@@ -1,4 +1,4 @@
-package com.kychan.mlog.model
+package com.kychan.mlog.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 import com.kychan.mlog.presentation.main.search.SearchMovieItem

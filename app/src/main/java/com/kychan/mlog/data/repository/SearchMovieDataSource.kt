@@ -1,10 +1,10 @@
-package com.kychan.mlog.repository
+package com.kychan.mlog.data.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PositionalDataSource
 import com.kychan.mlog.data.remote.NaverApi
-import com.kychan.mlog.model.SearchMovieResponse
+import com.kychan.mlog.data.remote.model.SearchMovieResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

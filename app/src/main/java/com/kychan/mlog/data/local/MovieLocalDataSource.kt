@@ -2,7 +2,7 @@ package com.kychan.mlog.data.local
 
 import androidx.paging.DataSource
 import com.kychan.mlog.data.local.dao.MovieDao
-import com.kychan.mlog.model.MovieEntity
+import com.kychan.mlog.data.local.model.MovieEntity
 import javax.inject.Inject
 
 class MovieLocalDataSource @Inject constructor(
