@@ -14,10 +14,8 @@ class App : Application() {
 
     fun context(): Context = applicationContext
 
-
     companion object {
         lateinit var instance: App
             private set
-
     }
 }

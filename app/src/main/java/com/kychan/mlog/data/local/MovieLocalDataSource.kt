@@ -20,7 +20,7 @@ class MovieLocalDataSource @Inject constructor(
         movieDao.delete(link)
     }
 
-    fun updateMovie(evaluation: Float, link: String){
+    fun updateMovie(evaluation: Float, link: String) {
         movieDao.update(evaluation, link)
     }
 }

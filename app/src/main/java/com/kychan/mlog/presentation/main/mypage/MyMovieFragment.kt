@@ -2,12 +2,12 @@ package com.kychan.mlog.presentation.main.mypage
 
 import android.app.Activity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -46,7 +46,6 @@ class MyMovieFragment : Fragment() {
         (activity as MainActivity).supportActionBar?.title = getString(R.string.storage)
         setView()
         setViewModel()
-
     }
 
     private fun setView() {
@@ -77,7 +76,7 @@ class MyMovieFragment : Fragment() {
             if (deleteResult == Activity.RESULT_OK) {
                 myMovieViewModel.deleteMovie(movieItem.link)
             }
-            if (ratingResult != null){
+            if (ratingResult != null) {
                 myMovieViewModel.updateMovie(ratingResult as Float, movieItem.link)
             }
         }

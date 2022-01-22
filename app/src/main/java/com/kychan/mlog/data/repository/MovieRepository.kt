@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.kychan.mlog.data.local.MovieLocalDataSource
 import com.kychan.mlog.data.factory.SearchMovieDataSourceFactory
+import com.kychan.mlog.data.local.MovieLocalDataSource
 import com.kychan.mlog.data.local.model.MovieEntity
 import com.kychan.mlog.presentation.main.mypage.MyMovieItem
 import com.kychan.mlog.presentation.main.search.SearchMovieItem
@@ -52,7 +52,7 @@ class MovieRepository @Inject constructor(
         movieLocalDataSource.deleteMovie(link)
     }
 
-    fun updateMovie(evaluation: Float, link: String){
+    fun updateMovie(evaluation: Float, link: String) {
         movieLocalDataSource.updateMovie(evaluation, link)
     }
 }
