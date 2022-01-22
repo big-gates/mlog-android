@@ -35,3 +35,19 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task copyGitHooks(type: Copy) {
+    from("$rootDir/teamConfig/git/gitHooks/") {
+        include '**/*'
+        rename '(.*)', '$1'
+    }
+    into "$rootDir/.git/hooks"
+}
+
+task installGitHooks(type: Exec) {
+    group 'git hooks'
+    workingDir rootDir
+    commandLine 'chmod'
+    args '-R', '+x', '.git/hooks/'
+    dependsOn copyGitHooks
+}
