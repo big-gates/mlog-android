@@ -3,8 +3,8 @@ package com.kychan.mlog.presentation.main.search
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
-import com.kychan.mlog.model.MovieEntity
-import com.kychan.mlog.repository.MovieRepository
+import com.kychan.mlog.data.local.model.MovieEntity
+import com.kychan.mlog.data.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -34,4 +34,5 @@ class SearchViewModel @Inject constructor(
             movieRepository.deleteMovie(link)
         }.start()
     }
+
 }

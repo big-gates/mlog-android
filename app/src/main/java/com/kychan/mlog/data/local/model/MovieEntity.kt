@@ -1,4 +1,4 @@
-package com.kychan.mlog.model
+package com.kychan.mlog.data.local.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

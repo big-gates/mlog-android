@@ -1,6 +1,6 @@
 package com.kychan.mlog.data.remote
 
-import com.kychan.mlog.model.SearchMovieResponse
+import com.kychan.mlog.data.remote.model.SearchMovieResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header

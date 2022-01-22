@@ -1,4 +1,4 @@
-package com.kychan.mlog.factory
+package com.kychan.mlog.data.factory
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
@@ -6,7 +6,7 @@ import androidx.paging.PagedList
 import com.kychan.mlog.data.remote.NaverApi
 import com.kychan.mlog.data.local.dao.MovieDao
 import com.kychan.mlog.presentation.main.search.SearchMovieItem
-import com.kychan.mlog.repository.SearchMovieDataSource
+import com.kychan.mlog.data.repository.SearchMovieDataSource
 import javax.inject.Inject
 
 class SearchMovieDataSourceFactory @Inject constructor(

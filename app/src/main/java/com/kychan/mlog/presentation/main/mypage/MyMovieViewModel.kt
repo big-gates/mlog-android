@@ -2,7 +2,7 @@ package com.kychan.mlog.presentation.main.mypage
 
 import androidx.lifecycle.*
 import androidx.paging.PagedList
-import com.kychan.mlog.repository.MovieRepository
+import com.kychan.mlog.data.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
