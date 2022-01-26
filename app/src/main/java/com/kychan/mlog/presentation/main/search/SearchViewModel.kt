@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.kychan.mlog.data.local.model.MovieEntity
-import com.kychan.mlog.data.repository.MovieRepository
+import com.kychan.mlog.domain.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
