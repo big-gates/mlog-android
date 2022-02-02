@@ -1,0 +1,21 @@
+#!/bin/sh
+
+echo "작성 코드 형식 확인중"
+
+./gradlew ktlintCheck
+
+status=$?
+
+if [ "$status" == 0 ] ; then
+    echo "코드 형식 이슈 없음"
+else
+    echo 1>&2 "* 코드형식 이슈 있음"
+    exit 1
+fi
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+if [ "$branch" = "develop" ]; then
+  echo "develop에 커밋하지마!!!"
+  exit 1
+fi
