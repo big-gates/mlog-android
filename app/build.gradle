@@ -95,4 +95,8 @@ dependencies {
 
     //loging
     implementation 'com.orhanobut:logger:2.2.0'
+
+    // Local unit tests
+    testImplementation "junit:junit:$jUnitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
 }

@@ -8,6 +8,8 @@ buildscript {
         glideVersion = '4.10.0'
         room_version = '2.3.0'
         paging_version = '2.1.2'
+        jUnitVersion = '4.13.2'
+        mockitoVersion = '4.1.0'
     }
 
     repositories {
