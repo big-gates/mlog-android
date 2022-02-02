@@ -14,5 +14,4 @@ abstract class DataSourceModule {
     @Singleton
     @Binds
     abstract fun bindMovieLocalDataSource(movieLocalDataSourceImpl: MovieLocalDataSourceImpl): MovieLocalDataSource
-    
 }
