@@ -14,13 +14,13 @@ buildscript {
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.2"
+        classpath 'com.android.tools.build:gradle:7.0.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.28-alpha'
-        classpath 'com.google.gms:google-services:4.3.8'
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.36'
+        classpath 'com.google.gms:google-services:4.3.10'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -30,10 +30,29 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+task copyGitHooks(type: Copy) {
+    from("$rootDir/teamConfig/git/gitHooks/") {
+        include '**/*'
+        rename '(.*)', '$1'
+    }
+    into "$rootDir/.git/hooks"
+}
+
+task installGitHooks(type: Exec) {
+    group 'git hooks'
+    commandLine 'chmod'
+    args '-R', '+x', "$rootDir/.git/hooks/"
+    dependsOn copyGitHooks
+}
+
+task autoKtlintFormat(type: Exec) {
+    executable "$rootDir/teamConfig/script/autoKtlintFormat"
 }

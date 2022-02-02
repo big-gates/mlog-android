@@ -10,7 +10,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-
 class SearchMovieDataSource @Inject constructor(
     private val naverApi: NaverApi
 ) : PositionalDataSource<SearchMovieResponse.MovieResponse>() {

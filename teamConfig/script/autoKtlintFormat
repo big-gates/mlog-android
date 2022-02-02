@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "작성 코드 형식 확인중"
+
+./gradlew ktlintFormat
+
+status=$?
+
+if [ "$status" == 0 ] ; then
+    echo "자동 변환 완료"
+    exit 0
+else
+    echo 1>&2 "자동 변환 실패"
+    exit 1
+fi

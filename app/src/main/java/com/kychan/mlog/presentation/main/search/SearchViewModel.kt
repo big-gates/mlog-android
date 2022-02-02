@@ -34,5 +34,4 @@ class SearchViewModel @Inject constructor(
             movieRepository.deleteMovie(link)
         }.start()
     }
-
 }
