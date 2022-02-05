@@ -7,6 +7,10 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 }
 
+// 선언 및 키값을 불러오기
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdkVersion 31
     buildToolsVersion "30.0.2"
@@ -19,6 +23,11 @@ android {
         versionName "1.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+
+        // 프로젝트에서 사용
+        // 타입 - 키 - 값
+        buildConfigField "String", "THE_MOVIE_DB_API_KEY", properties['the_movie_db_api_key']
     }
 
     buildFeatures {
