@@ -1,6 +1,7 @@
 package com.kychan.mlog.di
 
 import com.kychan.mlog.data.remote.NaverApi
+import com.kychan.mlog.data.remote.TheMovieDBApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +14,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object ApiModule {
     private const val NAVER_URL = "https://openapi.naver.com/"
+    private const val THE_MOVIE_DB_URL = "https://api.themoviedb.org/"
 
     @Singleton
     @Provides
@@ -22,5 +24,15 @@ object ApiModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(NaverApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideTheMovieDBApi(): TheMovieDBApi {
+        return Retrofit.Builder()
+            .baseUrl(THE_MOVIE_DB_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(TheMovieDBApi::class.java)
     }
 }
