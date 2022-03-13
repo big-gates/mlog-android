@@ -8,6 +8,7 @@ buildscript {
         glideVersion = '4.10.0'
         room_version = '2.3.0'
         paging_version = '2.1.2'
+        compose_version = '1.0.1'
     }
 
     repositories {
