@@ -19,4 +19,5 @@
     <string name="dialog_update_title">업데이트</string>
     <string name="dialog_update_sub_title">원활한 앱 사용을 위해 업데이트를 진행해 주세요.</string>
     <string name="termination">종료</string>
+    <string name="title_activity_compose_main">ComposeMainActivity</string>
 </resources>
