@@ -7,35 +7,37 @@ import androidx.paging.PagedList
 import com.kychan.mlog.data.factory.SearchMovieDataSourceFactory
 import com.kychan.mlog.data.local.MovieLocalDataSource
 import com.kychan.mlog.data.local.model.MovieEntity
+import com.kychan.mlog.domain.repository.MovieRepository
 import com.kychan.mlog.presentation.main.mypage.MyMovieItem
 import com.kychan.mlog.presentation.main.search.SearchMovieItem
 import javax.inject.Inject
 
-class MovieRepository @Inject constructor(
+class MovieRepositoryImpl @Inject constructor(
     private val movieLocalDataSource: MovieLocalDataSource,
     private val searchMovieDataSourceFactory: SearchMovieDataSourceFactory
-) {
-    fun invalidateDataSource() =
+) : MovieRepository {
+    override fun invalidateDataSource() {
         searchMovieDataSourceFactory.liveData.value?.invalidate()
+    }
 
-    fun setSearchKeyword(keyword: String) {
+    override fun setSearchKeyword(keyword: String) {
         searchMovieDataSourceFactory.setSearchKeyword(keyword)
     }
 
-    fun getItemTotal(): LiveData<Int> {
+    override fun getItemTotal(): LiveData<Int> {
         return Transformations.switchMap(
             searchMovieDataSourceFactory.liveData, SearchMovieDataSource::itemTotal
         )
     }
 
-    fun getSearchMovieList(): LiveData<PagedList<SearchMovieItem>> {
+    override fun getSearchMovieList(): LiveData<PagedList<SearchMovieItem>> {
         return LivePagedListBuilder(
             searchMovieDataSourceFactory,
             SearchMovieDataSourceFactory.pagedListConfig()
         ).build()
     }
 
-    fun getMovieAll(): LiveData<PagedList<MyMovieItem>> {
+    override fun getMovieAll(): LiveData<PagedList<MyMovieItem>> {
         return LivePagedListBuilder(
             movieLocalDataSource.getMovieAll().map {
                 it.toMovieItem()
@@ -44,15 +46,15 @@ class MovieRepository @Inject constructor(
         ).build()
     }
 
-    fun insertMovie(movieEntity: MovieEntity) {
+    override fun insertMovie(movieEntity: MovieEntity) {
         movieLocalDataSource.insertMovie(movieEntity)
     }
 
-    fun deleteMovie(link: String) {
+    override fun deleteMovie(link: String) {
         movieLocalDataSource.deleteMovie(link)
     }
 
-    fun updateMovie(evaluation: Float, link: String) {
+    override fun updateMovie(evaluation: Float, link: String) {
         movieLocalDataSource.updateMovie(evaluation, link)
     }
 }
