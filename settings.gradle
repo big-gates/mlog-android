@@ -1,2 +1,8 @@
 include ':app'
 rootProject.name = "mlog"
+include ':presenter'
+include ':domain'
+include ':data'
+include ':dataSourceLocal'
+include ':dataSourceRemote'
+include ':common'
