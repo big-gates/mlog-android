@@ -1,4 +1,4 @@
-package com.givita.presenter
+package com.example.searchmovie
 
 import org.junit.Test
 

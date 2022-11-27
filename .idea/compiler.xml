@@ -3,8 +3,12 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
       <module name="mlog.app" target="11" />
+      <module name="mlog.buildSrc" target="11" />
+      <module name="mlog.buildSrc.main" target="11" />
+      <module name="mlog.buildSrc.test" target="11" />
       <module name="mlog.dataSourceLocal" target="11" />
       <module name="mlog.presenter" target="11" />
+      <module name="mlog.ui.searchmovie" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
