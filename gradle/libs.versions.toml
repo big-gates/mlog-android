@@ -1,0 +1,58 @@
+[versions]
+kotlin = "1.7.21"
+activity = "1.2.2"
+fragment = "1.3.2"
+retrofit = "2.6.2"
+glide = "4.10.0"
+room = "2.4.0-alpha03"
+paging = "3.1.1"
+compose = "1.0.1"
+hilt = "2.36"
+gms-google-service = "4.3.10"
+android-gradle-plugin = "7.3.0"
+core-ktx = "1.3.2"
+appcompat = "1.2.0"
+constraintlayout = "2.0.4"
+material = "1.3.0"
+browser = "1.3.0"
+firebase-bom = "28.0.1"
+compose-bom = "2022.10.00"
+coil = "2.2.2"
+composecompiler = "1.4.0-alpha02"
+coroutines = "1.6.4"
+activity-compose = "1.6.1"
+androidx-lifecycle = "2.6.0-alpha03"
+logger = "2.2.0"
+
+[plugins]
+gms-google-service = { id = "com.google.gms:google-services", version.ref = "gms-google-service"}
+android-application = { id = "com.android.application", version.ref = "android-gradle-plugin"}
+android-library = { id = "com.android.library", version.ref = "android-gradle-plugin"}
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin"}
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+
+
+[libraries]
+paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
+
+firebase-bom = { module = "androidx.compose:compose-bom", version.ref = "firebase-bom" }
+firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-config-ktx = { module = "com.google.firebase:firebase-config-ktx" }
+
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+material3-compose = { module = "androidx.compose.material3:material3" }
+material2-compose = { module = "androidx.compose.material:material" }
+foundation-compose = { module = "androidx.compose.foundation:foundation" }
+ui-compose = { module = "androidx.compose.ui:ui" }
+ui-tooling-preview-compose = { module = "androidx.compose.ui:ui-tooling-preview" }
+ui-tooling-compose = { module = "androidx.compose.ui:ui-tooling" }
+ui-test-junit4-compose = { module = "androidx.compose.ui:ui-test-junit4" }
+ui-test-manifest-compose = { module = "androidx.compose.ui:ui-test-manifest" }
+material-icons-core-compose = { module = "androidx.compose.material:material-icons-core" }
+material-icons-extended-compose = { module = "androidx.compose.material:material-icons-extended" }
+material3-window-size-compose = { module = "androidx.compose.material3:material3-window-size-class" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle"}
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose"}
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil"}
+
+logger = { module = "com.orhanobut:logger", version.ref = "logger" }
