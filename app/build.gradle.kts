@@ -1,56 +1,54 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'kotlin-kapt'
-    id 'com.google.dagger.hilt.android'
-    id 'com.google.gms.google-services'
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.gms.google.service)
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk = 33
 
     defaultConfig {
-        applicationId "com.kychan.mlog"
-        minSdkVersion 24
-        targetSdkVersion 31
-        versionCode 5
-        versionName "1.1.1"
+        applicationId = "com.kychan.mlog"
+        minSdk = 24
+        targetSdk = 31
+        versionCode = 5
+        versionName = "1.1.1"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
-            useSupportLibrary true
+            useSupportLibrary = true
         }
     }
 
     buildFeatures {
-        dataBinding true
-        compose true
+        dataBinding = true
+        compose = true
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = "11"
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion '1.4.0-alpha02'
+        kotlinCompilerExtensionVersion = "1.4.0-alpha02"
     }
     packagingOptions {
         resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    namespace 'com.kychan.mlog'
+    namespace = "com.kychan.mlog"
 }
 
 dependencies {
