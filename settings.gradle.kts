@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         gradlePluginPortal()
         google()
@@ -13,3 +14,4 @@ rootProject.name = "mlog"
 include(
     ":app",
 )
+

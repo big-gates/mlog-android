@@ -17,12 +17,16 @@ browser = "1.4.0"
 firebase-bom = "28.0.1"
 compose-bom = "2022.10.00"
 coil = "2.2.2"
-composecompiler = "1.4.0-alpha02"
+compose-compiler = "1.4.0-alpha02"
 coroutines = "1.6.4"
 activity-compose = "1.6.1"
 androidx-lifecycle = "2.6.0-alpha03"
 logger = "2.2.0"
 ksp = "1.7.21-1.0.8"
+junit4 = "4.13.2"
+compileSdk = "33"
+minSdk = "24"
+targetSdk = "31"
 
 [plugins]
 gms-google-service = "com.google.gms.google-services:4.3.14"
@@ -36,6 +40,10 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 
 
 [libraries]
+# Dependencies of the included buildSrc
+android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "android-gradle-plugin" }
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }

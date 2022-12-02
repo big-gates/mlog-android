@@ -1,20 +1,15 @@
 plugins {
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.hilt)
+    id("kychan.android.application")
+    id("kychan.android.hilt")
+    id("kychan.android.application.compose")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.gms.google.service)
 }
 
 android {
-    compileSdk = 33
-
     defaultConfig {
-        applicationId = "com.kychan.mlog"
-        minSdk = 24
-        targetSdk = 31
         versionCode = 5
-        versionName = "1.1.1"
+        versionName = "1.1.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -24,7 +19,6 @@ android {
 
     buildFeatures {
         dataBinding = true
-        compose = true
     }
 
     buildTypes {
@@ -32,17 +26,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.0-alpha02"
-    }
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -69,16 +53,12 @@ dependencies {
 
     // Glide
     implementation(libs.glide)
-    kapt(libs.glide.compiler)
+    ksp(libs.glide.compiler)
 
     //Room
     implementation(libs.room.runtime)
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
     implementation(libs.room.ktx)
-
-    //Hilt
-    implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
 
     //Paging
     implementation(libs.paging.runtime.ktx)
@@ -89,9 +69,6 @@ dependencies {
     implementation(libs.firebase.config.ktx)
 
     //Compose
-    implementation(platform(libs.compose.bom))
-    androidTestImplementation(platform(libs.compose.bom))
-
     implementation(libs.material3.compose)
     implementation(libs.material2.compose)
     implementation(libs.foundation.compose)
