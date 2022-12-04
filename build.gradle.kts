@@ -1,16 +1,17 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-plugins {
-    alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.kotlin.jvm) apply false
-    alias(libs.plugins.hilt) apply false
-    alias(libs.plugins.gms.google.service) apply false
-}
-
-allprojects {
+buildscript {
     repositories {
         google()
         mavenCentral()
     }
+}
+
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.gms.google.service) apply false
 }
 
 //task clean(type: Delete) {

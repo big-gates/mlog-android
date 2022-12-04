@@ -82,9 +82,9 @@ dependencies {
     implementation(libs.material.icons.extended.compose)
     implementation(libs.material3.window.size.compose)
     implementation(libs.activity.compose)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.viewModel.compose)
 
-    implementation(libs.coil.compose)
+    implementation(libs.coil.kt.compose)
 
     //loging
     implementation(libs.logger)
