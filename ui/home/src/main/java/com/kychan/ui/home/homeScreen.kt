@@ -1,4 +1,4 @@
-package com.kychan.home
+package com.kychan.ui.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -30,9 +30,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.kychan.design.icon.MLogIcons
-import com.kychan.design.theme.MovieRankBg
-import com.kychan.design.theme.MovieRating
+import com.kychan.core.design.icon.MLogIcons
+import com.kychan.core.design.theme.MovieRankBg
+import com.kychan.core.design.theme.MovieRating
 
 val dummyMovieData = listOf<MovieItem>(
     MovieItem(

@@ -1,4 +1,4 @@
-package com.kychan.design
+package com.kychan.ui.home
 
 import org.junit.Test
 

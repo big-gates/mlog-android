@@ -1,4 +1,4 @@
-package com.kychan.home
+package com.kychan.core.domain
 
 import org.junit.Test
 

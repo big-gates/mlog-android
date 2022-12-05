@@ -1,4 +1,4 @@
-package com.kychan.design.theme
+package com.kychan.core.design.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

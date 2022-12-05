@@ -1,4 +1,4 @@
-package com.kychan.home
+package com.kychan.ui.home
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

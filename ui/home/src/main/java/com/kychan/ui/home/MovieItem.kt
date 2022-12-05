@@ -1,4 +1,4 @@
-package com.kychan.home
+package com.kychan.ui.home
 
 data class MovieItem(
     val image: String,
