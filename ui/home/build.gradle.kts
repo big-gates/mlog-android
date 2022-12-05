@@ -1,7 +1,6 @@
 plugins {
     id("kychan.android.library.compose")
     id("kychan.android.ui")
-    alias(libs.plugins.ksp)
 }
 
 android {

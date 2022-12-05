@@ -36,6 +36,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":ui:home"))
+
+    implementation(project(":core:design"))
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
