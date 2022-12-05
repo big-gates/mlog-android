@@ -40,8 +40,8 @@ dependencies {
 
     implementation(project(":core:design"))
 
-    implementation(libs.core.ktx)
-    implementation(libs.appcompat)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
     implementation(libs.constraintlayout)
 
     implementation(libs.material)
@@ -72,19 +72,19 @@ dependencies {
     implementation(libs.firebase.config.ktx)
 
     //Compose
-    implementation(libs.material3.compose)
-    implementation(libs.material2.compose)
-    implementation(libs.foundation.compose)
-    implementation(libs.ui.compose)
-    implementation(libs.ui.tooling.preview.compose)
-    debugImplementation(libs.ui.tooling.compose)
-    androidTestImplementation(libs.ui.test.junit4.compose)
-    debugImplementation(libs.ui.test.manifest.compose)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material2)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation(libs.material.icons.core.compose)
-    implementation(libs.material.icons.extended.compose)
-    implementation(libs.material3.window.size.compose)
-    implementation(libs.activity.compose)
+    implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.material3.window.size)
+    implementation(libs.androidx.compose.activity)
     implementation(libs.androidx.lifecycle.viewModel.compose)
 
     implementation(libs.coil.kt.compose)

@@ -12,11 +12,11 @@ android {
 }
 
 dependencies {
-    implementation(libs.core.ktx)
-    api(libs.foundation.compose)
-    api(libs.material.icons.extended.compose)
-    api(libs.material2.compose)
-    api(libs.material3.compose)
-    debugApi(libs.ui.tooling.compose)
-    api(libs.ui.tooling.preview.compose)
+    implementation(libs.androidx.core.ktx)
+    api(libs.androidx.compose.foundation)
+    api(libs.androidx.compose.material.icons.extended)
+    api(libs.androidx.compose.material2)
+    api(libs.androidx.compose.material3)
+    debugApi(libs.androidx.compose.ui.tooling)
+    api(libs.androidx.compose.ui.tooling.preview)
 }
