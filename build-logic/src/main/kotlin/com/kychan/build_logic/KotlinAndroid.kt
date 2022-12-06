@@ -8,6 +8,9 @@ import org.gradle.api.plugins.ExtensionAware
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.provideDelegate
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+import java.io.File
+import java.io.FileInputStream
+import java.io.InputStreamReader
 
 /**
  * Configure base Kotlin with Android options
@@ -22,6 +25,8 @@ fun Project.configureKotlinAndroid(
 
         defaultConfig {
             minSdk = libs.findVersion("minSdk").get().toString().toInt()
+            buildConfigField("String", "THE_MOVIE_DB_API_KEY", getLocalProperty("the_movie_db_api_key").toString())
+            buildConfigField("String", "THE_MOVIE_DB_API_URL", getLocalProperty("the_movie_db_api_url").toString())
         }
 
         compileOptions {
@@ -51,4 +56,16 @@ fun Project.configureKotlinAndroid(
 
 fun CommonExtension<*, *, *, *>.kotlinOptions(block: KotlinJvmOptions.() -> Unit) {
     (this as ExtensionAware).extensions.configure("kotlinOptions", block)
+}
+
+fun Project.getLocalProperty(key: String, file: String = "local.properties"): Any {
+    val properties = java.util.Properties()
+    val localProperties = File(file)
+    if (localProperties.isFile) {
+        InputStreamReader(FileInputStream(localProperties), Charsets.UTF_8).use { reader ->
+            properties.load(reader)
+        }
+    } else error("File from not found")
+
+    return properties.getProperty(key)
 }
