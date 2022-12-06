@@ -37,8 +37,9 @@ android {
 
 dependencies {
     implementation(project(":ui:home"))
-
     implementation(project(":core:design"))
+
+    testImplementation(project(":core:testing"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
