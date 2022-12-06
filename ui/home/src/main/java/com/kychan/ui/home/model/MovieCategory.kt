@@ -1,4 +1,4 @@
-package com.kychan.ui.home
+package com.kychan.ui.home.model
 
 data class MovieCategory(
     val title: String,

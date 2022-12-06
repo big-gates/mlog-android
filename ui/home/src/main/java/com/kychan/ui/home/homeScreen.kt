@@ -33,6 +33,8 @@ import coil.compose.rememberImagePainter
 import com.kychan.core.design.icon.MLogIcons
 import com.kychan.core.design.theme.MovieRankBg
 import com.kychan.core.design.theme.MovieRating
+import com.kychan.ui.home.model.MovieCategory
+import com.kychan.ui.home.model.MovieItem
 
 val dummyMovieData = listOf<MovieItem>(
     MovieItem(
