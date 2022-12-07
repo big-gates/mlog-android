@@ -10,7 +10,11 @@ android {
 
 dependencies {
     implementation(project(":core:common"))
-    implementation(project(":core:domain"))
+    implementation(project(":core:entity"))
+    implementation(project(":core:dataSourceRemote:http"))
 
     testImplementation(project(":core:testing"))
+
+    implementation(libs.mapstruct)
+    kapt(libs.mapstruct.processor)
 }
