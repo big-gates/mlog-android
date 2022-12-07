@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
 import com.kychan.core.design.icon.MLogIcons
 import com.kychan.core.design.theme.MovieRankBg
@@ -110,7 +111,10 @@ fun HomeAppBar() {
 
 @Composable
 @Preview
-fun HomeLayout() {
+fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel()
+) {
+    viewModel.init()
     Column {
         HomeAppBar()
         LazyColumn(

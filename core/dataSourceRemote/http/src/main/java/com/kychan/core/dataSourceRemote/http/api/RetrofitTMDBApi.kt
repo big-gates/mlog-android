@@ -14,13 +14,13 @@ interface RetrofitTMDBApi {
 //        @Query("language") language: String
 //    ):
 
-    @GET("/tv/popular")
+    @GET("/3/tv/popular")
     suspend fun getTvSeriesPopular(
         @Query("page") page: Int,
         @Query("language") language: String
     ): TvSeriesRes
 
-    @GET("/tv/{tvSeriesId}")
+    @GET("/3/tv/{tvSeriesId}")
     suspend fun getTvSeriesDetail(
         @Path("tvSeriesId") tvSeriesId: Int,
         @Query("language") language: String

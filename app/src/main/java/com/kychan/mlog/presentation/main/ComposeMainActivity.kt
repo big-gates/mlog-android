@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.kychan.core.design.theme.MlogTheme
-import com.kychan.ui.home.HomeLayout
+import com.kychan.ui.home.HomeScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ComposeMainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +24,7 @@ class ComposeMainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    HomeLayout()
+                    HomeScreen()
                 }
             }
         }
@@ -38,7 +40,7 @@ fun DefaultPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colors.background
         ) {
-            HomeLayout()
+            HomeScreen()
         }
     }
 }

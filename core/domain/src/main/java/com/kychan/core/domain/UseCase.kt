@@ -17,7 +17,7 @@ abstract class UseCase<in P, out R> {
                 emit(Result.Loading)
                 emit(Result.Success(doWork(param)))
             }
-        } catch (e: TimeoutCancellationException) {
+        } catch (e: Throwable) {
             emit(Result.Error(e))
         }
     }

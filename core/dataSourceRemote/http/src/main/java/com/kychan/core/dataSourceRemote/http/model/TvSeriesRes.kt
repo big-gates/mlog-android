@@ -1,12 +1,12 @@
 package com.kychan.core.dataSourceRemote.http.model
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
 
 @Serializable
 data class TvSeriesRes(
     val page: Int,
-    val result: List<TvSeries>,
+    val results: List<TvSeries>,
     @SerialName("total_pages") val totalPages: Int,
     @SerialName("total_results") val totalResults: Int
 )

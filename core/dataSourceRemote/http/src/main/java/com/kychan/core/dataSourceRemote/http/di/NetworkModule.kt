@@ -16,6 +16,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
+
 private const val THE_MOVIE_DB_BASE_URL = BuildConfig.THE_MOVIE_DB_API_URL
 private const val THE_MOVIE_DB_API_KEY = BuildConfig.THE_MOVIE_DB_API_KEY
 
