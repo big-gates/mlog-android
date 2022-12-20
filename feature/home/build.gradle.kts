@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.kychan.ui.home"
+    namespace = "com.kychan.mlog.feature.home"
 }
 
 dependencies {

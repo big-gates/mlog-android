@@ -1,4 +1,4 @@
-package com.kychan.ui.home.model
+package com.kychan.mlog.feature.home.model
 
 data class MovieItem(
     val image: String,

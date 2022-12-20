@@ -1,4 +1,4 @@
-package com.kychan.ui.home
+package com.kychan.mlog.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

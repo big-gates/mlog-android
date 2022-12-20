@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":ui:home"))
+    implementation(project(":feature:home"))
     implementation(project(":core:common"))
     implementation(project(":core:design"))
     implementation(project(":core:domain"))

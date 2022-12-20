@@ -20,7 +20,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "mlog"
 
 include(":app")
-include(":ui:home")
+include(":feature:home")
 include(":core:design")
 include(":core:domain")
 include(":core:common")

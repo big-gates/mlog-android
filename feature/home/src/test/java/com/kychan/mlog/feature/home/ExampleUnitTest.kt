@@ -1,4 +1,4 @@
-package com.kychan.ui.home
+package com.kychan.mlog.feature.home
 
 import org.junit.Test
 
