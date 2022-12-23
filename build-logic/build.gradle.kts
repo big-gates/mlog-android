@@ -39,9 +39,9 @@ gradlePlugin {
             implementationClass = "AndroidHiltConventionPlugin"
         }
 
-        register("androidUi") {
-            id = "kychan.android.ui"
-            implementationClass = "AndroidUiConventionPlugin"
+        register("androidFeature") {
+            id = "kychan.android.feature"
+            implementationClass = "AndroidFeatureConventionPlugin"
         }
     }
 }
