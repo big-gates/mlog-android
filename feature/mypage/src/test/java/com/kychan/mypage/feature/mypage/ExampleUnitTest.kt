@@ -1,4 +1,4 @@
-package com.kychan.mypage
+package com.kychan.mypage.feature.mypage
 
 import org.junit.Test
 import org.junit.Assert.*

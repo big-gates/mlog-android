@@ -21,6 +21,7 @@ rootProject.name = "mlog"
 
 include(":app")
 include(":feature:home")
+include(":feature:mypage")
 include(":core:design")
 include(":core:domain")
 include(":core:common")

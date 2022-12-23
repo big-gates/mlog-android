@@ -1,4 +1,4 @@
-package com.kychan.mypage
+package com.kychan.mlog.feature.mypage
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
