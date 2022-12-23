@@ -1,6 +1,6 @@
 plugins {
     id("kychan.android.library.compose")
-    id("kychan.android.ui")
+    id("kychan.android.feature")
 }
 
 android {
