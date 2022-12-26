@@ -91,6 +91,11 @@ dependencies {
 
     implementation(libs.coil.kt.compose)
 
+    //Navigation
+    androidTestImplementation(libs.androidx.navigation.testing)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.navigation.compose)
+
     //loging
     implementation(libs.logger)
 }
