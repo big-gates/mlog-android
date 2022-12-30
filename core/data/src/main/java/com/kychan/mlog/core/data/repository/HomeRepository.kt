@@ -1,6 +1,6 @@
 package com.kychan.mlog.core.data.repository
 
-import com.kychan.core.entity.TvSeriesEntity
+import com.kychan.mlog.core.model.TvSeriesEntity
 
 interface HomeRepository {
     fun getBoxOfficeRanking()

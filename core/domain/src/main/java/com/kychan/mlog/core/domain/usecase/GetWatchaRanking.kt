@@ -3,7 +3,7 @@ package com.kychan.mlog.core.domain.usecase
 import com.kychan.mlog.core.common.network.Dispatcher
 import com.kychan.mlog.core.common.network.Dispatchers.IO
 import com.kychan.mlog.core.domain.UseCase
-import com.kychan.core.entity.TvSeriesEntity
+import com.kychan.mlog.core.model.TvSeriesEntity
 import com.kychan.mlog.core.data.repository.HomeRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

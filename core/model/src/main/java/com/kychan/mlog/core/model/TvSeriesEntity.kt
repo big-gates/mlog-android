@@ -1,4 +1,4 @@
-package com.kychan.core.entity
+package com.kychan.mlog.core.model
 
 data class TvSeriesEntity(
     val id: Int,
