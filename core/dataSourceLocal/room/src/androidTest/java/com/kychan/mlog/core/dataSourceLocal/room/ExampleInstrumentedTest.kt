@@ -1,4 +1,4 @@
-package com.kychan.core.dataSourceLocal.room
+package com.kychan.mlog.core.dataSourceLocal.room
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.kychan.core.dataSourceLocal.room"
+    namespace = "com.kychan.mlog.core.dataSourceLocal.room"
 }
 
 dependencies {
