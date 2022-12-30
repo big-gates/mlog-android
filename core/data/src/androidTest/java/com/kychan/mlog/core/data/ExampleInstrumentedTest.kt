@@ -1,4 +1,4 @@
-package com.kychan.core.data
+package com.kychan.mlog.core.data
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

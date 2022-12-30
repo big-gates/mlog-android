@@ -4,7 +4,7 @@ import com.kychan.mlog.core.common.network.Dispatcher
 import com.kychan.mlog.core.common.network.Dispatchers.IO
 import com.kychan.core.domain.UseCase
 import com.kychan.core.entity.TvSeriesEntity
-import com.kychan.core.data.repository.HomeRepository
+import com.kychan.mlog.core.data.repository.HomeRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

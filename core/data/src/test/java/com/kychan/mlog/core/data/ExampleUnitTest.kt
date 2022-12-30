@@ -1,4 +1,4 @@
-package com.kychan.core.data
+package com.kychan.mlog.core.data
 
 import org.junit.Test
 

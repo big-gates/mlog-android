@@ -1,4 +1,4 @@
-package com.kychan.core.data.mapper
+package com.kychan.mlog.core.data.mapper
 
 import com.kychan.core.dataSourceRemote.http.model.TvSeries
 import com.kychan.core.entity.TvSeriesEntity

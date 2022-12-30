@@ -1,8 +1,8 @@
-package com.kychan.core.data.di
+package com.kychan.mlog.core.data.di
 
-import com.kychan.core.data.repository.HomeRepositoryImpl
+import com.kychan.mlog.core.data.repository.HomeRepositoryImpl
 import com.kychan.core.dataSourceRemote.http.datasource.tmdb.TMDBDataSource
-import com.kychan.core.data.repository.HomeRepository
+import com.kychan.mlog.core.data.repository.HomeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

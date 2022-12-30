@@ -1,4 +1,4 @@
-package com.kychan.core.data.repository
+package com.kychan.mlog.core.data.repository
 
 import com.kychan.core.entity.TvSeriesEntity
 
