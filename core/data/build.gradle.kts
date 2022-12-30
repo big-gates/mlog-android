@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace = "com.kychan.core.data"
+    namespace = "com.kychan.mlog.core.data"
 
 }
 
 dependencies {
     implementation(project(":core:common"))
-    implementation(project(":core:entity"))
+    implementation(project(":core:model"))
     implementation(project(":core:dataSourceRemote:http"))
 
     testImplementation(project(":core:testing"))

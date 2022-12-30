@@ -2,8 +2,8 @@ package com.kychan.mlog.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kychan.core.common.result.Result
-import com.kychan.core.domain.usecase.GetWatchaRanking
+import com.kychan.mlog.core.common.result.Result
+import com.kychan.mlog.core.domain.usecase.GetWatchaRanking
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

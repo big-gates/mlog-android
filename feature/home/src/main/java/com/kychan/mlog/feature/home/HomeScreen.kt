@@ -31,9 +31,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
-import com.kychan.core.design.icon.MLogIcons
-import com.kychan.core.design.theme.MovieRankBg
-import com.kychan.core.design.theme.MovieRating
+import com.kychan.mlog.core.design.icon.MLogIcons
+import com.kychan.mlog.core.design.theme.MovieRankBg
+import com.kychan.mlog.core.design.theme.MovieRating
 import com.kychan.mlog.feature.home.model.MovieCategory
 import com.kychan.mlog.feature.home.model.MovieItem
 

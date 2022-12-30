@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.kychan.core.common"
+    namespace = "com.kychan.mlog.core.common"
 }
 
 dependencies {

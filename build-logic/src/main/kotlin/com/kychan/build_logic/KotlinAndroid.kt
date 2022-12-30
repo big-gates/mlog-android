@@ -1,6 +1,7 @@
 package com.kychan.build_logic
 
 import com.android.build.api.dsl.CommonExtension
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
@@ -58,14 +59,6 @@ fun CommonExtension<*, *, *, *>.kotlinOptions(block: KotlinJvmOptions.() -> Unit
     (this as ExtensionAware).extensions.configure("kotlinOptions", block)
 }
 
-fun Project.getLocalProperty(key: String, file: String = "local.properties"): Any {
-    val properties = java.util.Properties()
-    val localProperties = File(file)
-    if (localProperties.isFile) {
-        InputStreamReader(FileInputStream(localProperties), Charsets.UTF_8).use { reader ->
-            properties.load(reader)
-        }
-    } else error("File from not found")
-
-    return properties.getProperty(key)
+fun Project.getLocalProperty(key: String): String {
+    return gradleLocalProperties(rootDir).getProperty(key)
 }
