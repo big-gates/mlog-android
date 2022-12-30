@@ -1,9 +1,14 @@
 package com.kychan.mlog.core.data.repository
 
-import com.kychan.mlog.core.model.TvSeriesEntity
+import com.kychan.mlog.core.model.*
 
 interface HomeRepository {
     fun getBoxOfficeRanking()
     suspend fun getWatchaRanking(page: Int, language: String): List<TvSeriesEntity>
-    fun getNeflixRanking()
+    suspend fun getMoviePopularWithProvider(
+        page: Int,
+        language: Language,
+        watchRegion: WatchRegion,
+        withWatchProviders: WatchProviders
+    ): List<Movie>
 }
