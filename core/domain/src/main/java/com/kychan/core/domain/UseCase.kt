@@ -1,6 +1,6 @@
 package com.kychan.core.domain
 
-import com.kychan.core.common.result.Result
+import com.kychan.mlog.core.common.result.Result
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*

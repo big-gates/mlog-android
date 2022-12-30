@@ -1,4 +1,4 @@
-package com.kychan.core.common.network
+package com.kychan.mlog.core.common.network
 
 import javax.inject.Qualifier
 import kotlin.annotation.AnnotationRetention.RUNTIME

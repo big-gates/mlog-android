@@ -1,7 +1,7 @@
-package com.kychan.core.common.network.di
+package com.kychan.mlog.core.common.network.di
 
-import com.kychan.core.common.network.Dispatcher
-import com.kychan.core.common.network.Dispatchers.IO
+import com.kychan.mlog.core.common.network.Dispatcher
+import com.kychan.mlog.core.common.network.Dispatchers.IO
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
