@@ -3,6 +3,7 @@ package com.kychan.mlog.core.dataSourceRemote.http.di
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.kychan.mlog.core.dataSourceRemote.http.BuildConfig
 import com.kychan.mlog.core.dataSourceRemote.http.api.RetrofitTMDBApi
+import com.kychan.mlog.core.dataSourceRemote.http.converter.EnumConverter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,7 +33,14 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesTMDBApi(networkJson: Json): RetrofitTMDBApi = Retrofit.Builder()
+    fun provideEnumConverter(): EnumConverter = EnumConverter()
+
+    @Provides
+    @Singleton
+    fun providesTMDBApi(
+        networkJson: Json,
+        enumConverter: EnumConverter
+    ): RetrofitTMDBApi = Retrofit.Builder()
         .baseUrl(THE_MOVIE_DB_BASE_URL)
         .client(
             OkHttpClient.Builder()
@@ -55,6 +63,7 @@ object NetworkModule {
             @OptIn(ExperimentalSerializationApi::class)
             networkJson.asConverterFactory("application/json".toMediaType())
         )
+        .addConverterFactory(enumConverter)
         .build()
         .create(RetrofitTMDBApi::class.java)
 
