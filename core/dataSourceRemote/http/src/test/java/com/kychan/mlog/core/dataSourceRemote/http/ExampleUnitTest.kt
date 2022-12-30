@@ -1,4 +1,4 @@
-package com.kychan.core.dataSourceRemote.http
+package com.kychan.mlog.core.dataSourceRemote.http
 
 import org.junit.Test
 

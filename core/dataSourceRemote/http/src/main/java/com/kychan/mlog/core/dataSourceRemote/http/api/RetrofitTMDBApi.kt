@@ -1,7 +1,7 @@
-package com.kychan.core.dataSourceRemote.http.api
+package com.kychan.mlog.core.dataSourceRemote.http.api
 
-import com.kychan.core.dataSourceRemote.http.model.TvSeriesDetailRes
-import com.kychan.core.dataSourceRemote.http.model.TvSeriesRes
+import com.kychan.mlog.core.dataSourceRemote.http.model.TvSeriesDetailRes
+import com.kychan.mlog.core.dataSourceRemote.http.model.TvSeriesRes
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

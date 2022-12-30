@@ -1,8 +1,8 @@
-package com.kychan.core.dataSourceRemote.http.di
+package com.kychan.mlog.core.dataSourceRemote.http.di
 
-import com.kychan.core.dataSourceRemote.http.api.RetrofitTMDBApi
-import com.kychan.core.dataSourceRemote.http.datasource.tmdb.TMDBDataSource
-import com.kychan.core.dataSourceRemote.http.datasource.tmdb.TMDBDataSourceImpl
+import com.kychan.mlog.core.dataSourceRemote.http.api.RetrofitTMDBApi
+import com.kychan.mlog.core.dataSourceRemote.http.datasource.tmdb.TMDBDataSource
+import com.kychan.mlog.core.dataSourceRemote.http.datasource.tmdb.TMDBDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

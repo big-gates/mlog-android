@@ -1,4 +1,4 @@
-package com.kychan.core.dataSourceRemote.http
+package com.kychan.mlog.core.dataSourceRemote.http
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

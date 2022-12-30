@@ -1,7 +1,7 @@
 package com.kychan.mlog.core.data.repository
 
 import com.kychan.mlog.core.data.mapper.TvSeriesMapper
-import com.kychan.core.dataSourceRemote.http.datasource.tmdb.TMDBDataSource
+import com.kychan.mlog.core.dataSourceRemote.http.datasource.tmdb.TMDBDataSource
 import com.kychan.core.entity.TvSeriesEntity
 import org.mapstruct.factory.Mappers
 import javax.inject.Inject

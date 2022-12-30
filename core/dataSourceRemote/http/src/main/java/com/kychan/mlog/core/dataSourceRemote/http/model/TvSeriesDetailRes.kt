@@ -1,4 +1,4 @@
-package com.kychan.core.dataSourceRemote.http.model
+package com.kychan.mlog.core.dataSourceRemote.http.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName

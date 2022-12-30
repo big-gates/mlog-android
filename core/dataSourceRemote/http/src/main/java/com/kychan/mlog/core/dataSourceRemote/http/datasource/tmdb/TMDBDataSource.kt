@@ -1,7 +1,7 @@
-package com.kychan.core.dataSourceRemote.http.datasource.tmdb
+package com.kychan.mlog.core.dataSourceRemote.http.datasource.tmdb
 
-import com.kychan.core.dataSourceRemote.http.model.TvSeriesDetailRes
-import com.kychan.core.dataSourceRemote.http.model.TvSeriesRes
+import com.kychan.mlog.core.dataSourceRemote.http.model.TvSeriesDetailRes
+import com.kychan.mlog.core.dataSourceRemote.http.model.TvSeriesRes
 
 interface TMDBDataSource {
 

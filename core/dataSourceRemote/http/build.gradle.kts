@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.kychan.core.dataSourceRemote.http"
+    namespace = "com.kychan.mlog.core.dataSourceRemote.http"
 }
 
 dependencies {
