@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.kychan.core.domain"
+    namespace = "com.kychan.mlog.core.domain"
 
 }
 

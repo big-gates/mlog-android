@@ -1,4 +1,4 @@
-package com.kychan.core.domain
+package com.kychan.mlog.core.domain
 
 import com.kychan.mlog.core.common.result.Result
 import kotlinx.coroutines.TimeoutCancellationException
