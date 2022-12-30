@@ -1,4 +1,4 @@
-package com.kychan.core.design.theme
+package com.kychan.mlog.core.design.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

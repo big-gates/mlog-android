@@ -8,7 +8,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    namespace = "com.kychan.core.designsystem"
+    namespace = "com.kychan.mlog.core.designsystem"
 }
 
 dependencies {

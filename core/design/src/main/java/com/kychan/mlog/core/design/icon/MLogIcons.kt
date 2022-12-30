@@ -1,4 +1,4 @@
-package com.kychan.core.design.icon
+package com.kychan.mlog.core.design.icon
 
 import com.kychan.core.designsystem.R
 

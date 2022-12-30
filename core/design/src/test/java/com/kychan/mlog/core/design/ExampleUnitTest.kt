@@ -1,4 +1,4 @@
-package com.kychan.core.design
+package com.kychan.mlog.core.design
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.kychan.core.design.theme
+package com.kychan.mlog.core.design.theme
 
 import androidx.compose.ui.graphics.Color
 
