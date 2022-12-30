@@ -1,7 +1,7 @@
 package com.kychan.mlog.core.dataSourceRemote.http.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.kychan.core.dataSourceRemote.http.BuildConfig
+import com.kychan.mlog.core.dataSourceRemote.http.BuildConfig
 import com.kychan.mlog.core.dataSourceRemote.http.api.RetrofitTMDBApi
 import dagger.Module
 import dagger.Provides

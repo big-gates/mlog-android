@@ -1,6 +1,6 @@
 package com.kychan.mlog.core.design.icon
 
-import com.kychan.core.designsystem.R
+import com.kychan.mlog.core.designsystem.R
 
 object MLogIcons {
     val Search = R.drawable.ic_search
