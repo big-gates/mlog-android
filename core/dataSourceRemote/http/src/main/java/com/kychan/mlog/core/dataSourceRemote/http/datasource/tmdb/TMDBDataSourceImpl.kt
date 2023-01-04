@@ -2,8 +2,7 @@ package com.kychan.mlog.core.dataSourceRemote.http.datasource.tmdb
 
 import com.kychan.mlog.core.dataSourceRemote.http.api.RetrofitTMDBApi
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
-import com.kychan.mlog.core.dataSourceRemote.http.model.TvSeriesDetailRes
-import com.kychan.mlog.core.dataSourceRemote.http.model.TvSeriesRes
+import com.kychan.mlog.core.dataSourceRemote.http.model.MoviePopularRes
 import com.kychan.mlog.core.model.Language
 import com.kychan.mlog.core.model.WatchProviders
 import com.kychan.mlog.core.model.WatchRegion
@@ -21,12 +20,12 @@ class TMDBDataSourceImpl @Inject constructor(
         return tmdbApi.getMoviePopularWithProvider(page, language, watchRegion, withWatchProviders)
     }
 
-    override suspend fun getTvSeriesPopular(page: Int, language: String): TvSeriesRes {
-        return tmdbApi.getTvSeriesPopular(page, language)
-    }
-
-    override suspend fun getTvSeriesDetail(tvSeriesId: Int, language: String): TvSeriesDetailRes {
-        return tmdbApi.getTvSeriesDetail(tvSeriesId, language)
+    override suspend fun getMoviePopular(
+        page: Int,
+        language: Language,
+        watchRegion: WatchRegion
+    ): MoviePopularRes {
+        return tmdbApi.getMoviePopular(page, language, watchRegion)
     }
 
 }

@@ -1,6 +1,7 @@
 package com.kychan.mlog.core.dataSourceRemote.http.datasource.tmdb
 
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
+import com.kychan.mlog.core.dataSourceRemote.http.model.MoviePopularRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.TvSeriesDetailRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.TvSeriesRes
 import com.kychan.mlog.core.model.Language
@@ -16,13 +17,9 @@ interface TMDBDataSource {
         withWatchProviders: WatchProviders
     ): MovieDiscoverRes
 
-    suspend fun getTvSeriesPopular(
+    suspend fun getMoviePopular(
         page: Int,
-        language: String
-    ): TvSeriesRes
-
-    suspend fun getTvSeriesDetail(
-        tvSeriesId: Int,
-        language: String
-    ): TvSeriesDetailRes
+        language: Language,
+        watchRegion: WatchRegion,
+    ): MoviePopularRes
 }
