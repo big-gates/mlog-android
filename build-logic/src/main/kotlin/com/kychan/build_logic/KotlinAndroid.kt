@@ -26,8 +26,9 @@ fun Project.configureKotlinAndroid(
 
         defaultConfig {
             minSdk = libs.findVersion("minSdk").get().toString().toInt()
-            buildConfigField("String", "THE_MOVIE_DB_API_KEY", getLocalProperty("the_movie_db_api_key").toString())
-            buildConfigField("String", "THE_MOVIE_DB_API_URL", getLocalProperty("the_movie_db_api_url").toString())
+            buildConfigField("String", "THE_MOVIE_DB_API_KEY", getLocalProperty("the_movie_db_api_key"))
+            buildConfigField("String", "THE_MOVIE_DB_API_URL", getLocalProperty("the_movie_db_api_url"))
+            buildConfigField("String", "THE_MOVIE_DB_IMAGE_URL", getLocalProperty("the_movie_db_image_url"))
         }
 
         compileOptions {
