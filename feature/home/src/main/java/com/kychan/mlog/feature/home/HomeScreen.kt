@@ -2,15 +2,7 @@ package com.kychan.mlog.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -18,26 +10,32 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.rememberImagePainter
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.core.design.theme.MovieRankBg
 import com.kychan.mlog.core.design.theme.MovieRating
 import com.kychan.mlog.feature.home.model.MovieCategory
 import com.kychan.mlog.feature.home.model.MovieItem
 
-val dummyMovieData = listOf<MovieItem>(
+val dummyMovieData = listOf(
     MovieItem(
         "https://image.tmdb.org/t/p/original/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
         "1",
@@ -77,13 +75,12 @@ val dummyMovieData = listOf<MovieItem>(
 )
 
 val dummyMovieRankingsByCategory = listOf(
-    MovieCategory("박스오피스 순위", dummyMovieData),
-    MovieCategory("왓챠 영화 순위", dummyMovieData),
-    MovieCategory("넷플릭스 영화 순위", dummyMovieData),
+    MovieCategory("Mlog 추천 Pick", dummyMovieData),
+    MovieCategory("Mlog가 추천하는 Netfilx", dummyMovieData),
+    MovieCategory("Mlog가 추천하는 Watcha", dummyMovieData),
 )
 
 @Composable
-@Preview
 fun HomeAppBar() {
     TopAppBar(
         backgroundColor = Color.White
@@ -109,18 +106,29 @@ fun HomeAppBar() {
     }
 }
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-@Preview
-fun HomeScreen(
+fun HomeRoute(
+    modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    viewModel.init()
+    val movieRankingsByCategory by viewModel.movieRankingsByCategory.collectAsStateWithLifecycle()
+
+    HomeScreen(
+        movieRankingsByCategory = movieRankingsByCategory
+    )
+}
+
+@Composable
+fun HomeScreen(
+    movieRankingsByCategory: List<MovieCategory> = listOf()
+) {
     Column {
         HomeAppBar()
         LazyColumn(
-            contentPadding = PaddingValues(vertical = 5.dp)
+            contentPadding = PaddingValues(vertical = 5.dp),
         ) {
-            items(dummyMovieRankingsByCategory) { category ->
+            items(movieRankingsByCategory) { category ->
                 MovieRankingsByCategory(category)
             }
         }
@@ -128,19 +136,20 @@ fun HomeScreen(
 }
 
 @Composable
-@Preview
 fun MovieRankingsByCategory(
-    category: MovieCategory = dummyMovieRankingsByCategory[0]
+    category: MovieCategory
 ) {
     Column(
         modifier = Modifier
             .padding(vertical = 10.dp)
+            .heightIn(min = 280.dp)
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
+                .height(50.dp)
                 .padding(horizontal = 16.dp)
         ) {
             Text(
@@ -158,6 +167,7 @@ fun MovieRankingsByCategory(
                     .height(12.dp)
             )
         }
+
         LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
         ) {
@@ -174,16 +184,15 @@ fun Movie(
 ) {
     Column(
         modifier = Modifier
-            .width(100.dp)
+            .width(110.dp)
             .padding(end = 7.dp)
     ) {
         Box {
             Image(
-                painter = rememberImagePainter(
-                    data = movie.image,
-                    builder = {
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current).data(data = movie.image).apply(block = fun ImageRequest.Builder.() {
                         crossfade(true)
-                    }
+                    }).build()
                 ),
                 contentDescription = "movie poster",
                 contentScale = ContentScale.Crop,
@@ -203,8 +212,9 @@ fun Movie(
             text = movie.title,
             fontSize = 15.sp,
             modifier = Modifier.padding(top = 5.dp),
-            lineHeight = 17.sp
-
+            lineHeight = 17.sp,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis
         )
 
         MovieRating(
@@ -215,10 +225,9 @@ fun Movie(
 }
 
 @Composable
-@Preview
 fun MovieRankBox(
-    rank: String = "1",
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    rank: String
 ) {
     Row(
         modifier = modifier
@@ -232,7 +241,7 @@ fun MovieRankBox(
         horizontalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "$rank",
+            text = rank,
             fontSize = 10.sp,
             color = Color.White,
         )
@@ -240,10 +249,9 @@ fun MovieRankBox(
 }
 
 @Composable
-@Preview
 fun MovieRating(
-    rating: Float = 10f,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    rating: Float
 ) {
     Row(modifier = modifier) {
         Text(
@@ -252,4 +260,42 @@ fun MovieRating(
             fontSize = 13.sp
         )
     }
+}
+
+@Composable
+@Preview
+fun HomeScreenPreview(){
+    HomeScreen(
+        movieRankingsByCategory = dummyMovieRankingsByCategory
+    )
+}
+
+@Composable
+@Preview
+fun MovieRankingByCategoryPreview(){
+    MovieRankingsByCategory(category = dummyMovieRankingsByCategory[0])
+}
+
+@Composable
+@Preview
+fun MoviePreview(){
+    Movie(movie = dummyMovieData[0])
+}
+
+@Composable
+@Preview
+fun MovieRankBoxPreview(){
+    MovieRankBox(rank = "1")
+}
+
+@Composable
+@Preview
+fun MovieRatingPreview(){
+    MovieRating(rating = 10f)
+}
+
+@Composable
+@Preview
+fun HomeAppBarPreview(){
+    HomeAppBar()
 }
