@@ -1,18 +1,21 @@
 package com.kychan.mlog.core.data.repository
 
 import com.kychan.mlog.core.model.*
+import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
-    suspend fun getMoviePopular(
+    fun getPopularMoviesWithCategory(watchProviders: WatchProviders): Flow<List<Movie>>
+
+    suspend fun updateMoviePopular(
         page: Int,
         language: Language,
         watchRegion: WatchRegion
-    ): List<Movie>
+    )
 
-    suspend fun getMoviePopularWithProvider(
+    suspend fun updateMoviePopularWithProvider(
         page: Int,
         language: Language,
         watchRegion: WatchRegion,
         withWatchProviders: WatchProviders
-    ): List<Movie>
+    )
 }

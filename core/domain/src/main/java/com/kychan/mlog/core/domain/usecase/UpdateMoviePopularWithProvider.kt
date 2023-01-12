@@ -5,20 +5,19 @@ import com.kychan.mlog.core.common.network.Dispatchers
 import com.kychan.mlog.core.data.repository.HomeRepository
 import com.kychan.mlog.core.domain.UseCase
 import com.kychan.mlog.core.model.Language
-import com.kychan.mlog.core.model.Movie
 import com.kychan.mlog.core.model.WatchProviders
 import com.kychan.mlog.core.model.WatchRegion
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-data class GetMoviePopularWithProvider @Inject constructor(
+data class UpdateMoviePopularWithProvider @Inject constructor(
     private val homeRepository: HomeRepository,
     @Dispatcher(Dispatchers.IO) private val ioDispatcher: CoroutineDispatcher
-): UseCase<GetMoviePopularWithProvider.Params, List<Movie>>() {
+): UseCase<UpdateMoviePopularWithProvider.Params, Unit>() {
 
-    override suspend fun doWork(params: Params): List<Movie> = withContext(ioDispatcher) {
-        homeRepository.getMoviePopularWithProvider(
+    override suspend fun doWork(params: Params): Unit = withContext(ioDispatcher) {
+        homeRepository.updateMoviePopularWithProvider(
             page = params.page,
             language = params.language,
             watchRegion =  params.watchRegion,

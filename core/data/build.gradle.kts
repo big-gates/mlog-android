@@ -11,6 +11,7 @@ android {
 dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:model"))
+    implementation(project(":core:dataSourceLocal:room"))
     implementation(project(":core:dataSourceRemote:http"))
 
     testImplementation(project(":core:testing"))

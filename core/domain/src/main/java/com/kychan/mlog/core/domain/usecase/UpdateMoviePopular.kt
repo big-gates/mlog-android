@@ -9,13 +9,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class GetMoviePopular @Inject constructor(
+class UpdateMoviePopular @Inject constructor(
     private val homeRepository: HomeRepository,
     @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher
-): UseCase<GetMoviePopular.Params, List<Movie>>() {
+): UseCase<UpdateMoviePopular.Params, Unit>() {
 
-    override suspend fun doWork(params: Params): List<Movie> = withContext(ioDispatcher){
-        homeRepository.getMoviePopular(params.page, params.language, params.watchRegion)
+    override suspend fun doWork(params: Params): Unit = withContext(ioDispatcher){
+        homeRepository.updateMoviePopular(params.page, params.language, params.watchRegion)
     }
 
     data class Params(

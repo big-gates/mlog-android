@@ -6,7 +6,9 @@ import com.kychan.mlog.core.model.WatchProviders
 class WatchProvidersConverters {
 
     @TypeConverter
-    fun toWatchProvider(value: String): WatchProviders = enumValueOf(value)
+    fun toWatchProvider(value: String): WatchProviders = WatchProviders.values().first { type ->
+        type.id == value
+    }
 
     @TypeConverter
     fun fromWatchProvider(value: WatchProviders): String = value.id

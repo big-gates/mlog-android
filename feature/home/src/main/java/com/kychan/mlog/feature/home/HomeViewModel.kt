@@ -3,8 +3,9 @@ package com.kychan.mlog.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kychan.mlog.core.common.extenstions.roundToTheFirstDecimal
-import com.kychan.mlog.core.domain.usecase.GetMoviePopular
-import com.kychan.mlog.core.domain.usecase.GetMoviePopularWithProvider
+import com.kychan.mlog.core.domain.observe.ObserveMoviePopular
+import com.kychan.mlog.core.domain.usecase.UpdateMoviePopular
+import com.kychan.mlog.core.domain.usecase.UpdateMoviePopularWithProvider
 import com.kychan.mlog.core.model.Language
 import com.kychan.mlog.core.model.WatchProviders
 import com.kychan.mlog.core.model.WatchRegion
@@ -12,40 +13,61 @@ import com.kychan.mlog.feature.home.model.MovieCategory
 import com.kychan.mlog.feature.home.model.MovieItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getMoviePopularWithProvider: GetMoviePopularWithProvider,
-    private val getMoviePopular: GetMoviePopular,
+    private val observeMoviePopular: ObserveMoviePopular,
+    private val updateMoviePopularWithProvider: UpdateMoviePopularWithProvider,
+    private val updateMoviePopular: UpdateMoviePopular,
 ): ViewModel() {
 
+    init {
+        viewModelScope.launch {
+            updateMoviePopular(
+                UpdateMoviePopular.Params(
+                    page = 1,
+                    language = Language.KR,
+                    watchRegion = WatchRegion.KR,
+                )
+            ).collect{
+
+            }
+        }
+        viewModelScope.launch {
+            updateMoviePopularWithProvider(
+                UpdateMoviePopularWithProvider.Params(
+                    page = 1,
+                    language = Language.KR,
+                    watchRegion = WatchRegion.KR,
+                    withWatchProviders = WatchProviders.Netflix
+                )
+            ).collect{
+
+            }
+        }
+        viewModelScope.launch {
+            updateMoviePopularWithProvider(
+                UpdateMoviePopularWithProvider.Params(
+                    page = 1,
+                    language = Language.KR,
+                    watchRegion = WatchRegion.KR,
+                    withWatchProviders = WatchProviders.Watcha
+                )
+            ).collect{
+
+            }
+        }
+    }
+
     val movieRankingsByCategory = combine(
-        getMoviePopular(
-          GetMoviePopular.Params(
-              page = 1,
-              language = Language.KR,
-              watchRegion = WatchRegion.KR,
-          )
-        ),
-        getMoviePopularWithProvider(
-            GetMoviePopularWithProvider.Params(
-                page = 1,
-                language = Language.KR,
-                watchRegion = WatchRegion.KR,
-                withWatchProviders = WatchProviders.Netflix
-            )
-        ),
-        getMoviePopularWithProvider(
-            GetMoviePopularWithProvider.Params(
-                page = 1,
-                language = Language.KR,
-                watchRegion = WatchRegion.KR,
-                withWatchProviders = WatchProviders.Watcha
-            )
-        )
+        observeMoviePopular(ObserveMoviePopular.Params(WatchProviders.None)),
+        observeMoviePopular(ObserveMoviePopular.Params(WatchProviders.Netflix)),
+        observeMoviePopular(ObserveMoviePopular.Params(WatchProviders.Watcha)),
     ){ popular, netflix, watcha ->
         listOf(
             MovieCategory(

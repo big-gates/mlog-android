@@ -12,10 +12,8 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.MovieEntity
     entities = [
         MovieEntity::class
     ],
-    version = 3,
-    autoMigrations = [
-        AutoMigration(from = 2, to = 3, spec = DatabaseMigrations.Schema2to3::class)
-    ],
+    version = 1,
+    autoMigrations = [],
     exportSchema = true,
 )
 @TypeConverters(
