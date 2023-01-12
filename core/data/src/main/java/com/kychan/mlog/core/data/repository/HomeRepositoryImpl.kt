@@ -2,20 +2,21 @@ package com.kychan.mlog.core.data.repository
 
 import com.kychan.mlog.core.data.mapper.toEntity
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
+import com.kychan.mlog.core.dataSourceLocal.room.datasource.LocalDataSource
 import com.kychan.mlog.core.dataSourceLocal.room.model.MovieEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.toDomain
-import com.kychan.mlog.core.dataSourceRemote.http.datasource.tmdb.TMDBDataSource
+import com.kychan.mlog.core.dataSourceRemote.http.datasource.RemoteDataSource
 import com.kychan.mlog.core.model.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(
-    private val tmdbDataSource: TMDBDataSource,
-    private val movieDao: MovieDao,
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource
 ): HomeRepository {
     override fun getPopularMoviesWithCategory(watchProviders: WatchProviders): Flow<List<Movie>> {
-        return movieDao.getPopularMoviesWithCategory(watchProviders).map { it.map(MovieEntity::toDomain) }
+        return localDataSource.getPopularMoviesWithCategory(watchProviders).map { it.map(MovieEntity::toDomain) }
     }
 
     override suspend fun updateMoviePopular(
@@ -23,7 +24,7 @@ class HomeRepositoryImpl @Inject constructor(
         language: Language,
         watchRegion: WatchRegion
     ) {
-        movieDao.upsertMovies(tmdbDataSource.getMoviePopular(
+        localDataSource.upsertMovies(remoteDataSource.getMoviePopular(
             page,
             language,
             watchRegion
@@ -36,7 +37,7 @@ class HomeRepositoryImpl @Inject constructor(
         watchRegion: WatchRegion,
         withWatchProviders: WatchProviders
     ) {
-        movieDao.upsertMovies(tmdbDataSource.getMoviePopularWithProvider(
+        localDataSource.upsertMovies(remoteDataSource.getMoviePopularWithProvider(
             page,
             language,
             watchRegion,

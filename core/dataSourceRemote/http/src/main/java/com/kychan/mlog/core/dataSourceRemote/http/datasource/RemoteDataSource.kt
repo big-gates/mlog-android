@@ -1,14 +1,12 @@
-package com.kychan.mlog.core.dataSourceRemote.http.datasource.tmdb
+package com.kychan.mlog.core.dataSourceRemote.http.datasource
 
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MoviePopularRes
-import com.kychan.mlog.core.dataSourceRemote.http.model.TvSeriesDetailRes
-import com.kychan.mlog.core.dataSourceRemote.http.model.TvSeriesRes
 import com.kychan.mlog.core.model.Language
 import com.kychan.mlog.core.model.WatchProviders
 import com.kychan.mlog.core.model.WatchRegion
 
-interface TMDBDataSource {
+interface RemoteDataSource {
 
     suspend fun getMoviePopularWithProvider(
         page: Int,
