@@ -10,6 +10,7 @@ android {
 
 dependencies {
     implementation(project(":core:common"))
+    implementation(project(":core:model"))
     testImplementation(project(":core:testing"))
 
     implementation(libs.retrofit)

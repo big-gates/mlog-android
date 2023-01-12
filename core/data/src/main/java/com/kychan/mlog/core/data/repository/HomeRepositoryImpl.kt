@@ -1,27 +1,47 @@
 package com.kychan.mlog.core.data.repository
 
-import com.kychan.mlog.core.data.mapper.TvSeriesMapper
-import com.kychan.mlog.core.dataSourceRemote.http.datasource.tmdb.TMDBDataSource
-import com.kychan.mlog.core.model.TvSeriesEntity
-import org.mapstruct.factory.Mappers
+import com.kychan.mlog.core.data.mapper.toEntity
+import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
+import com.kychan.mlog.core.dataSourceLocal.room.datasource.LocalDataSource
+import com.kychan.mlog.core.dataSourceLocal.room.model.MovieEntity
+import com.kychan.mlog.core.dataSourceLocal.room.model.toDomain
+import com.kychan.mlog.core.dataSourceRemote.http.datasource.RemoteDataSource
+import com.kychan.mlog.core.model.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(
-    private val tmdbDataSource: TMDBDataSource
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource
 ): HomeRepository {
-
-    private val tvSeriesMapper: TvSeriesMapper by lazy {
-        Mappers.getMapper(TvSeriesMapper::class.java)
-    }
-    override fun getBoxOfficeRanking() {
-
+    override fun getPopularMoviesWithCategory(watchProviders: WatchProviders): Flow<List<Movie>> {
+        return localDataSource.getPopularMoviesWithCategory(watchProviders).map { it.map(MovieEntity::toDomain) }
     }
 
-    override suspend fun getWatchaRanking(page: Int, language: String): List<TvSeriesEntity> {
-        return tvSeriesMapper.toEntity(tmdbDataSource.getTvSeriesPopular(page, language).results)
+    override suspend fun updateMoviePopular(
+        page: Int,
+        language: Language,
+        watchRegion: WatchRegion
+    ) {
+        localDataSource.upsertMovies(remoteDataSource.getMoviePopular(
+            page,
+            language,
+            watchRegion
+        ).toEntity(page = page, watchProviders = WatchProviders.None))
     }
 
-    override fun getNeflixRanking() {
-        TODO("Not yet implemented")
+    override suspend fun updateMoviePopularWithProvider(
+        page: Int,
+        language: Language,
+        watchRegion: WatchRegion,
+        withWatchProviders: WatchProviders
+    ) {
+        localDataSource.upsertMovies(remoteDataSource.getMoviePopularWithProvider(
+            page,
+            language,
+            watchRegion,
+            withWatchProviders
+        ).toEntity(page = page, watchProviders = withWatchProviders))
     }
 }
