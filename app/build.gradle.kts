@@ -37,6 +37,7 @@ android {
 
 dependencies {
     implementation(project(":feature:home"))
+    implementation(project(":feature:mypage"))
     implementation(project(":core:common"))
     implementation(project(":core:design"))
     implementation(project(":core:domain"))
@@ -90,6 +91,11 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewModel.compose)
 
     implementation(libs.coil.kt.compose)
+
+    //Navigation
+    androidTestImplementation(libs.androidx.navigation.testing)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.navigation.compose)
 
     //loging
     implementation(libs.logger)
