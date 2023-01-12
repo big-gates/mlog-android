@@ -15,7 +15,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun providesNiaDatabase(
+    fun providesMlogDatabase(
         @ApplicationContext context: Context,
     ): MlogDatabase = Room.databaseBuilder(
         context,
