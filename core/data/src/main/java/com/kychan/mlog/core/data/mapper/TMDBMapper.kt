@@ -38,7 +38,7 @@ fun MoviePopularRes.toDomain(): List<Movie> = this.results.map {
     Movie(
         id = it.id,
         adult = it.adult,
-        backdropPath = it.backdropPath?: "",
+        backdropPath = it.backdropPath ?: "",
         originalTitle = it.originalTitle,
         posterPath = it.posterPath,
         title = it.title,
