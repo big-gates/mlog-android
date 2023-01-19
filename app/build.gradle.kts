@@ -96,6 +96,7 @@ dependencies {
     androidTestImplementation(libs.androidx.navigation.testing)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.accompanist.navigation.animation)
 
     //loging
     implementation(libs.logger)
