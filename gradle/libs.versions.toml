@@ -35,6 +35,7 @@ mapstruct = "1.5.1.Final"
 
 androidx-hilt-navigation-compose = "1.0.0"
 androidx-navigation = "2.5.3"
+accompanist = "0.29.0-alpha"
 
 compileSdk = "33"
 minSdk = "24"
@@ -121,6 +122,8 @@ androidx-lifecycle-viewModel-compose = { group = "androidx.lifecycle", name = "l
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidx-navigation" }
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "androidx-navigation" }
 
+accompanist-pager-layout = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist" }
+accompanist-pager-indicators = { group = "com.google.accompanist", name = "accompanist-pager-indicators", version.ref = "accompanist" }
 coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil"}
 
 logger = { module = "com.orhanobut:logger", version.ref = "logger" }
