@@ -7,3 +7,7 @@ enum class WatchProviders(val id: String) {
     @SerialName("97") Watcha("97"),
     @SerialName("-1") None("-1")
 }
+
+fun String.toWatchProvider(): WatchProviders = WatchProviders.values().first { type ->
+    type.id == this
+}

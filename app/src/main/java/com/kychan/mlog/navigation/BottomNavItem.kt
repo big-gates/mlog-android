@@ -1,7 +1,7 @@
 package com.kychan.mlog.navigation
 
 import com.kychan.mlog.R
-import com.kychan.mlog.feature.home.navigation.homeRoute
+import com.kychan.mlog.feature.home.navigation.homeGraph
 import com.kychan.mlog.feature.mypage.navigation.myPageRoute
 
 sealed class BottomNavItem(
@@ -9,6 +9,6 @@ sealed class BottomNavItem(
     val icon: Int,
     val screenRoute: String
 ) {
-    object Home : BottomNavItem("홈", R.drawable.ic_home, homeRoute)
+    object Home : BottomNavItem("홈", R.drawable.ic_home, homeGraph)
     object MyPage : BottomNavItem("보관함", R.drawable.ic_person, myPageRoute)
 }
