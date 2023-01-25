@@ -74,34 +74,37 @@ class HomeViewModel @Inject constructor(
                 title = MLOG_RECOMMENDATION,
                 movieItems = popular.mapIndexed { index, movie ->
                     MovieItem(
-                        image = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w154/${movie.posterPath}",
+                        image = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}$POSTER_SIZE/${movie.posterPath}",
                         rank = "${index+1}",
                         rating = movie.voteAverage.roundToTheFirstDecimal().toFloat(),
                         title = movie.title,
                     )
-                }
+                },
+                watchProviders = WatchProviders.None
             ),
             MovieCategory(
                 title = NETFLIX_RECOMMENDATION,
                 movieItems = netflix.mapIndexed { index, movie ->
                     MovieItem(
-                        image = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w154/${movie.posterPath}",
+                        image = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}$POSTER_SIZE/${movie.posterPath}",
                         rank = "${index+1}",
                         rating = movie.voteAverage.roundToTheFirstDecimal().toFloat(),
                         title = movie.title,
                     )
-                }
+                },
+                watchProviders = WatchProviders.Netflix
             ),
             MovieCategory(
                 title = WATCHA_RECOMMENDATION,
                 movieItems = watcha.mapIndexed { index, movie ->
                     MovieItem(
-                        image = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w154/${movie.posterPath}",
+                        image = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}$POSTER_SIZE/${movie.posterPath}",
                         rank = "${index+1}",
                         rating = movie.voteAverage.roundToTheFirstDecimal().toFloat(),
                         title = movie.title,
                     )
-                }
+                },
+                watchProviders = WatchProviders.Watcha
             )
         )
     }.stateIn(
@@ -111,6 +114,7 @@ class HomeViewModel @Inject constructor(
     )
 
     companion object{
+        private const val POSTER_SIZE = "w154"
         private const val MLOG_RECOMMENDATION = "Mlog 추천 Pick"
         private const val NETFLIX_RECOMMENDATION = "Mlog가 추천하는 Netflix"
         private const val WATCHA_RECOMMENDATION = "Mlog가 추천하는 Watcha"

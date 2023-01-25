@@ -2,6 +2,7 @@ package com.kychan.mlog.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -31,6 +32,7 @@ import coil.request.ImageRequest
 import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.core.design.theme.MovieRankBg
 import com.kychan.mlog.core.design.theme.MovieRating
+import com.kychan.mlog.core.model.WatchProviders
 import com.kychan.mlog.feature.home.model.MovieCategory
 import com.kychan.mlog.feature.home.model.MovieItem
 
@@ -74,9 +76,9 @@ val dummyMovieData = listOf(
 )
 
 val dummyMovieRankingsByCategory = listOf(
-    MovieCategory("Mlog 추천 Pick", dummyMovieData),
-    MovieCategory("Mlog가 추천하는 Netfilx", dummyMovieData),
-    MovieCategory("Mlog가 추천하는 Watcha", dummyMovieData),
+    MovieCategory("Mlog 추천 Pick", dummyMovieData, WatchProviders.None),
+    MovieCategory("Mlog가 추천하는 Netfilx", dummyMovieData, WatchProviders.Netflix),
+    MovieCategory("Mlog가 추천하는 Watcha", dummyMovieData, WatchProviders.Watcha),
 )
 
 @Composable
@@ -108,18 +110,21 @@ fun HomeAppBar() {
 @Composable
 fun HomeRoute(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    navigateToHomeDetail: (watchProviders: WatchProviders) -> Unit
 ) {
     val movieRankingsByCategory by viewModel.movieRankingsByCategory.collectAsStateWithLifecycle()
 
     HomeScreen(
-        movieRankingsByCategory = movieRankingsByCategory
+        movieRankingsByCategory = movieRankingsByCategory,
+        navigateToHomeDetail = navigateToHomeDetail
     )
 }
 
 @Composable
 fun HomeScreen(
-    movieRankingsByCategory: List<MovieCategory> = listOf()
+    movieRankingsByCategory: List<MovieCategory> = listOf(),
+    navigateToHomeDetail: (watchProviders: WatchProviders) -> Unit = { }
 ) {
     Column {
         HomeAppBar()
@@ -127,7 +132,7 @@ fun HomeScreen(
             contentPadding = PaddingValues(vertical = 5.dp),
         ) {
             items(movieRankingsByCategory) { category ->
-                MovieRankingsByCategory(category)
+                MovieRankingsByCategory(category, navigateToHomeDetail)
             }
         }
     }
@@ -135,36 +140,16 @@ fun HomeScreen(
 
 @Composable
 fun MovieRankingsByCategory(
-    category: MovieCategory
+    category: MovieCategory,
+    navigateToHomeDetail: (watchProviders: WatchProviders) -> Unit
 ) {
     Column(
         modifier = Modifier
             .padding(vertical = 10.dp)
             .heightIn(min = 280.dp)
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .padding(horizontal = 16.dp)
-        ) {
-            Text(
-                text = category.title,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
 
-            Image(
-                painter = painterResource(id = MLogIcons.RightArrow),
-                contentDescription = "",
-                contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .width(12.dp)
-                    .height(12.dp)
-            )
-        }
+        CategoryTitle(category, navigateToHomeDetail)
 
         LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
@@ -173,6 +158,37 @@ fun MovieRankingsByCategory(
                 Movie(movie = movie)
             }
         }
+    }
+}
+
+@Composable
+fun CategoryTitle(
+    category: MovieCategory,
+    navigateToHomeDetail: (watchProviders: WatchProviders) -> Unit
+){
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp)
+            .padding(horizontal = 16.dp)
+            .clickable { navigateToHomeDetail(category.watchProviders) }
+    ) {
+        Text(
+            text = category.title,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Image(
+            painter = painterResource(id = MLogIcons.RightArrow),
+            contentDescription = "",
+            contentScale = ContentScale.Fit,
+            modifier = Modifier
+                .width(12.dp)
+                .height(12.dp)
+        )
     }
 }
 
@@ -264,14 +280,15 @@ fun MovieRating(
 @Preview
 fun HomeScreenPreview(){
     HomeScreen(
-        movieRankingsByCategory = dummyMovieRankingsByCategory
+        movieRankingsByCategory = dummyMovieRankingsByCategory,
+        navigateToHomeDetail = {}
     )
 }
 
 @Composable
 @Preview
 fun MovieRankingByCategoryPreview(){
-    MovieRankingsByCategory(category = dummyMovieRankingsByCategory[0])
+    MovieRankingsByCategory(category = dummyMovieRankingsByCategory[0], navigateToHomeDetail = {})
 }
 
 @Composable
