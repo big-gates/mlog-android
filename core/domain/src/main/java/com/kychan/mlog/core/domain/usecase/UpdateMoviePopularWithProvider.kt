@@ -5,7 +5,7 @@ import com.kychan.mlog.core.common.network.Dispatchers
 import com.kychan.mlog.core.data.repository.HomeRepository
 import com.kychan.mlog.core.domain.UseCase
 import com.kychan.mlog.core.model.Language
-import com.kychan.mlog.core.model.WatchProviders
+import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.core.model.WatchRegion
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -21,7 +21,7 @@ data class UpdateMoviePopularWithProvider @Inject constructor(
             page = params.page,
             language = params.language,
             watchRegion =  params.watchRegion,
-            withWatchProviders = params.withWatchProviders
+            withWatchProvider = params.withWatchProvider
         )
     }
 
@@ -29,6 +29,6 @@ data class UpdateMoviePopularWithProvider @Inject constructor(
         val page: Int,
         val language: Language,
         val watchRegion: WatchRegion,
-        val withWatchProviders: WatchProviders
+        val withWatchProvider: WatchProvider
     )
 }

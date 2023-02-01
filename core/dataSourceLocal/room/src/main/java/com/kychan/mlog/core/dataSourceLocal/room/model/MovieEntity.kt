@@ -1,22 +1,25 @@
 package com.kychan.mlog.core.dataSourceLocal.room.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.kychan.mlog.core.model.Movie
-import com.kychan.mlog.core.model.WatchProviders
+import com.kychan.mlog.core.model.WatchProvider
 
 @Entity(
     tableName = "movie",
-    primaryKeys = ["id","watchProviders"]
+    indices = [Index(value = ["id","watch_provider"], unique = true)]
 )
 data class MovieEntity(
-    val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int,
     val adult: Boolean,
-    val backdropPath: String,
-    val originalTitle: String,
-    val posterPath: String,
+    @ColumnInfo("backdrop_path") val backdropPath: String,
+    @ColumnInfo("original_title") val originalTitle: String,
+    @ColumnInfo("poster_path") val posterPath: String,
     val title: String,
-    val voteAverage: Double,
-    val watchProviders: WatchProviders,
+    @ColumnInfo("vote_average") val voteAverage: Double,
+    @ColumnInfo("watch_provider") val watchProvider: WatchProvider,
     val rank: Int,
 )
 

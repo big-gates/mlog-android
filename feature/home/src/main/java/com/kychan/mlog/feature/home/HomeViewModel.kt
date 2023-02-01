@@ -7,13 +7,12 @@ import com.kychan.mlog.core.domain.observe.ObserveMoviePopular
 import com.kychan.mlog.core.domain.usecase.UpdateMoviePopular
 import com.kychan.mlog.core.domain.usecase.UpdateMoviePopularWithProvider
 import com.kychan.mlog.core.model.Language
-import com.kychan.mlog.core.model.WatchProviders
+import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.core.model.WatchRegion
 import com.kychan.mlog.feature.home.model.MovieCategory
 import com.kychan.mlog.feature.home.model.MovieItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -44,7 +43,7 @@ class HomeViewModel @Inject constructor(
                     page = 1,
                     language = Language.KR,
                     watchRegion = WatchRegion.KR,
-                    withWatchProviders = WatchProviders.Netflix
+                    withWatchProvider = WatchProvider.Netflix
                 )
             ).collect{
 
@@ -56,7 +55,7 @@ class HomeViewModel @Inject constructor(
                     page = 1,
                     language = Language.KR,
                     watchRegion = WatchRegion.KR,
-                    withWatchProviders = WatchProviders.Watcha
+                    withWatchProvider = WatchProvider.Watcha
                 )
             ).collect{
 
@@ -65,9 +64,9 @@ class HomeViewModel @Inject constructor(
     }
 
     val movieRankingsByCategory = combine(
-        observeMoviePopular(ObserveMoviePopular.Params(WatchProviders.None)),
-        observeMoviePopular(ObserveMoviePopular.Params(WatchProviders.Netflix)),
-        observeMoviePopular(ObserveMoviePopular.Params(WatchProviders.Watcha)),
+        observeMoviePopular(ObserveMoviePopular.Params(WatchProvider.None)),
+        observeMoviePopular(ObserveMoviePopular.Params(WatchProvider.Netflix)),
+        observeMoviePopular(ObserveMoviePopular.Params(WatchProvider.Watcha)),
     ){ popular, netflix, watcha ->
         listOf(
             MovieCategory(
@@ -80,7 +79,7 @@ class HomeViewModel @Inject constructor(
                         title = movie.title,
                     )
                 },
-                watchProviders = WatchProviders.None
+                watchProvider = WatchProvider.None
             ),
             MovieCategory(
                 title = NETFLIX_RECOMMENDATION,
@@ -92,7 +91,7 @@ class HomeViewModel @Inject constructor(
                         title = movie.title,
                     )
                 },
-                watchProviders = WatchProviders.Netflix
+                watchProvider = WatchProvider.Netflix
             ),
             MovieCategory(
                 title = WATCHA_RECOMMENDATION,
@@ -104,7 +103,7 @@ class HomeViewModel @Inject constructor(
                         title = movie.title,
                     )
                 },
-                watchProviders = WatchProviders.Watcha
+                watchProvider = WatchProvider.Watcha
             )
         )
     }.stateIn(

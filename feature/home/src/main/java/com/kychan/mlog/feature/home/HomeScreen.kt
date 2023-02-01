@@ -32,7 +32,7 @@ import coil.request.ImageRequest
 import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.core.design.theme.MovieRankBg
 import com.kychan.mlog.core.design.theme.MovieRating
-import com.kychan.mlog.core.model.WatchProviders
+import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.feature.home.model.MovieCategory
 import com.kychan.mlog.feature.home.model.MovieItem
 
@@ -76,9 +76,9 @@ val dummyMovieData = listOf(
 )
 
 val dummyMovieRankingsByCategory = listOf(
-    MovieCategory("Mlog 추천 Pick", dummyMovieData, WatchProviders.None),
-    MovieCategory("Mlog가 추천하는 Netfilx", dummyMovieData, WatchProviders.Netflix),
-    MovieCategory("Mlog가 추천하는 Watcha", dummyMovieData, WatchProviders.Watcha),
+    MovieCategory("Mlog 추천 Pick", dummyMovieData, WatchProvider.None),
+    MovieCategory("Mlog가 추천하는 Netfilx", dummyMovieData, WatchProvider.Netflix),
+    MovieCategory("Mlog가 추천하는 Watcha", dummyMovieData, WatchProvider.Watcha),
 )
 
 @Composable
@@ -111,7 +111,7 @@ fun HomeAppBar() {
 fun HomeRoute(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
-    navigateToHomeDetail: (watchProviders: WatchProviders) -> Unit
+    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit
 ) {
     val movieRankingsByCategory by viewModel.movieRankingsByCategory.collectAsStateWithLifecycle()
 
@@ -124,7 +124,7 @@ fun HomeRoute(
 @Composable
 fun HomeScreen(
     movieRankingsByCategory: List<MovieCategory> = listOf(),
-    navigateToHomeDetail: (watchProviders: WatchProviders) -> Unit = { }
+    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit = { }
 ) {
     Column {
         HomeAppBar()
@@ -141,7 +141,7 @@ fun HomeScreen(
 @Composable
 fun MovieRankingsByCategory(
     category: MovieCategory,
-    navigateToHomeDetail: (watchProviders: WatchProviders) -> Unit
+    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -164,7 +164,7 @@ fun MovieRankingsByCategory(
 @Composable
 fun CategoryTitle(
     category: MovieCategory,
-    navigateToHomeDetail: (watchProviders: WatchProviders) -> Unit
+    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit
 ){
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -173,7 +173,7 @@ fun CategoryTitle(
             .fillMaxWidth()
             .height(50.dp)
             .padding(horizontal = 16.dp)
-            .clickable { navigateToHomeDetail(category.watchProviders) }
+            .clickable { navigateToHomeDetail(category.watchProvider) }
     ) {
         Text(
             text = category.title,
