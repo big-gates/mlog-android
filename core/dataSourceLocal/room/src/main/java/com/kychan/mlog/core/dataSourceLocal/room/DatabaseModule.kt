@@ -2,6 +2,8 @@ package com.kychan.mlog.core.dataSourceLocal.room
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,5 +23,12 @@ object DatabaseModule {
         context,
         MlogDatabase::class.java,
         "movie_database"
-    ).build()
+    ).addCallback(object: RoomDatabase.Callback(){
+        override fun onCreate(db: SupportSQLiteDatabase) {
+            super.onCreate(db)
+            db.execSQL("INSERT INTO watch_provider (id, watch_provider) VALUES (null, '8');")
+            db.execSQL("INSERT INTO watch_provider (id, watch_provider) VALUES (null, '97');")
+            db.execSQL("INSERT INTO watch_provider (id, watch_provider) VALUES (null, '-1');")
+        }
+    }).build()
 }

@@ -11,7 +11,8 @@ import kotlinx.coroutines.flow.Flow
 interface MovieDao {
     @Query(
         value = """
-            SELECT * FROM movie
+            SELECT * FROM movie AS m
+            LEFT JOIN watch_provider AS wp ON m.watch_provider_id = wp.id
             WHERE watch_provider = :watchProvider
             ORDER BY rank ASC
         """

@@ -29,7 +29,11 @@ fun MovieDiscoverRes.toEntity(page:Int, watchProvider: WatchProvider): List<Movi
         posterPath = moviePopular.posterPath,
         title = moviePopular.title,
         voteAverage = moviePopular.voteAverage,
-        watchProvider = watchProvider,
+        watchProviderId = when(watchProvider){
+            WatchProvider.Netflix -> 1
+            WatchProvider.Watcha -> 2
+            WatchProvider.None -> 3
+        },
         rank = ((page * DEFAULT_RESULT_COUNT) - DEFAULT_RESULT_COUNT) + (index + 1)
     )
 }
@@ -55,7 +59,11 @@ fun MoviePopularRes.toEntity(page:Int, watchProvider: WatchProvider): List<Movie
         posterPath = moviePopular.posterPath,
         title = moviePopular.title,
         voteAverage = moviePopular.voteAverage,
-        watchProvider = watchProvider,
+        watchProviderId = when(watchProvider){
+            WatchProvider.Netflix -> 1
+            WatchProvider.Watcha -> 2
+            WatchProvider.None -> 3
+        },
         rank = ((page * DEFAULT_RESULT_COUNT) - DEFAULT_RESULT_COUNT) + (index + 1)
     )
 }
