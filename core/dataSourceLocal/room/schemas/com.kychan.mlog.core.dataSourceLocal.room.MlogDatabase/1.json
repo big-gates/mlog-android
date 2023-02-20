@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "44b9dddebf4a8484f1c3fde618ab3ceb",
+    "identityHash": "79f1bedd772fdac8cbc101b9511609f6",
     "entities": [
       {
-        "tableName": "movie",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `adult` INTEGER NOT NULL, `backdropPath` TEXT NOT NULL, `originalTitle` TEXT NOT NULL, `posterPath` TEXT NOT NULL, `title` TEXT NOT NULL, `voteAverage` REAL NOT NULL, `watchProviders` TEXT NOT NULL, `rank` INTEGER NOT NULL)",
+        "tableName": "mlog_movie",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `adult` INTEGER NOT NULL, `backdrop_path` TEXT NOT NULL, `original_title` TEXT NOT NULL, `poster_path` TEXT NOT NULL, `title` TEXT NOT NULL, `vote_average` REAL NOT NULL, `rank` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -51,12 +51,6 @@
             "notNull": true
           },
           {
-            "fieldPath": "watchProviderId",
-            "columnName": "watch_provider_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
             "fieldPath": "rank",
             "columnName": "rank",
             "affinity": "INTEGER",
@@ -71,70 +65,21 @@
         },
         "indices": [
           {
-            "name": "index_movie_id_watch_provider_id",
+            "name": "index_mlog_movie_id_title",
             "unique": true,
             "columnNames": [
               "id",
-              "watch_provider_id"
+              "title"
             ],
             "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_movie_id_watch_provider_id` ON `${TABLE_NAME}` (`id`, `watch_provider_id`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "watch_provider",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "watch_provider_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
-      },
-      {
-        "tableName": "watch_provider",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `watch_provider` TEXT NOT NULL)",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "watchProvider",
-            "columnName": "watch_provider",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "id"
-          ]
-        },
-        "indices": [
-          {
-            "name": "index_watch_provider_id_watch_provider",
-            "unique": true,
-            "columnNames": [
-              "id",
-              "watch_provider"
-            ],
-            "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_watch_provider_id_watch_provider` ON `${TABLE_NAME}` (`id`, `watch_provider`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_mlog_movie_id_title` ON `${TABLE_NAME}` (`id`, `title`)"
           }
         ],
         "foreignKeys": []
       },
       {
-        "tableName": "my_movie",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `adult` INTEGER NOT NULL, `backdrop_path` TEXT NOT NULL, `original_title` TEXT NOT NULL, `poster_path` TEXT NOT NULL, `title` TEXT NOT NULL, `vote_average` REAL NOT NULL, `watch_providers` TEXT NOT NULL, `rank` INTEGER NOT NULL)",
+        "tableName": "netflix_movie",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `adult` INTEGER NOT NULL, `backdrop_path` TEXT NOT NULL, `original_title` TEXT NOT NULL, `poster_path` TEXT NOT NULL, `title` TEXT NOT NULL, `vote_average` REAL NOT NULL, `rank` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -179,9 +124,76 @@
             "notNull": true
           },
           {
-            "fieldPath": "watchProviders",
-            "columnName": "watch_providers",
+            "fieldPath": "rank",
+            "columnName": "rank",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_netflix_movie_id_title",
+            "unique": true,
+            "columnNames": [
+              "id",
+              "title"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_netflix_movie_id_title` ON `${TABLE_NAME}` (`id`, `title`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "watcha_movie",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `adult` INTEGER NOT NULL, `backdrop_path` TEXT NOT NULL, `original_title` TEXT NOT NULL, `poster_path` TEXT NOT NULL, `title` TEXT NOT NULL, `vote_average` REAL NOT NULL, `rank` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "adult",
+            "columnName": "adult",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "backdropPath",
+            "columnName": "backdrop_path",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "originalTitle",
+            "columnName": "original_title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "posterPath",
+            "columnName": "poster_path",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "voteAverage",
+            "columnName": "vote_average",
+            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -199,21 +211,21 @@
         },
         "indices": [
           {
-            "name": "index_my_movie_id_watch_providers",
+            "name": "index_watcha_movie_id_title",
             "unique": true,
             "columnNames": [
               "id",
-              "watch_providers"
+              "title"
             ],
             "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_my_movie_id_watch_providers` ON `${TABLE_NAME}` (`id`, `watch_providers`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_watcha_movie_id_title` ON `${TABLE_NAME}` (`id`, `title`)"
           }
         ],
         "foreignKeys": []
       },
       {
-        "tableName": "rated",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `my_movie_id` INTEGER NOT NULL, `rated` REAL NOT NULL, `comment` INTEGER NOT NULL, FOREIGN KEY(`my_movie_id`) REFERENCES `movie`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "tableName": "sync_log",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type` TEXT NOT NULL, `next_key` INTEGER NOT NULL, `created_at` TEXT NOT NULL, `updated_at` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -222,124 +234,26 @@
             "notNull": true
           },
           {
-            "fieldPath": "myMovieId",
-            "columnName": "my_movie_id",
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nextKey",
+            "columnName": "next_key",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "rated",
-            "columnName": "rated",
-            "affinity": "REAL",
+            "fieldPath": "createdAt",
+            "columnName": "created_at",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "comment",
-            "columnName": "comment",
-            "affinity": "INTEGER",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "id"
-          ]
-        },
-        "indices": [
-          {
-            "name": "index_rated_id_my_movie_id",
-            "unique": true,
-            "columnNames": [
-              "id",
-              "my_movie_id"
-            ],
-            "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_rated_id_my_movie_id` ON `${TABLE_NAME}` (`id`, `my_movie_id`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "movie",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "my_movie_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
-      },
-      {
-        "tableName": "want_to_watches",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `my_movie_id` INTEGER NOT NULL, FOREIGN KEY(`my_movie_id`) REFERENCES `movie`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "myMovieId",
-            "columnName": "my_movie_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": true,
-          "columnNames": [
-            "id"
-          ]
-        },
-        "indices": [
-          {
-            "name": "index_want_to_watches_id_my_movie_id",
-            "unique": true,
-            "columnNames": [
-              "id",
-              "my_movie_id"
-            ],
-            "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_want_to_watches_id_my_movie_id` ON `${TABLE_NAME}` (`id`, `my_movie_id`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "movie",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "my_movie_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
-      },
-      {
-        "tableName": "tags",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `movie_id` INTEGER NOT NULL, `name` TEXT NOT NULL, FOREIGN KEY(`movie_id`) REFERENCES `movie`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "movieId",
-            "columnName": "movie_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "name",
-            "columnName": "name",
+            "fieldPath": "updatedAt",
+            "columnName": "updated_at",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -352,35 +266,22 @@
         },
         "indices": [
           {
-            "name": "index_tags_id_movie_id",
+            "name": "index_sync_log_type",
             "unique": true,
             "columnNames": [
-              "id",
-              "movie_id"
+              "type"
             ],
             "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_tags_id_movie_id` ON `${TABLE_NAME}` (`id`, `movie_id`)"
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_sync_log_type` ON `${TABLE_NAME}` (`type`)"
           }
         ],
-        "foreignKeys": [
-          {
-            "table": "movie",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "movie_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8f2c655d12d843c36a31b64f2bb965ab')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '79f1bedd772fdac8cbc101b9511609f6')"
     ]
   }
 }
