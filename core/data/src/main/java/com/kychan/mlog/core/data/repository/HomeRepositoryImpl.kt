@@ -1,21 +1,21 @@
 package com.kychan.mlog.core.data.repository
 
 import com.kychan.mlog.core.data.mapper.toEntity
-import com.kychan.mlog.core.dataSourceLocal.room.datasource.LocalDataSource
+import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
 import com.kychan.mlog.core.dataSourceLocal.room.model.MovieEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.toDomain
-import com.kychan.mlog.core.dataSourceRemote.http.datasource.RemoteDataSource
+import com.kychan.mlog.core.dataSourceRemote.http.datasource.TMDBDataSource
 import com.kychan.mlog.core.model.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(
-    private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource
+    private val tmdbDataSource: TMDBDataSource,
+    private val roomDataSource: RoomDataSource
 ): HomeRepository {
     override fun getPopularMoviesWithCategory(watchProvider: WatchProvider): Flow<List<Movie>> {
-        return localDataSource.getPopularMoviesWithCategory(watchProvider).map { it.map(MovieEntity::toDomain) }
+        return roomDataSource.getPopularMoviesWithCategory(watchProvider).map { it.map(MovieEntity::toDomain) }
     }
 
     override suspend fun updateMoviePopular(
@@ -23,7 +23,7 @@ class HomeRepositoryImpl @Inject constructor(
         language: Language,
         watchRegion: WatchRegion
     ) {
-        localDataSource.upsertMovies(remoteDataSource.getMoviePopular(
+        roomDataSource.upsertMovies(tmdbDataSource.getMoviePopular(
             page,
             language,
             watchRegion
@@ -36,7 +36,7 @@ class HomeRepositoryImpl @Inject constructor(
         watchRegion: WatchRegion,
         withWatchProvider: WatchProvider
     ) {
-        localDataSource.upsertMovies(remoteDataSource.getMoviePopularWithProvider(
+        roomDataSource.upsertMovies(tmdbDataSource.getMoviePopularWithProvider(
             page,
             language,
             watchRegion,

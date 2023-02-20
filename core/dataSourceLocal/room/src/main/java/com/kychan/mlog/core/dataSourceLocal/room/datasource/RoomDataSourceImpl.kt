@@ -7,9 +7,9 @@ import com.kychan.mlog.core.model.WatchProvider
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class LocalDataSourceImpl @Inject constructor(
+class RoomDataSourceImpl @Inject constructor(
     private val movieDao: MovieDao,
-): LocalDataSource {
+): RoomDataSource {
     override fun getPopularMoviesWithCategory(watchProvider: WatchProvider): Flow<List<MovieEntity>> {
         return movieDao.getPopularMoviesWithCategory(watchProvider)
     }

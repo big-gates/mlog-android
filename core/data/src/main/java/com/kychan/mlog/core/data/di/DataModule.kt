@@ -1,9 +1,9 @@
 package com.kychan.mlog.core.data.di
 
 import com.kychan.mlog.core.data.repository.HomeRepositoryImpl
-import com.kychan.mlog.core.dataSourceRemote.http.datasource.RemoteDataSource
+import com.kychan.mlog.core.dataSourceRemote.http.datasource.TMDBDataSource
 import com.kychan.mlog.core.data.repository.HomeRepository
-import com.kychan.mlog.core.dataSourceLocal.room.datasource.LocalDataSource
+import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +17,7 @@ object DataModule {
     @Provides
     @Singleton
     fun providesHomeRepository(
-        remoteDataSource: RemoteDataSource,
-        localDataSource: LocalDataSource
-    ): HomeRepository = HomeRepositoryImpl(remoteDataSource, localDataSource)
+        tmdbDataSource: TMDBDataSource,
+        roomDataSource: RoomDataSource
+    ): HomeRepository = HomeRepositoryImpl(tmdbDataSource, roomDataSource)
 }
