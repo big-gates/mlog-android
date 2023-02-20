@@ -6,16 +6,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.kychan.mlog.core.common.extenstions.roundToTheFirstDecimal
-import com.kychan.mlog.core.design.component.DynamicGridComponent.DEFAULT_ROW_DYNAMIC_INDEX
-import com.kychan.mlog.core.design.component.DynamicLazyVerticalGrid
-import com.kychan.mlog.core.model.Movie
-import com.kychan.mlog.feature.home.BuildConfig
+import com.kychan.mlog.core.design.component.DynamicGridComponent.DEFAULT_COL
+import com.kychan.mlog.core.design.component.PagingDynamicLazyVerticalGrid
 import com.kychan.mlog.feature.home.model.MovieItem
 
 @Composable
@@ -23,7 +20,7 @@ fun HomeDetailRoute(
     modifier: Modifier = Modifier,
     viewModel: HomeDetailViewModel = hiltViewModel()
 ){
-    val movies by viewModel.movies.collectAsStateWithLifecycle()
+    val movies = viewModel.movies.collectAsLazyPagingItems()
 
     HomeDetailScreen(
         modifier = modifier,
@@ -34,39 +31,14 @@ fun HomeDetailRoute(
 @Composable
 fun HomeDetailScreen(
     modifier: Modifier = Modifier,
-    movies: List<Movie>,
+    movies: LazyPagingItems<MovieItem>,
 ){
-    val cols = 3
-    var isPrevReverse = false
-    val dynamicGridItem = movies.mapIndexed { index, movie ->
-        val row = index / cols
-        val isRowDynamic = row % DEFAULT_ROW_DYNAMIC_INDEX == 1
-        val movieItem = MovieItem(
-            image = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342/${movie.posterPath}",
-            rank = "${index+1}",
-            rating = movie.voteAverage.roundToTheFirstDecimal().toFloat(),
-            title = movie.title,
-            isRowDynamic = isRowDynamic,
-            isReverse = isPrevReverse
-        )
-        if(isRowDynamic) isPrevReverse = !isPrevReverse
-
-        movieItem
-    }
-
-    DynamicLazyVerticalGrid(
-        cols = cols,
+    PagingDynamicLazyVerticalGrid(
+        cols = DEFAULT_COL,
         height = 150,
-        items = dynamicGridItem,
-        dynamicGridContent = { movie ->
+        items = movies,
+        content = { movie ->
             Movie(
-                movie = movie
-            )
-        },
-        normalGridContent = { movie ->
-            Movie(
-                modifier = Modifier
-                    .heightIn(max = 150.dp),
                 movie = movie
             )
         }
