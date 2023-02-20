@@ -1,13 +1,15 @@
 package com.kychan.mlog.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
+import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.kychan.mlog.feature.home.navigation.homeRoute
 import com.kychan.mlog.feature.home.navigation.homeScreen
 import com.kychan.mlog.feature.mypage.navigation.myPageScreen
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MLogNavHost(
     navController: NavHostController,
@@ -15,11 +17,11 @@ fun MLogNavHost(
     modifier: Modifier = Modifier,
     startDestination: String = homeRoute
 ) {
-    NavHost(
+    AnimatedNavHost(
         navController = navController,
         startDestination = startDestination,
-        modifier = modifier,
-    ) {
+        modifier = modifier
+    ){
         homeScreen()
         myPageScreen()
     }
