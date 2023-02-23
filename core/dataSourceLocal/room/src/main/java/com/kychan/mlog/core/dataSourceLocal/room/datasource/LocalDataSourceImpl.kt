@@ -2,6 +2,7 @@ package com.kychan.mlog.core.dataSourceLocal.room.datasource
 
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
 import com.kychan.mlog.core.dataSourceLocal.room.model.MovieEntity
+import com.kychan.mlog.core.dataSourceLocal.room.model.MyRatedMoviesVO
 import com.kychan.mlog.core.model.WatchProviders
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -15,5 +16,9 @@ class LocalDataSourceImpl @Inject constructor(
 
     override fun upsertMovies(entities: List<MovieEntity>) {
         movieDao.upsertMovies(entities)
+    }
+
+    override fun getMyRatedMovies(): Flow<List<MyRatedMoviesVO>> {
+        return movieDao.getMyRatedMovies()
     }
 }
