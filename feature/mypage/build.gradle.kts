@@ -8,4 +8,6 @@ android {
 }
 
 dependencies {
+    implementation(libs.accompanist.pager.layout)
+    implementation(libs.accompanist.pager.indicators)
 }

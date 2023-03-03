@@ -2,7 +2,6 @@ package com.kychan.mlog.core.dataSourceLocal.room.model
 
 import androidx.room.*
 import com.kychan.mlog.core.model.Movie
-import com.kychan.mlog.core.model.WatchProvider
 
 @Entity(
     tableName = "movie",

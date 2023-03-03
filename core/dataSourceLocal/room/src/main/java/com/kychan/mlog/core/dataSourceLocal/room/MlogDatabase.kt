@@ -1,17 +1,19 @@
 package com.kychan.mlog.core.dataSourceLocal.room
 
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.kychan.mlog.core.dataSourceLocal.room.converter.WatchProvidersConverters
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
-import com.kychan.mlog.core.dataSourceLocal.room.model.MovieEntity
-import com.kychan.mlog.core.dataSourceLocal.room.model.WatchProviderEntity
+import com.kychan.mlog.core.dataSourceLocal.room.model.*
 
 @Database(
     entities = [
         MovieEntity::class,
+        MyMovieEntity::class,
+        RatedEntity::class,
+        WantToWatchesEntity::class,
+        TagsEntity::class,
         WatchProviderEntity::class
     ],
     version = 1,
@@ -21,6 +23,6 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.WatchProviderEntity
 @TypeConverters(
     WatchProvidersConverters::class
 )
-abstract class MlogDatabase: RoomDatabase() {
+abstract class MlogDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
 }
