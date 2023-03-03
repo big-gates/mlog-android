@@ -1,7 +1,6 @@
 package com.kychan.mlog.core.data.repository
 
 import com.kychan.mlog.core.data.mapper.toEntity
-import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
 import com.kychan.mlog.core.dataSourceLocal.room.datasource.LocalDataSource
 import com.kychan.mlog.core.dataSourceLocal.room.model.MovieEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.toDomain
@@ -15,8 +14,8 @@ class HomeRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ): HomeRepository {
-    override fun getPopularMoviesWithCategory(watchProviders: WatchProviders): Flow<List<Movie>> {
-        return localDataSource.getPopularMoviesWithCategory(watchProviders).map { it.map(MovieEntity::toDomain) }
+    override fun getPopularMoviesWithCategory(watchProvider: WatchProvider): Flow<List<Movie>> {
+        return localDataSource.getPopularMoviesWithCategory(watchProvider).map { it.map(MovieEntity::toDomain) }
     }
 
     override suspend fun updateMoviePopular(
@@ -28,20 +27,20 @@ class HomeRepositoryImpl @Inject constructor(
             page,
             language,
             watchRegion
-        ).toEntity(page = page, watchProviders = WatchProviders.None))
+        ).toEntity(page = page, watchProvider = WatchProvider.None))
     }
 
     override suspend fun updateMoviePopularWithProvider(
         page: Int,
         language: Language,
         watchRegion: WatchRegion,
-        withWatchProviders: WatchProviders
+        withWatchProvider: WatchProvider
     ) {
         localDataSource.upsertMovies(remoteDataSource.getMoviePopularWithProvider(
             page,
             language,
             watchRegion,
-            withWatchProviders
-        ).toEntity(page = page, watchProviders = withWatchProviders))
+            withWatchProvider
+        ).toEntity(page = page, watchProvider = withWatchProvider))
     }
 }

@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.kychan.mlog.core.model.WatchProviders
+import com.kychan.mlog.core.model.WatchProvider
 
 @Entity(
     tableName = "my_movie",
@@ -24,6 +24,6 @@ data class MyMovieEntity(
     @ColumnInfo(name = "vote_average")
     val voteAverage: Double,
     @ColumnInfo(name = "watch_providers")
-    val watchProviders: WatchProviders,
+    val watchProviders: WatchProvider,
     val rank: Int,
 )

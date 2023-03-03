@@ -2,7 +2,7 @@ package com.kychan.mlog.core.dataSourceLocal.room.model
 
 import androidx.room.ColumnInfo
 import com.kychan.mlog.core.model.MyRatedMovies
-import com.kychan.mlog.core.model.WatchProviders
+import com.kychan.mlog.core.model.WatchProvider
 
 data class MyRatedMoviesVO(
     @ColumnInfo("my_movie_id") val myMovieId: Int,
@@ -12,7 +12,7 @@ data class MyRatedMoviesVO(
     @ColumnInfo("poster_path") val posterPath: String,
     val title: String,
     @ColumnInfo("vote_average") val voteAverage: Double,
-    @ColumnInfo("watch_providers") val watchProviders: WatchProviders,
+    @ColumnInfo("watch_providers") val watchProviders: WatchProvider,
     val rank: Int,
     val rated: Float,
     val comment: String,

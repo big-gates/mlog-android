@@ -13,7 +13,8 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.*
         MyMovieEntity::class,
         RatedEntity::class,
         WantToWatchesEntity::class,
-        TagsEntity::class
+        TagsEntity::class,
+        WatchProviderEntity::class
     ],
     version = 1,
     autoMigrations = [],

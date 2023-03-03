@@ -4,7 +4,7 @@ import com.kychan.mlog.core.model.*
 import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
-    fun getPopularMoviesWithCategory(watchProviders: WatchProviders): Flow<List<Movie>>
+    fun getPopularMoviesWithCategory(watchProvider: WatchProvider): Flow<List<Movie>>
 
     suspend fun updateMoviePopular(
         page: Int,
@@ -16,6 +16,6 @@ interface HomeRepository {
         page: Int,
         language: Language,
         watchRegion: WatchRegion,
-        withWatchProviders: WatchProviders
+        withWatchProvider: WatchProvider
     )
 }

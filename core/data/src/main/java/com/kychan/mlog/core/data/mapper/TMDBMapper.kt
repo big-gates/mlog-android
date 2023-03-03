@@ -4,7 +4,7 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.MovieEntity
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MoviePopularRes
 import com.kychan.mlog.core.model.Movie
-import com.kychan.mlog.core.model.WatchProviders
+import com.kychan.mlog.core.model.WatchProvider
 
 private const val DEFAULT_RESULT_COUNT = 20
 
@@ -20,7 +20,7 @@ fun MovieDiscoverRes.toDomain(): List<Movie> = this.results.map {
     )
 }
 
-fun MovieDiscoverRes.toEntity(page:Int, watchProviders: WatchProviders): List<MovieEntity> = this.results.mapIndexed { index, moviePopular ->
+fun MovieDiscoverRes.toEntity(page:Int, watchProvider: WatchProvider): List<MovieEntity> = this.results.mapIndexed { index, moviePopular ->
     MovieEntity(
         id = moviePopular.id,
         adult = moviePopular.adult,
@@ -29,7 +29,11 @@ fun MovieDiscoverRes.toEntity(page:Int, watchProviders: WatchProviders): List<Mo
         posterPath = moviePopular.posterPath,
         title = moviePopular.title,
         voteAverage = moviePopular.voteAverage,
-        watchProviders = watchProviders,
+        watchProviderId = when(watchProvider){
+            WatchProvider.Netflix -> 1
+            WatchProvider.Watcha -> 2
+            WatchProvider.None -> 3
+        },
         rank = ((page * DEFAULT_RESULT_COUNT) - DEFAULT_RESULT_COUNT) + (index + 1)
     )
 }
@@ -46,7 +50,7 @@ fun MoviePopularRes.toDomain(): List<Movie> = this.results.map {
     )
 }
 
-fun MoviePopularRes.toEntity(page:Int, watchProviders: WatchProviders): List<MovieEntity> = this.results.mapIndexed { index, moviePopular ->
+fun MoviePopularRes.toEntity(page:Int, watchProvider: WatchProvider): List<MovieEntity> = this.results.mapIndexed { index, moviePopular ->
     MovieEntity(
         id = moviePopular.id,
         adult = moviePopular.adult,
@@ -55,7 +59,11 @@ fun MoviePopularRes.toEntity(page:Int, watchProviders: WatchProviders): List<Mov
         posterPath = moviePopular.posterPath,
         title = moviePopular.title,
         voteAverage = moviePopular.voteAverage,
-        watchProviders = watchProviders,
+        watchProviderId = when(watchProvider){
+            WatchProvider.Netflix -> 1
+            WatchProvider.Watcha -> 2
+            WatchProvider.None -> 3
+        },
         rank = ((page * DEFAULT_RESULT_COUNT) - DEFAULT_RESULT_COUNT) + (index + 1)
     )
 }

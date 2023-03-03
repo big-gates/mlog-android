@@ -1,24 +1,28 @@
 package com.kychan.mlog.core.dataSourceLocal.room.model
 
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import androidx.room.*
 import com.kychan.mlog.core.model.Movie
-import com.kychan.mlog.core.model.WatchProviders
 
 @Entity(
     tableName = "movie",
-    indices = [Index(value = ["id", "watchProviders"], unique = true)],
+    indices = [Index(value = ["id","watch_provider_id"], unique = true)],
+    foreignKeys = [
+        ForeignKey(
+            entity = WatchProviderEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["watch_provider_id"],
+        )
+    ]
 )
 data class MovieEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val adult: Boolean,
-    val backdropPath: String,
-    val originalTitle: String,
-    val posterPath: String,
+    @ColumnInfo("backdrop_path") val backdropPath: String,
+    @ColumnInfo("original_title") val originalTitle: String,
+    @ColumnInfo("poster_path") val posterPath: String,
     val title: String,
-    val voteAverage: Double,
-    val watchProviders: WatchProviders,
+    @ColumnInfo("vote_average") val voteAverage: Double,
+    @ColumnInfo("watch_provider_id") val watchProviderId: Int,
     val rank: Int,
 )
 
