@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -75,8 +76,8 @@ fun BottomBar(navController: NavHostController){
                 alwaysShowLabel = true,
                 onClick = {
                     navController.navigate(item.screenRoute) {
-                        navController.graph.startDestinationRoute?.let {
-                            popUpTo(it) { saveState = true }
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
                         }
                         launchSingleTop = true
                         restoreState = true

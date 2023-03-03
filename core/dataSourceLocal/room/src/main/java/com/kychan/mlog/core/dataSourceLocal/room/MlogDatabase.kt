@@ -7,10 +7,12 @@ import androidx.room.TypeConverters
 import com.kychan.mlog.core.dataSourceLocal.room.converter.WatchProvidersConverters
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
 import com.kychan.mlog.core.dataSourceLocal.room.model.MovieEntity
+import com.kychan.mlog.core.dataSourceLocal.room.model.WatchProviderEntity
 
 @Database(
     entities = [
-        MovieEntity::class
+        MovieEntity::class,
+        WatchProviderEntity::class
     ],
     version = 1,
     autoMigrations = [],

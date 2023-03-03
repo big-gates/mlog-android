@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3aa0a93f4f819396e930562c821df2e2",
+    "identityHash": "8f2c655d12d843c36a31b64f2bb965ab",
     "entities": [
       {
         "tableName": "movie",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `adult` INTEGER NOT NULL, `backdropPath` TEXT NOT NULL, `originalTitle` TEXT NOT NULL, `posterPath` TEXT NOT NULL, `title` TEXT NOT NULL, `voteAverage` REAL NOT NULL, `watchProviders` TEXT NOT NULL, `rank` INTEGER NOT NULL, PRIMARY KEY(`id`, `watchProviders`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `adult` INTEGER NOT NULL, `backdrop_path` TEXT NOT NULL, `original_title` TEXT NOT NULL, `poster_path` TEXT NOT NULL, `title` TEXT NOT NULL, `vote_average` REAL NOT NULL, `watch_provider_id` INTEGER NOT NULL, `rank` INTEGER NOT NULL, FOREIGN KEY(`watch_provider_id`) REFERENCES `watch_provider`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "id",
@@ -22,19 +22,19 @@
           },
           {
             "fieldPath": "backdropPath",
-            "columnName": "backdropPath",
+            "columnName": "backdrop_path",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "originalTitle",
-            "columnName": "originalTitle",
+            "columnName": "original_title",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "posterPath",
-            "columnName": "posterPath",
+            "columnName": "poster_path",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -46,14 +46,14 @@
           },
           {
             "fieldPath": "voteAverage",
-            "columnName": "voteAverage",
+            "columnName": "vote_average",
             "affinity": "REAL",
             "notNull": true
           },
           {
-            "fieldPath": "watchProviders",
-            "columnName": "watchProviders",
-            "affinity": "TEXT",
+            "fieldPath": "watchProviderId",
+            "columnName": "watch_provider_id",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -64,20 +64,79 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": false,
+          "autoGenerate": true,
           "columnNames": [
-            "id",
-            "watchProviders"
+            "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_movie_id_watch_provider_id",
+            "unique": true,
+            "columnNames": [
+              "id",
+              "watch_provider_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_movie_id_watch_provider_id` ON `${TABLE_NAME}` (`id`, `watch_provider_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "watch_provider",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "watch_provider_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "watch_provider",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `watch_provider` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "watchProvider",
+            "columnName": "watch_provider",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_watch_provider_id_watch_provider",
+            "unique": true,
+            "columnNames": [
+              "id",
+              "watch_provider"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_watch_provider_id_watch_provider` ON `${TABLE_NAME}` (`id`, `watch_provider`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3aa0a93f4f819396e930562c821df2e2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8f2c655d12d843c36a31b64f2bb965ab')"
     ]
   }
 }
