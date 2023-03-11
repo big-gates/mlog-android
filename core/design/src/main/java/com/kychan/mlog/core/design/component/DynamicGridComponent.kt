@@ -1,37 +1,16 @@
 package com.kychan.mlog.core.design.component
 
-import androidx.compose.animation.core.AnimationState
-import androidx.compose.animation.core.DecayAnimationSpec
-import androidx.compose.animation.core.animateDecay
-import androidx.compose.animation.rememberSplineBasedDecay
-import androidx.compose.foundation.gestures.FlingBehavior
-import androidx.compose.foundation.gestures.ScrollScope
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
-import kotlin.math.abs
+import com.kychan.mlog.core.design.util.maxScrollFlingBehavior
 
 object DynamicGridComponent {
     const val DEFAULT_COL = 3
-    const val DEFAULT_ROW_DYNAMIC_INDEX = 2
-
-    /**
-     * limitVelocity 의 값이 클 수록 스크롤이 빨라집니다.
-     * Custom GridView가 생각보다 무거워 스크롤이 너무 빠르면 컴포넌트를 생성하면서 Main Thread(UI Thread)를 많이 잡고있어
-     * 의도치 않는 현상이 발생하여 스크롤 속도를 조절하는 maxScrollFlingBehavior를 만들었습니다.
-     *
-     * @param limitVelocity 값이 크면 스크롤 속도가 빨라집니다.
-     * **/
-    @Composable
-    fun maxScrollFlingBehavior(limitVelocity: Float = 15000F): FlingBehavior {
-        val flingSpec = rememberSplineBasedDecay<Float>()
-        return remember(flingSpec) {
-            ScrollSpeedFlingBehavior(flingSpec, limitVelocity)
-        }
-    }
+    const val DEFAULT_ROW_DYNAMIC_INDEX = 16
 }
 
 interface DynamicGridItem {
@@ -75,11 +54,11 @@ fun <T: DynamicGridItem> LazyGridScope.items(
         itemContent(items[index], index)
     }
 }
+
 @Composable
 fun <T: DynamicGridItem> PagingDynamicLazyVerticalGrid(
     modifier: Modifier = Modifier,
     cols: Int,
-    height: Int,
     items: LazyPagingItems<T>,
     content: @Composable (item: T) -> Unit,
     showEndOfPaginationReached: () -> Unit = {},
@@ -107,11 +86,10 @@ fun <T: DynamicGridItem> PagingDynamicLazyVerticalGrid(
         columns = GridCells.Fixed(cols),
         modifier = modifier.fillMaxWidth(),
         contentPadding = PaddingValues(3.dp),
-        flingBehavior = DynamicGridComponent.maxScrollFlingBehavior(),
+        flingBehavior = maxScrollFlingBehavior(),
         verticalArrangement = Arrangement.spacedBy(3.dp),
         horizontalArrangement = Arrangement.spacedBy(3.dp),
     ){
-
         items(
             items = items,
             span = { item ->
@@ -122,19 +100,7 @@ fun <T: DynamicGridItem> PagingDynamicLazyVerticalGrid(
                 }
             }
         ){ item, index ->
-
-            item?.let {
-                val contentModifier = if(item.isRowDynamic){
-                    Modifier.height(height.dp * 2)
-                } else {
-                    Modifier.height(height.dp)
-                }
-                Column(
-                    modifier = contentModifier
-                ) {
-                    content(item)
-                }
-            }
+            item?.let { content(item) }
         }
     }
 }
@@ -143,7 +109,7 @@ fun <T: DynamicGridItem> PagingDynamicLazyVerticalGrid(
 fun <T: DynamicGridItem> DynamicLazyVerticalGrid(
     modifier: Modifier = Modifier,
     cols: Int,
-    height: Int,
+    height: Double,
     items: List<T>,
     dynamicGridContent: @Composable (item: T) -> Unit,
     normalGridContent: @Composable (item: T) -> Unit,
@@ -189,7 +155,7 @@ fun <T: DynamicGridItem> DynamicLazyVerticalGrid(
 @Composable
 private fun <T: DynamicGridItem>SpanGrid(
     modifier: Modifier = Modifier,
-    items: List<T>,
+    items: List<T?>,
     reverse: Boolean,
     content: @Composable (item: T) -> Unit
 ){
@@ -213,16 +179,18 @@ private fun <T: DynamicGridItem>SpanGrid(
 @Composable
 private fun <T: DynamicGridItem>NestedSpanGridItem(
     modifier: Modifier = Modifier,
-    items: List<T>,
+    items: List<T?>,
     content: @Composable (item: T) -> Unit,
 ) {
     Row(modifier = modifier) {
         Column(modifier = Modifier.weight(2/3f)) {
-            content(items[0])
+            items[0]?.let { content(it) }
         }
+        Spacer(modifier = Modifier.width(3.dp))
         Column(modifier = Modifier.weight(1/3f)) {
-            Row(modifier = Modifier.weight(0.5f)) { content(items[1]) }
-            Row(modifier = Modifier.weight(0.5f)) { content(items[2]) }
+            Row(modifier = Modifier.weight(0.5f)) { items[1]?.let { content(it) } }
+            Spacer(modifier = Modifier.height(3.dp))
+            Row(modifier = Modifier.weight(0.5f)) { items[2]?.let { content(it) } }
         }
     }
 }
@@ -230,44 +198,18 @@ private fun <T: DynamicGridItem>NestedSpanGridItem(
 @Composable
 private fun <T: DynamicGridItem>ReverseSpanGridItem(
     modifier: Modifier = Modifier,
-    items: List<T>,
+    items: List<T?>,
     content: @Composable (item: T) -> Unit,
 ) {
-    Row(modifier = modifier) {
+    Row(modifier = modifier.fillMaxWidth()) {
         Column(modifier = Modifier.weight(1/3f)) {
-            Row(modifier = Modifier.weight(0.5f)) { content(items[1]) }
-            Row(modifier = Modifier.weight(0.5f)) { content(items[2]) }
+            Row(modifier = Modifier.weight(0.5f)) { items[0]?.let { content(it) } }
+            Spacer(modifier = Modifier.height(3.dp))
+            Row(modifier = Modifier.weight(0.5f)) { items[1]?.let { content(it) } }
         }
+        Spacer(modifier = Modifier.width(3.dp))
         Column(modifier = Modifier.weight(2/3f)) {
-            content(items[0])
+            items[2]?.let { content(it) }
         }
-    }
-}
-
-private class ScrollSpeedFlingBehavior(
-    private val flingDecay: DecayAnimationSpec<Float>,
-    private val limitVelocity: Float,
-) : FlingBehavior {
-    override suspend fun ScrollScope.performFling(initialVelocity: Float): Float {
-        // 매우 빠른 스크롤을 막기 위한 것
-        val newVelocity = if (initialVelocity > 0F) minOf(initialVelocity, limitVelocity)
-        else maxOf(initialVelocity, -limitVelocity)
-
-        return if (abs(newVelocity) > 1f) {
-            var velocityLeft = newVelocity
-            var lastValue = 0f
-            AnimationState(
-                initialValue = 0f,
-                initialVelocity = newVelocity,
-            ).animateDecay(flingDecay) {
-                val delta = value - lastValue
-                val consumed = scrollBy(delta)
-                lastValue = value
-                velocityLeft = this.velocity
-                // 반올림 오류를 방지하고 사용하지 않는 항목이 있으면 중지합니다
-                if (abs(delta - consumed) > 0.5f) this.cancelAnimation()
-            }
-            velocityLeft
-        } else newVelocity
     }
 }

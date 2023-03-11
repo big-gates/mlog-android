@@ -13,12 +13,13 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.kychan.mlog.core.design.component.DynamicGridComponent.DEFAULT_COL
 import com.kychan.mlog.core.design.component.PagingDynamicLazyVerticalGrid
+import com.kychan.mlog.feature.home.MOVIE_ASPECT_RATIO
 import com.kychan.mlog.feature.home.model.MovieItem
 
 @Composable
 fun HomeDetailRoute(
     modifier: Modifier = Modifier,
-    viewModel: HomeDetailViewModel = hiltViewModel()
+    viewModel: HomeDetailViewModel = hiltViewModel(),
 ){
     val movies = viewModel.movies.collectAsLazyPagingItems()
 
@@ -35,7 +36,6 @@ fun HomeDetailScreen(
 ){
     PagingDynamicLazyVerticalGrid(
         cols = DEFAULT_COL,
-        height = 150,
         items = movies,
         content = { movie ->
             Movie(
@@ -58,6 +58,9 @@ fun Movie(
         ),
         contentDescription = "movie poster",
         contentScale = ContentScale.Crop,
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .aspectRatio(MOVIE_ASPECT_RATIO, true)
+
     )
 }

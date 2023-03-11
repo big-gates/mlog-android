@@ -8,20 +8,23 @@ interface RoomDataSource {
     fun getMLogMovie(): PagingSource<Int, MlogMovieEntity>
     fun getNetflixMovie(): PagingSource<Int, NetflixMovieEntity>
     fun getWatchaMovie(): PagingSource<Int, WatchaMovieEntity>
+    suspend fun clearMlogMoviesUpdateSyncLogUpdatedAt()
+    suspend fun clearNetflixMoviesUpdateSyncLogUpdatedAt()
+    suspend fun clearWatchaMoviesUpdateSyncLogUpdatedAt()
     fun getMyRatedMovies(): Flow<List<MyRatedMoviesVO>>
     suspend fun getSyncLog(syncLogType: SyncLogType): SyncLogEntity
-    suspend fun upsertSyncLogAndMlogMovies(
+    suspend fun updateMlogMoviesAndSyncLogNextKey(
         movieEntities: List<MlogMovieEntity>,
-        syncLogEntity: SyncLogEntity
+        nextKey: Int,
     )
 
-    suspend fun upsertSyncLogAndNetflixMovies(
+    suspend fun updateNetflixMoviesAndSyncLogNextKey(
         movieEntities: List<NetflixMovieEntity>,
-        syncLogEntity: SyncLogEntity
+        nextKey: Int,
     )
 
-    suspend fun upsertSyncLogAndWatchaMovies(
+    suspend fun updateWatchaMoviesAndSyncLogNextKey(
         movieEntities: List<WatchaMovieEntity>,
-        syncLogEntity: SyncLogEntity
+        nextKey: Int,
     )
 }

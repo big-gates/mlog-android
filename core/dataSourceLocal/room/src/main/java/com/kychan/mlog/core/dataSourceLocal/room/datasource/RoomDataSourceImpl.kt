@@ -3,6 +3,7 @@ package com.kychan.mlog.core.dataSourceLocal.room.datasource
 import androidx.paging.PagingSource
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
 import com.kychan.mlog.core.dataSourceLocal.room.model.*
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RoomDataSourceImpl @Inject constructor(
@@ -20,29 +21,41 @@ class RoomDataSourceImpl @Inject constructor(
         return movieDao.getWatchaMovie()
     }
 
+    override suspend fun clearMlogMoviesUpdateSyncLogUpdatedAt() {
+        movieDao.clearMlogMoviesUpdateSyncLogUpdatedAt()
+    }
+
+    override suspend fun clearNetflixMoviesUpdateSyncLogUpdatedAt() {
+        movieDao.clearNetflixMoviesUpdateSyncLogUpdatedAt()
+    }
+
+    override suspend fun clearWatchaMoviesUpdateSyncLogUpdatedAt() {
+        movieDao.clearWatchaMoviesUpdateSyncLogUpdatedAt()
+    }
+
     override suspend fun getSyncLog(syncLogType: SyncLogType): SyncLogEntity {
         return movieDao.getSyncLog(syncLogType)
     }
 
-    override suspend fun upsertSyncLogAndMlogMovies(
+    override suspend fun updateMlogMoviesAndSyncLogNextKey(
         movieEntities: List<MlogMovieEntity>,
-        syncLogEntity: SyncLogEntity
+        nextKey: Int,
     ) {
-        movieDao.upsertSyncLogAndMlogMovies(movieEntities, syncLogEntity)
+        movieDao.updateMlogMoviesAndSyncLogNextKey(movieEntities, nextKey)
     }
 
-    override suspend fun upsertSyncLogAndNetflixMovies(
+    override suspend fun updateNetflixMoviesAndSyncLogNextKey(
         movieEntities: List<NetflixMovieEntity>,
-        syncLogEntity: SyncLogEntity
+        nextKey: Int,
     ) {
-        movieDao.upsertSyncLogAndNetflixMovies(movieEntities,syncLogEntity)
+        movieDao.updateNetflixMoviesAndSyncLogNextKey(movieEntities,nextKey)
     }
 
-    override suspend fun upsertSyncLogAndWatchaMovies(
+    override suspend fun updateWatchaMoviesAndSyncLogNextKey(
         movieEntities: List<WatchaMovieEntity>,
-        syncLogEntity: SyncLogEntity
+        nextKey: Int,
     ) {
-        movieDao.upsertSyncLogAndWatchaMovies(movieEntities,syncLogEntity)
+        movieDao.updateWatchaMoviesAndSyncLogNextKey(movieEntities,nextKey)
     }
 
     override fun getMyRatedMovies(): Flow<List<MyRatedMoviesVO>> {

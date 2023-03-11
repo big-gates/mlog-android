@@ -24,7 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -36,6 +35,7 @@ import coil.request.ImageRequest
 import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.core.design.theme.MovieRankBg
 import com.kychan.mlog.core.design.theme.MovieRating
+import com.kychan.mlog.core.design.util.maxScrollFlingBehavior
 import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.feature.home.HomeViewModel.Companion.MLOG_RECOMMENDATION
 import com.kychan.mlog.feature.home.HomeViewModel.Companion.NETFLIX_RECOMMENDATION
@@ -107,7 +107,10 @@ fun HomeScreen(
     )) {
         HomeAppBar()
 
-        LazyColumn(contentPadding = PaddingValues(5.dp)){
+        LazyColumn(
+            contentPadding = PaddingValues(5.dp),
+            flingBehavior = maxScrollFlingBehavior(0F),
+        ){
             items(
                 items = categories
             ){
@@ -130,13 +133,14 @@ fun MovieRankingsByCategory(
     Column(
         modifier = Modifier
             .padding(vertical = 10.dp)
-            .heightIn(min = 280.dp)
+            .heightIn(min = 270.dp)
     ) {
 
         CategoryTitle(header, navigateToHomeDetail)
 
         LazyRow(
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
+            contentPadding = PaddingValues(horizontal = 4.dp),
+            flingBehavior = maxScrollFlingBehavior(5000F),
         ) {
             items(
                 key = { it.title },
@@ -161,7 +165,7 @@ fun CategoryTitle(
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 4.dp)
             .clickable { navigateToHomeDetail(category.watchProvider) }
     ) {
         Text(
@@ -187,7 +191,7 @@ fun Movie(
 ) {
     Column(
         modifier = Modifier
-            .width(110.dp)
+            .width(MOVIE_ITEM_WIDTH.dp)
             .padding(end = 7.dp)
     ) {
         Box {
@@ -200,7 +204,7 @@ fun Movie(
                 contentDescription = "movie poster",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .height(150.dp)
+                    .aspectRatio(MOVIE_ASPECT_RATIO, true)
             )
 
             MovieRankBox(

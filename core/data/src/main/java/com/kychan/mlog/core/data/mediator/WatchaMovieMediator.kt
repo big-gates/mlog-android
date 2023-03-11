@@ -4,6 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
+import com.kychan.mlog.core.common.extenstions.toDate
 import com.kychan.mlog.core.data.mapper.toWatchaMovieEntity
 import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
 import com.kychan.mlog.core.dataSourceLocal.room.model.SyncLogType
@@ -12,8 +13,8 @@ import com.kychan.mlog.core.dataSourceRemote.http.datasource.TMDBDataSource
 import com.kychan.mlog.core.model.Language
 import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.core.model.WatchRegion
-import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalPagingApi::class)
 class WatchaMovieMediator(
@@ -23,6 +24,15 @@ class WatchaMovieMediator(
 
     companion object{
         const val END_PAGE = 500
+    }
+
+    override suspend fun initialize(): InitializeAction {
+        val latestUpdate = roomDataSource.getSyncLog(SyncLogType.Watcha_Movie).updatedAt.toDate().time
+        val cacheTime = TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS)
+        return if(System.currentTimeMillis() >= latestUpdate + cacheTime) {
+            roomDataSource.clearMlogMoviesUpdateSyncLogUpdatedAt()
+            InitializeAction.LAUNCH_INITIAL_REFRESH
+        } else InitializeAction.SKIP_INITIAL_REFRESH
     }
 
     override suspend fun load(
@@ -46,13 +56,9 @@ class WatchaMovieMediator(
                 withWatchProvider = WatchProvider.Watcha
             ).toWatchaMovieEntity(loadKey)
 
-            roomDataSource.upsertSyncLogAndWatchaMovies(
+            roomDataSource.updateWatchaMoviesAndSyncLogNextKey(
                 movieEntities = data,
-                syncLogEntity = syncLog.copy(
-                    nextKey = loadKey + 1,
-                    updatedAt = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                        .format(Date(System.currentTimeMillis()))
-                )
+                nextKey = loadKey + 1,
             )
             return MediatorResult.Success(endOfPaginationReached = loadKey + 1 > END_PAGE)
         }catch (e: Exception){

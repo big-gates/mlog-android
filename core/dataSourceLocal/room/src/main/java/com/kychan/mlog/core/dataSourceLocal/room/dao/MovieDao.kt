@@ -5,8 +5,9 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
+import com.kychan.mlog.core.common.extenstions.toSyncDateFormat
 import com.kychan.mlog.core.dataSourceLocal.room.model.*
-import androidx.room.*
+import java.util.*
 import com.kychan.mlog.core.dataSourceLocal.room.model.MyRatedMoviesVO
 import kotlinx.coroutines.flow.Flow
 
@@ -36,14 +37,23 @@ abstract class MovieDao {
     )
     abstract fun getWatchaMovie(): PagingSource<Int, WatchaMovieEntity>
 
-    @Upsert
-    abstract fun upsertMlogMovies(entities: List<MlogMovieEntity>)
+    @Query("DELETE FROM mlog_movie")
+    abstract suspend fun clearMlogMovie()
+
+    @Query("DELETE FROM netflix_movie")
+    abstract suspend fun clearNetflixMovie()
+
+    @Query("DELETE FROM watcha_movie")
+    abstract suspend fun clearWatchaMovie()
 
     @Upsert
-    abstract fun upsertNetflixMovies(entities: List<NetflixMovieEntity>)
+    abstract suspend fun upsertMlogMovies(entities: List<MlogMovieEntity>)
 
     @Upsert
-    abstract fun upsertWatchaMovies(entities: List<WatchaMovieEntity>)
+    abstract suspend fun upsertNetflixMovies(entities: List<NetflixMovieEntity>)
+
+    @Upsert
+    abstract suspend fun upsertWatchaMovies(entities: List<WatchaMovieEntity>)
 
     @Query(value = """
             SELECT * FROM sync_log
@@ -52,33 +62,62 @@ abstract class MovieDao {
     )
     abstract suspend fun getSyncLog(syncLogType: SyncLogType): SyncLogEntity
     @Upsert
-    abstract fun upsertSyncLog(syncLogEntity: SyncLogEntity)
+    abstract suspend fun upsertSyncLog(syncLogEntity: SyncLogEntity)
 
     @Transaction
-    open suspend fun upsertSyncLogAndMlogMovies(
+    open suspend fun clearMlogMoviesUpdateSyncLogUpdatedAt() {
+        clearMlogMovie()
+        val syncLog = getSyncLog(SyncLogType.Mlog_Movie)
+        upsertSyncLog(syncLog.copy(
+            updatedAt = System.currentTimeMillis().toSyncDateFormat()
+        ))
+    }
+
+    @Transaction
+    open suspend fun clearNetflixMoviesUpdateSyncLogUpdatedAt() {
+        clearNetflixMovie()
+        val syncLog = getSyncLog(SyncLogType.Netflix_Movie)
+        upsertSyncLog(syncLog.copy(
+            updatedAt = System.currentTimeMillis().toSyncDateFormat()
+        ))
+    }
+
+    @Transaction
+    open suspend fun clearWatchaMoviesUpdateSyncLogUpdatedAt() {
+        clearWatchaMovie()
+        val syncLog = getSyncLog(SyncLogType.Watcha_Movie)
+        upsertSyncLog(syncLog.copy(
+            updatedAt = System.currentTimeMillis().toSyncDateFormat()
+        ))
+    }
+    @Transaction
+    open suspend fun updateMlogMoviesAndSyncLogNextKey(
         movieEntities: List<MlogMovieEntity>,
-        syncLogEntity: SyncLogEntity
+        nextKey: Int,
     ){
         upsertMlogMovies(movieEntities)
-        upsertSyncLog(syncLogEntity)
+        val syncLog = getSyncLog(SyncLogType.Mlog_Movie)
+        upsertSyncLog(syncLog.copy(nextKey = nextKey))
     }
 
     @Transaction
-    open suspend fun upsertSyncLogAndNetflixMovies(
+    open suspend fun updateNetflixMoviesAndSyncLogNextKey(
         movieEntities: List<NetflixMovieEntity>,
-        syncLogEntity: SyncLogEntity
+        nextKey: Int,
     ){
         upsertNetflixMovies(movieEntities)
-        upsertSyncLog(syncLogEntity)
+        val syncLog = getSyncLog(SyncLogType.Netflix_Movie)
+        upsertSyncLog(syncLog.copy(nextKey = nextKey))
     }
 
     @Transaction
-    open suspend fun upsertSyncLogAndWatchaMovies(
+    open suspend fun updateWatchaMoviesAndSyncLogNextKey(
         movieEntities: List<WatchaMovieEntity>,
-        syncLogEntity: SyncLogEntity
+        nextKey: Int,
     ){
         upsertWatchaMovies(movieEntities)
-        upsertSyncLog(syncLogEntity)
+        val syncLog = getSyncLog(SyncLogType.Watcha_Movie)
+        upsertSyncLog(syncLog.copy(nextKey = nextKey))
     }
 
     @Query("""
