@@ -69,6 +69,7 @@ abstract class MovieDao {
         clearMlogMovie()
         val syncLog = getSyncLog(SyncLogType.Mlog_Movie)
         upsertSyncLog(syncLog.copy(
+            nextKey = 1,
             updatedAt = System.currentTimeMillis().toSyncDateFormat()
         ))
     }
@@ -78,6 +79,7 @@ abstract class MovieDao {
         clearNetflixMovie()
         val syncLog = getSyncLog(SyncLogType.Netflix_Movie)
         upsertSyncLog(syncLog.copy(
+            nextKey = 1,
             updatedAt = System.currentTimeMillis().toSyncDateFormat()
         ))
     }
@@ -87,6 +89,7 @@ abstract class MovieDao {
         clearWatchaMovie()
         val syncLog = getSyncLog(SyncLogType.Watcha_Movie)
         upsertSyncLog(syncLog.copy(
+            nextKey = 1,
             updatedAt = System.currentTimeMillis().toSyncDateFormat()
         ))
     }
