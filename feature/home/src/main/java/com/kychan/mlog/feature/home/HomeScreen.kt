@@ -45,7 +45,7 @@ import com.kychan.mlog.feature.home.model.MovieCategory
 import com.kychan.mlog.feature.home.model.MovieItem
 
 @Composable
-fun HomeAppBar() {
+fun HomeAppBar(navigateToSearch: () -> Unit) {
     TopAppBar(
         backgroundColor = Color.White
     ) {
@@ -61,6 +61,7 @@ fun HomeAppBar() {
             )
 
             Image(
+                modifier = Modifier.clickable { navigateToSearch() },
                 painter = painterResource(id = MLogIcons.Search),
                 contentDescription = "",
                 contentScale = ContentScale.Fit,
@@ -74,7 +75,8 @@ fun HomeAppBar() {
 fun HomeRoute(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
-    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit
+    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit,
+    navigateToSearch: () -> Unit
 ) {
     HomeScreen(
         categories = listOf(
@@ -91,7 +93,8 @@ fun HomeRoute(
                 movieItem = viewModel.watchaMovieitem.collectAsLazyPagingItems()
             )
         ),
-        navigateToHomeDetail = navigateToHomeDetail
+        navigateToHomeDetail = navigateToHomeDetail,
+        navigateToSearch = navigateToSearch,
     )
 }
 
@@ -99,13 +102,14 @@ fun HomeRoute(
 fun HomeScreen(
     categories: List<MovieCategory>,
     navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit = { },
+    navigateToSearch: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
     Column(Modifier.scrollable(
         state = scrollState,
         orientation = Orientation.Vertical
     )) {
-        HomeAppBar()
+        HomeAppBar(navigateToSearch = navigateToSearch)
 
         LazyColumn(
             contentPadding = PaddingValues(5.dp),
