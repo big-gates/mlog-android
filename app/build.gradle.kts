@@ -68,7 +68,7 @@ dependencies {
     implementation(libs.room.ktx)
 
     //Paging
-    implementation(libs.paging.runtime.ktx)
+    implementation(libs.androidx.paging.runtime.ktx)
 
     //Firebase
     implementation(platform(libs.firebase.bom))

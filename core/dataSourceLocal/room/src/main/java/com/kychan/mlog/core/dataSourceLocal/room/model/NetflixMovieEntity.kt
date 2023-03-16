@@ -4,17 +4,10 @@ import androidx.room.*
 import com.kychan.mlog.core.model.Movie
 
 @Entity(
-    tableName = "movie",
-    indices = [Index(value = ["id","watch_provider_id"], unique = true)],
-    foreignKeys = [
-        ForeignKey(
-            entity = WatchProviderEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["watch_provider_id"],
-        )
-    ]
+    tableName = "netflix_movie",
+    indices = [Index(value = ["id","title"], unique = true)],
 )
-data class MovieEntity(
+data class NetflixMovieEntity(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val adult: Boolean,
     @ColumnInfo("backdrop_path") val backdropPath: String,
@@ -22,16 +15,16 @@ data class MovieEntity(
     @ColumnInfo("poster_path") val posterPath: String,
     val title: String,
     @ColumnInfo("vote_average") val voteAverage: Double,
-    @ColumnInfo("watch_provider_id") val watchProviderId: Int,
     val rank: Int,
 )
 
-fun MovieEntity.toDomain() = Movie(
+fun NetflixMovieEntity.toDomain() = Movie(
     id = id,
     adult = adult,
     backdropPath = backdropPath,
     originalTitle = originalTitle,
     posterPath = posterPath,
     title = title,
-    voteAverage = voteAverage
+    voteAverage = voteAverage,
+    rank = rank,
 )

@@ -1,8 +1,8 @@
 package com.kychan.mlog.core.dataSourceRemote.http.di
 
 import com.kychan.mlog.core.dataSourceRemote.http.api.RetrofitTMDBApi
-import com.kychan.mlog.core.dataSourceRemote.http.datasource.RemoteDataSource
-import com.kychan.mlog.core.dataSourceRemote.http.datasource.RemoteDataSourceImpl
+import com.kychan.mlog.core.dataSourceRemote.http.datasource.TMDBDataSource
+import com.kychan.mlog.core.dataSourceRemote.http.datasource.TMDBDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,5 +15,5 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun providesRemoteDataSource(tmdbApi: RetrofitTMDBApi): RemoteDataSource = RemoteDataSourceImpl(tmdbApi)
+    fun providesTMDBDataSource(tmdbApi: RetrofitTMDBApi): TMDBDataSource = TMDBDataSourceImpl(tmdbApi)
 }

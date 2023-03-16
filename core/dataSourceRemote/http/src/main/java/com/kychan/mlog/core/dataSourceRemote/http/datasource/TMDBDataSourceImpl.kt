@@ -8,9 +8,9 @@ import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.core.model.WatchRegion
 import javax.inject.Inject
 
-class RemoteDataSourceImpl @Inject constructor(
+class TMDBDataSourceImpl @Inject constructor(
     private val tmdbApi: RetrofitTMDBApi
-): RemoteDataSource {
+): TMDBDataSource {
     override suspend fun getMoviePopularWithProvider(
         page: Int,
         language: Language,

@@ -13,6 +13,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:model"))
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.paging.runtime.ktx)
 
     testImplementation(project(":core:testing"))
 }
