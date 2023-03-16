@@ -15,6 +15,7 @@ import com.kychan.mlog.core.domain.observe.ObserveWatchaMovie
 import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.feature.home.BuildConfig
 import com.kychan.mlog.feature.home.model.MovieItem
+import com.kychan.mlog.feature.home.model.toView
 import com.kychan.mlog.feature.home.navigation.HomeDetailArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -39,12 +40,8 @@ class HomeDetailViewModel @Inject constructor(
         WatchProvider.Watcha -> observeWatchaMovie().cachedIn(viewModelScope)
     }.map { paging ->
         paging.map { movie ->
-            val row = (movie.rank-1) / DEFAULT_COL
-            MovieItem(
-                image = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342/${movie.posterPath}",
-                rank = "${movie.rank}",
-                rating = movie.voteAverage.roundToTheFirstDecimal().toFloat(),
-                title = movie.title,
+            movie.toView(
+                posterSize = POSTER_SIZE,
                 isRowDynamic = movie.rank % (DEFAULT_ROW_DYNAMIC_INDEX) == 0,
             )
         }
@@ -54,4 +51,8 @@ class HomeDetailViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = PagingData.empty()
     )
+
+    companion object{
+        const val POSTER_SIZE = "w342"
+    }
 }

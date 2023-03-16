@@ -143,7 +143,7 @@ fun MovieRankingsByCategory(
             flingBehavior = maxScrollFlingBehavior(5000F),
         ) {
             items(
-                key = { it.title },
+                key = { it.id },
                 items = movie
             ) { movie ->
                 if (movie != null) {

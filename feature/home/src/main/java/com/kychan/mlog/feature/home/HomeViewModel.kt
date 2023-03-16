@@ -24,7 +24,7 @@ class HomeViewModel @Inject constructor(
     val mLogMovieItem: Flow<PagingData<MovieItem>> = observeMlogMovie()
         .map { paging ->
             paging.map { movie ->
-                movie.toView()
+                movie.toView(posterSize = POSTER_SIZE)
             }
         }
         .cachedIn(viewModelScope)
@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(
     val netflixMovieItem: Flow<PagingData<MovieItem>> = observeNetflixMovie()
         .map { paging ->
             paging.map { movie ->
-                movie.toView()
+                movie.toView(posterSize = POSTER_SIZE)
             }
         }
         .cachedIn(viewModelScope)
@@ -50,7 +50,7 @@ class HomeViewModel @Inject constructor(
     val watchaMovieitem: Flow<PagingData<MovieItem>> = observeWatchaMovie()
         .map { paging ->
             paging.map { movie ->
-                movie.toView()
+                movie.toView(posterSize = POSTER_SIZE)
             }
         }
         .cachedIn(viewModelScope)
