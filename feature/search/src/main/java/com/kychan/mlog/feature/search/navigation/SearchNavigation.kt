@@ -1,6 +1,7 @@
 package com.kychan.mlog.feature.search.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
+import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -15,7 +16,15 @@ fun NavController.navigateToSearch(navOptions: NavOptions? = null) {
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.searchScreen(){
-    composable(route = searchRoute){
+    composable(
+        route = searchRoute,
+        enterTransition = { slideIn(
+            initialOffset = { IntOffset(it.width,0) }
+        ) },
+        popEnterTransition = { slideIn(
+            initialOffset = { IntOffset(it.width,0) }
+        ) },
+    ){
         SearchRouter()
     }
 }

@@ -21,6 +21,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.kychan.mlog.feature.search.navigation.searchRoute
 import com.kychan.mlog.navigation.BottomNavItem
 import com.kychan.mlog.navigation.MLogNavHost
 
@@ -75,6 +76,9 @@ fun BottomBar(navController: NavHostController){
                 } == true,
                 alwaysShowLabel = true,
                 onClick = {
+                    if(currentDestination?.hierarchy?.any{ it.route == searchRoute } == true){
+                        navController.popBackStack()
+                    }
                     navController.navigate(item.screenRoute) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
