@@ -31,6 +31,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberAsyncImagePainter
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.core.design.theme.Black
@@ -204,9 +205,14 @@ fun Movie(
         Box {
             Image(
                 painter = rememberAsyncImagePainter(
-                    ImageRequest.Builder(LocalContext.current).data(data = movie.image).apply(block = fun ImageRequest.Builder.() {
-                        crossfade(true)
-                    }).build()
+                    ImageRequest
+                        .Builder(LocalContext.current)
+                        .data(data = movie.image)
+                        .apply(block = fun ImageRequest.Builder.() {
+                            crossfade(true)
+                        })
+                        .diskCachePolicy(CachePolicy.ENABLED)
+                        .build()
                 ),
                 contentDescription = "movie poster",
                 contentScale = ContentScale.Crop,
