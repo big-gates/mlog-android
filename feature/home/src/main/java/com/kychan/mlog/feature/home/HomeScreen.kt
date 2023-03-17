@@ -33,6 +33,7 @@ import androidx.paging.compose.items
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.kychan.mlog.core.design.icon.MLogIcons
+import com.kychan.mlog.core.design.theme.Black
 import com.kychan.mlog.core.design.theme.MovieRankBg
 import com.kychan.mlog.core.design.theme.MovieRating
 import com.kychan.mlog.core.design.util.maxScrollFlingBehavior
@@ -46,28 +47,30 @@ import com.kychan.mlog.feature.home.model.MovieItem
 
 @Composable
 fun HomeAppBar(navigateToSearch: () -> Unit) {
-    TopAppBar(
-        backgroundColor = Color.White
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = CenterVertically,
+        modifier = Modifier
+            .background(color = Color.White)
+            .fillMaxWidth()
+            .padding(
+                horizontal = 10.dp,
+                vertical = 5.dp
+            )
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Image(
-                painter = painterResource(id = MLogIcons.Logo),
-                contentDescription = "",
-                contentScale = ContentScale.Fit
-            )
+        Image(
+            painter = painterResource(id = MLogIcons.Logo),
+            contentDescription = "",
+            contentScale = ContentScale.Fit
+        )
 
-            Image(
-                modifier = Modifier.clickable { navigateToSearch() },
-                painter = painterResource(id = MLogIcons.Search),
-                contentDescription = "",
-                contentScale = ContentScale.Fit,
-                colorFilter = ColorFilter.tint(Color.Black),
-            )
-        }
+        Image(
+            modifier = Modifier.clickable { navigateToSearch() },
+            painter = painterResource(id = MLogIcons.Search),
+            contentDescription = "",
+            contentScale = ContentScale.Fit,
+            colorFilter = ColorFilter.tint(Black),
+        )
     }
 }
 
