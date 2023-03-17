@@ -1,27 +1,15 @@
 package com.kychan.mlog.core.data.mapper
 
-import com.kychan.mlog.core.dataSourceLocal.room.model.MovieEntity
+import com.kychan.mlog.core.dataSourceLocal.room.model.MlogMovieEntity
+import com.kychan.mlog.core.dataSourceLocal.room.model.NetflixMovieEntity
+import com.kychan.mlog.core.dataSourceLocal.room.model.WatchaMovieEntity
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MoviePopularRes
-import com.kychan.mlog.core.model.Movie
-import com.kychan.mlog.core.model.WatchProvider
 
 private const val DEFAULT_RESULT_COUNT = 20
 
-fun MovieDiscoverRes.toDomain(): List<Movie> = this.results.map {
-    Movie(
-        id = it.id,
-        adult = it.adult,
-        backdropPath = it.backdropPath,
-        originalTitle = it.originalTitle,
-        posterPath = it.posterPath,
-        title = it.title,
-        voteAverage = it.voteAverage
-    )
-}
-
-fun MovieDiscoverRes.toEntity(page:Int, watchProvider: WatchProvider): List<MovieEntity> = this.results.mapIndexed { index, moviePopular ->
-    MovieEntity(
+fun MovieDiscoverRes.toNetflixMovieEntity(page:Int): List<NetflixMovieEntity> = this.results.mapIndexed { index, moviePopular ->
+    NetflixMovieEntity(
         id = moviePopular.id,
         adult = moviePopular.adult,
         backdropPath = moviePopular.backdropPath,
@@ -29,29 +17,25 @@ fun MovieDiscoverRes.toEntity(page:Int, watchProvider: WatchProvider): List<Movi
         posterPath = moviePopular.posterPath,
         title = moviePopular.title,
         voteAverage = moviePopular.voteAverage,
-        watchProviderId = when(watchProvider){
-            WatchProvider.Netflix -> 1
-            WatchProvider.Watcha -> 2
-            WatchProvider.None -> 3
-        },
         rank = ((page * DEFAULT_RESULT_COUNT) - DEFAULT_RESULT_COUNT) + (index + 1)
     )
 }
 
-fun MoviePopularRes.toDomain(): List<Movie> = this.results.map {
-    Movie(
-        id = it.id,
-        adult = it.adult,
-        backdropPath = it.backdropPath ?: "",
-        originalTitle = it.originalTitle,
-        posterPath = it.posterPath,
-        title = it.title,
-        voteAverage = it.voteAverage
+fun MovieDiscoverRes.toWatchaMovieEntity(page:Int): List<WatchaMovieEntity> = this.results.mapIndexed { index, moviePopular ->
+    WatchaMovieEntity(
+        id = moviePopular.id,
+        adult = moviePopular.adult,
+        backdropPath = moviePopular.backdropPath,
+        originalTitle = moviePopular.originalTitle,
+        posterPath = moviePopular.posterPath,
+        title = moviePopular.title,
+        voteAverage = moviePopular.voteAverage,
+        rank = ((page * DEFAULT_RESULT_COUNT) - DEFAULT_RESULT_COUNT) + (index + 1)
     )
 }
 
-fun MoviePopularRes.toEntity(page:Int, watchProvider: WatchProvider): List<MovieEntity> = this.results.mapIndexed { index, moviePopular ->
-    MovieEntity(
+fun MoviePopularRes.toMlogMovieEntity(page:Int): List<MlogMovieEntity> = this.results.mapIndexed { index, moviePopular ->
+    MlogMovieEntity(
         id = moviePopular.id,
         adult = moviePopular.adult,
         backdropPath = moviePopular.backdropPath?: "",
@@ -59,11 +43,6 @@ fun MoviePopularRes.toEntity(page:Int, watchProvider: WatchProvider): List<Movie
         posterPath = moviePopular.posterPath,
         title = moviePopular.title,
         voteAverage = moviePopular.voteAverage,
-        watchProviderId = when(watchProvider){
-            WatchProvider.Netflix -> 1
-            WatchProvider.Watcha -> 2
-            WatchProvider.None -> 3
-        },
         rank = ((page * DEFAULT_RESULT_COUNT) - DEFAULT_RESULT_COUNT) + (index + 1)
     )
 }

@@ -3,15 +3,17 @@ package com.kychan.mlog.feature.home
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -22,64 +24,25 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.core.design.theme.MovieRankBg
 import com.kychan.mlog.core.design.theme.MovieRating
+import com.kychan.mlog.core.design.util.maxScrollFlingBehavior
 import com.kychan.mlog.core.model.WatchProvider
+import com.kychan.mlog.feature.home.HomeViewModel.Companion.MLOG_RECOMMENDATION
+import com.kychan.mlog.feature.home.HomeViewModel.Companion.NETFLIX_RECOMMENDATION
+import com.kychan.mlog.feature.home.HomeViewModel.Companion.WATCHA_RECOMMENDATION
+import com.kychan.mlog.feature.home.model.Header
 import com.kychan.mlog.feature.home.model.MovieCategory
 import com.kychan.mlog.feature.home.model.MovieItem
-
-val dummyMovieData = listOf(
-    MovieItem(
-        "https://image.tmdb.org/t/p/original/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
-        "1",
-        10f,
-        "파이트 클럽"
-    ),
-    MovieItem(
-        "https://image.tmdb.org/t/p/original/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
-        "1",
-        10f,
-        "파이트 클럽"
-    ),
-    MovieItem(
-        "https://image.tmdb.org/t/p/original/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
-        "1",
-        10f,
-        "파이트 클럽"
-    ),
-    MovieItem(
-        "https://image.tmdb.org/t/p/original/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
-        "1",
-        10f,
-        "파이트 클럽"
-    ),
-    MovieItem(
-        "https://image.tmdb.org/t/p/original/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
-        "1",
-        10f,
-        "파이트 클럽"
-    ),
-    MovieItem(
-        "https://image.tmdb.org/t/p/original/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
-        "1",
-        10f,
-        "파이트 클럽"
-    )
-)
-
-val dummyMovieRankingsByCategory = listOf(
-    MovieCategory("Mlog 추천 Pick", dummyMovieData, WatchProvider.None),
-    MovieCategory("Mlog가 추천하는 Netfilx", dummyMovieData, WatchProvider.Netflix),
-    MovieCategory("Mlog가 추천하는 Watcha", dummyMovieData, WatchProvider.Watcha),
-)
 
 @Composable
 fun HomeAppBar() {
@@ -113,26 +76,49 @@ fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit
 ) {
-    val movieRankingsByCategory by viewModel.movieRankingsByCategory.collectAsStateWithLifecycle()
-
     HomeScreen(
-        movieRankingsByCategory = movieRankingsByCategory,
+        categories = listOf(
+            MovieCategory(
+                header = Header(MLOG_RECOMMENDATION, WatchProvider.None),
+                movieItem = viewModel.mLogMovieItem.collectAsLazyPagingItems()
+            ),
+            MovieCategory(
+                header = Header(NETFLIX_RECOMMENDATION, WatchProvider.Netflix),
+                movieItem = viewModel.netflixMovieItem.collectAsLazyPagingItems()
+            ),
+            MovieCategory(
+                header = Header(WATCHA_RECOMMENDATION, WatchProvider.Watcha),
+                movieItem = viewModel.watchaMovieitem.collectAsLazyPagingItems()
+            )
+        ),
         navigateToHomeDetail = navigateToHomeDetail
     )
 }
 
 @Composable
 fun HomeScreen(
-    movieRankingsByCategory: List<MovieCategory> = listOf(),
-    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit = { }
+    categories: List<MovieCategory>,
+    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit = { },
 ) {
-    Column {
+    val scrollState = rememberScrollState()
+    Column(Modifier.scrollable(
+        state = scrollState,
+        orientation = Orientation.Vertical
+    )) {
         HomeAppBar()
+
         LazyColumn(
-            contentPadding = PaddingValues(vertical = 5.dp),
-        ) {
-            items(movieRankingsByCategory) { category ->
-                MovieRankingsByCategory(category, navigateToHomeDetail)
+            contentPadding = PaddingValues(5.dp),
+            flingBehavior = maxScrollFlingBehavior(0F),
+        ){
+            items(
+                items = categories
+            ){
+                MovieRankingsByCategory(
+                    header = it.header,
+                    movie = it.movieItem,
+                    navigateToHomeDetail = navigateToHomeDetail
+                )
             }
         }
     }
@@ -140,22 +126,29 @@ fun HomeScreen(
 
 @Composable
 fun MovieRankingsByCategory(
-    category: MovieCategory,
+    header: Header,
+    movie: LazyPagingItems<MovieItem>,
     navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit
 ) {
     Column(
         modifier = Modifier
             .padding(vertical = 10.dp)
-            .heightIn(min = 280.dp)
+            .heightIn(min = 270.dp)
     ) {
 
-        CategoryTitle(category, navigateToHomeDetail)
+        CategoryTitle(header, navigateToHomeDetail)
 
         LazyRow(
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
+            contentPadding = PaddingValues(horizontal = 4.dp),
+            flingBehavior = maxScrollFlingBehavior(5000F),
         ) {
-            items(category.movieItems) { movie ->
-                Movie(movie = movie)
+            items(
+                key = { it.id },
+                items = movie
+            ) { movie ->
+                if (movie != null) {
+                    Movie(movie = movie)
+                }
             }
         }
     }
@@ -163,7 +156,7 @@ fun MovieRankingsByCategory(
 
 @Composable
 fun CategoryTitle(
-    category: MovieCategory,
+    category: Header,
     navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit
 ){
     Row(
@@ -172,7 +165,7 @@ fun CategoryTitle(
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
-            .padding(horizontal = 16.dp)
+            .padding(horizontal = 4.dp)
             .clickable { navigateToHomeDetail(category.watchProvider) }
     ) {
         Text(
@@ -198,7 +191,7 @@ fun Movie(
 ) {
     Column(
         modifier = Modifier
-            .width(110.dp)
+            .width(MOVIE_ITEM_WIDTH.dp)
             .padding(end = 7.dp)
     ) {
         Box {
@@ -211,7 +204,7 @@ fun Movie(
                 contentDescription = "movie poster",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .height(150.dp)
+                    .aspectRatio(MOVIE_ASPECT_RATIO, true)
             )
 
             MovieRankBox(
@@ -274,43 +267,4 @@ fun MovieRating(
             fontSize = 13.sp
         )
     }
-}
-
-@Composable
-@Preview
-fun HomeScreenPreview(){
-    HomeScreen(
-        movieRankingsByCategory = dummyMovieRankingsByCategory,
-        navigateToHomeDetail = {}
-    )
-}
-
-@Composable
-@Preview
-fun MovieRankingByCategoryPreview(){
-    MovieRankingsByCategory(category = dummyMovieRankingsByCategory[0], navigateToHomeDetail = {})
-}
-
-@Composable
-@Preview
-fun MoviePreview(){
-    Movie(movie = dummyMovieData[0])
-}
-
-@Composable
-@Preview
-fun MovieRankBoxPreview(){
-    MovieRankBox(rank = "1")
-}
-
-@Composable
-@Preview
-fun MovieRatingPreview(){
-    MovieRating(rating = 10f)
-}
-
-@Composable
-@Preview
-fun HomeAppBarPreview(){
-    HomeAppBar()
 }

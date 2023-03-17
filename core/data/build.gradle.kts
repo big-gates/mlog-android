@@ -13,9 +13,7 @@ dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:dataSourceLocal:room"))
     implementation(project(":core:dataSourceRemote:http"))
+    implementation(libs.androidx.paging.runtime.ktx)
 
     testImplementation(project(":core:testing"))
-
-    implementation(libs.mapstruct)
-    kapt(libs.mapstruct.processor)
 }

@@ -9,6 +9,7 @@ retrofit-kotlinx-serialization-json = "0.8.0"
 glide = "4.13.0"
 room = "2.5.0-rc01"
 paging = "3.1.1"
+paging-compose = "1.0.0-alpha17"
 compose = "1.0.1"
 hilt = "2.44"
 android-gradle-plugin = "7.3.1"
@@ -32,7 +33,6 @@ androidx-lifecycle = "2.6.0-alpha03"
 logger = "2.2.0"
 ksp = "1.7.21-1.0.8"
 junit4 = "4.13.2"
-mapstruct = "1.5.1.Final"
 
 androidx-hilt-navigation-compose = "1.0.0"
 androidx-navigation = "2.5.3"
@@ -66,8 +66,6 @@ kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
-mapstruct = { group = "org.mapstruct", name = "mapstruct", version.ref = "mapstruct"}
-mapstruct-processor = { group = "org.mapstruct", name = "mapstruct-processor", version.ref = "mapstruct"}
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
 androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidx-test-core" }
@@ -94,12 +92,15 @@ glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = 
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
 
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
 
-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "paging" }
+androidx-paging-runtime-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "paging" }
+androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging"}
+androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging-compose"}
 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }

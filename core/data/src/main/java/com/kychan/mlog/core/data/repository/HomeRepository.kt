@@ -1,21 +1,13 @@
 package com.kychan.mlog.core.data.repository
 
+import androidx.paging.PagingData
 import com.kychan.mlog.core.model.*
 import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
-    fun getPopularMoviesWithCategory(watchProvider: WatchProvider): Flow<List<Movie>>
+    fun getMlogMovie(): Flow<PagingData<Movie>>
 
-    suspend fun updateMoviePopular(
-        page: Int,
-        language: Language,
-        watchRegion: WatchRegion
-    )
+    fun getNetflixMovie(): Flow<PagingData<Movie>>
 
-    suspend fun updateMoviePopularWithProvider(
-        page: Int,
-        language: Language,
-        watchRegion: WatchRegion,
-        withWatchProvider: WatchProvider
-    )
+    fun getWatchaMovie(): Flow<PagingData<Movie>>
 }

@@ -6,7 +6,7 @@ import com.kychan.mlog.core.model.Language
 import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.core.model.WatchRegion
 
-interface RemoteDataSource {
+interface TMDBDataSource {
 
     suspend fun getMoviePopularWithProvider(
         page: Int,

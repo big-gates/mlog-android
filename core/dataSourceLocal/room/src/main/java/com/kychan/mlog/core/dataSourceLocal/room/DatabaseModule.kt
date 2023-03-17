@@ -26,9 +26,9 @@ object DatabaseModule {
     ).addCallback(object: RoomDatabase.Callback(){
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            db.execSQL("INSERT INTO watch_provider (id, watch_provider) VALUES (null, '8');")
-            db.execSQL("INSERT INTO watch_provider (id, watch_provider) VALUES (null, '97');")
-            db.execSQL("INSERT INTO watch_provider (id, watch_provider) VALUES (null, '-1');")
+            db.execSQL("INSERT INTO sync_log (id, type, next_key, created_at, updated_at) VALUES (null, 'Netflix_Movie', 1, date(), date());")
+            db.execSQL("INSERT INTO sync_log (id, type, next_key, created_at, updated_at) VALUES (null, 'Watcha_Movie', 1, date(), date());")
+            db.execSQL("INSERT INTO sync_log (id, type, next_key, created_at, updated_at) VALUES (null, 'Mlog_Movie', 1, date(), date());")
         }
     }).build()
 }
