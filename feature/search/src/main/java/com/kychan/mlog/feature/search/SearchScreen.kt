@@ -35,6 +35,7 @@ import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.core.design.theme.Gray400
 import com.kychan.mlog.core.design.theme.Gray600
 import com.kychan.mlog.feature.search.model.MovieItem
+import com.kychan.mlog.feature.search.model.RecentSearchView
 
 @Composable
 fun SearchRouter(){
@@ -108,7 +109,7 @@ fun SearchBar(
 @Composable
 fun SearchView(
     text: String,
-    recentSearchList: List<String> = listOf(),
+    recentSearchList: List<RecentSearchView> = listOf(),
     movies: List<MovieItem> = listOf(),
 ) {
     if(text.isEmpty()){
@@ -164,7 +165,7 @@ fun Movie(
 
 @Composable
 fun RecentSearchListView(
-    recentSearchList: List<String>,
+    recentSearchList: List<RecentSearchView>,
 ) {
 
     if(recentSearchList.isNotEmpty()){
@@ -177,7 +178,7 @@ fun RecentSearchListView(
         verticalArrangement = Arrangement.Center,
     ){
         items(recentSearchList){
-            RecentSearch(title = it)
+            RecentSearch(recentSearchView = it)
         }
     }
 }
@@ -204,11 +205,11 @@ fun RecentSearchHeader(){
 
 @Composable
 fun RecentSearch(
-    title: String
+    recentSearchView: RecentSearchView
 ){
     Text(
         modifier = Modifier.padding(vertical = 8.dp),
-        text = title,
+        text = recentSearchView.text,
         fontSize = 16.sp
     )
 }

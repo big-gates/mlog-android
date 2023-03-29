@@ -1,15 +1,24 @@
 package com.kychan.mlog.feature.search
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.kychan.mlog.core.domain.observe.ObserveRecentSearch
+import com.kychan.mlog.core.domain.usecase.DeleteAllRecentSearch
+import com.kychan.mlog.core.domain.usecase.DeleteRecentSearch
+import com.kychan.mlog.core.domain.usecase.UpdateRecentSearch
 import com.kychan.mlog.feature.search.model.MovieItem
+import com.kychan.mlog.feature.search.model.RecentSearchView
+import com.kychan.mlog.feature.search.model.toView
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-
+    private val observeRecentSearch: ObserveRecentSearch,
+    private val updateRecentSearch: UpdateRecentSearch,
+    private val deleteAllRecentSearch: DeleteAllRecentSearch,
+    private val deleteRecentSearch: DeleteRecentSearch,
 ):ViewModel() {
 
     private val _searchText: MutableStateFlow<String> = MutableStateFlow("")
@@ -69,32 +78,15 @@ class SearchViewModel @Inject constructor(
         "https://i.annihil.us/u/prod/marvel/i/mg/7/00/545a82f59dd73.jpg",
     )
 
-    private val _recentSearchList: MutableStateFlow<List<String>> = MutableStateFlow(listOf(
-        "한니발",
-        "하나와 엘리스",
-        "하얀 리본",
-        "하울의 움직이는 성",
-        "하이 랜더",
-        "한산",
-        "a",
-        "b",
-        "c",
-        "d",
-        "e",
-        "f",
-        "g",
-        "h",
-        "i",
-        "j",
-        "k",
-        "곽하민",
-        "abcd",
-        "유럽",
-        "프랑스",
-        "런던"
-    ))
-    val recentSearchList: StateFlow<List<String>>
-        get() = _recentSearchList
+    val recentSearchList: StateFlow<List<RecentSearchView>> = observeRecentSearch()
+        .map { recentSearches ->
+            recentSearches.map { it.toView() }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = listOf()
+        )
 
     val movies: StateFlow<List<MovieItem>> = MutableStateFlow(
         (0 until 50).map {
@@ -105,5 +97,4 @@ class SearchViewModel @Inject constructor(
     fun updateSearchText(text: String){
         _searchText.value = text
     }
-
 }
