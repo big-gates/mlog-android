@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
-import com.kychan.mlog.core.common.extenstions.toSyncDateFormat
+import com.kychan.mlog.core.common.extenstions.toDateFormat
 import com.kychan.mlog.core.dataSourceLocal.room.model.*
 import java.util.*
 import com.kychan.mlog.core.dataSourceLocal.room.model.MyRatedMoviesVO
@@ -70,7 +70,7 @@ abstract class MovieDao {
         val syncLog = getSyncLog(SyncLogType.Mlog_Movie)
         upsertSyncLog(syncLog.copy(
             nextKey = 1,
-            updatedAt = System.currentTimeMillis().toSyncDateFormat()
+            updatedAt = System.currentTimeMillis().toDateFormat()
         ))
     }
 
@@ -80,7 +80,7 @@ abstract class MovieDao {
         val syncLog = getSyncLog(SyncLogType.Netflix_Movie)
         upsertSyncLog(syncLog.copy(
             nextKey = 1,
-            updatedAt = System.currentTimeMillis().toSyncDateFormat()
+            updatedAt = System.currentTimeMillis().toDateFormat()
         ))
     }
 
@@ -90,7 +90,7 @@ abstract class MovieDao {
         val syncLog = getSyncLog(SyncLogType.Watcha_Movie)
         upsertSyncLog(syncLog.copy(
             nextKey = 1,
-            updatedAt = System.currentTimeMillis().toSyncDateFormat()
+            updatedAt = System.currentTimeMillis().toDateFormat()
         ))
     }
     @Transaction
