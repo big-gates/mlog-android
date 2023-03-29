@@ -2,9 +2,11 @@ package com.kychan.mlog.feature.search
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -20,13 +22,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import com.kychan.mlog.core.design.border.bottomBorder
 import com.kychan.mlog.core.design.icon.MLogIcons
+import com.kychan.mlog.core.design.theme.Gray400
 import com.kychan.mlog.core.design.theme.Gray600
 import com.kychan.mlog.feature.search.model.MovieItem
 
@@ -42,6 +48,7 @@ fun SearchScreen(
 ){
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
     val movies by viewModel.movies.collectAsStateWithLifecycle()
+    val recentSearchList by viewModel.recentSearchList.collectAsStateWithLifecycle()
 
     Column(modifier = modifier.fillMaxHeight()) {
         SearchBar(
@@ -50,6 +57,7 @@ fun SearchScreen(
         )
         SearchView(
             text = searchText,
+            recentSearchList = recentSearchList,
             movies = movies
         )
     }
@@ -69,9 +77,12 @@ fun SearchBar(
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
+            .bottomBorder(1.dp, Gray400)
             .padding(
-                horizontal = 10.dp,
-                vertical = 10.dp
+                start = 10.dp,
+                end = 10.dp,
+                top = 10.dp,
+                bottom = 15.dp
             ),
         value = text,
         leadingIcon = {
@@ -97,10 +108,13 @@ fun SearchBar(
 @Composable
 fun SearchView(
     text: String,
-    movies: List<MovieItem> = listOf()
+    recentSearchList: List<String> = listOf(),
+    movies: List<MovieItem> = listOf(),
 ) {
     if(text.isEmpty()){
-        EmptySearchView()
+        RecentSearchListView(
+            recentSearchList = recentSearchList
+        )
     }else{
         SearchResultView(movies)
     }
@@ -149,15 +163,52 @@ fun Movie(
 }
 
 @Composable
-fun EmptySearchView(){
-    Box(
+fun RecentSearchListView(
+    recentSearchList: List<String>,
+) {
+
+    if(recentSearchList.isNotEmpty()){
+        RecentSearchHeader()
+    }
+
+    LazyColumn(
+        modifier = Modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(10.dp),
+        verticalArrangement = Arrangement.Center,
+    ){
+        items(recentSearchList){
+            RecentSearch(title = it)
+        }
+    }
+}
+
+@Composable
+fun RecentSearchHeader(){
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight()
-    ) {
+            .padding(start = 10.dp, end = 10.dp, top = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ){
         Text(
-            modifier = Modifier.align(Alignment.Center),
-            text = "영화를 검색해 보세요"
+            text = "최근 검색어",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
         )
+
+        Text(text = "모두 삭제")
+
     }
+}
+
+@Composable
+fun RecentSearch(
+    title: String
+){
+    Text(
+        modifier = Modifier.padding(vertical = 8.dp),
+        text = title,
+        fontSize = 16.sp
+    )
 }

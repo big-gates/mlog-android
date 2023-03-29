@@ -69,6 +69,33 @@ class SearchViewModel @Inject constructor(
         "https://i.annihil.us/u/prod/marvel/i/mg/7/00/545a82f59dd73.jpg",
     )
 
+    private val _recentSearchList: MutableStateFlow<List<String>> = MutableStateFlow(listOf(
+        "한니발",
+        "하나와 엘리스",
+        "하얀 리본",
+        "하울의 움직이는 성",
+        "하이 랜더",
+        "한산",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "곽하민",
+        "abcd",
+        "유럽",
+        "프랑스",
+        "런던"
+    ))
+    val recentSearchList: StateFlow<List<String>>
+        get() = _recentSearchList
+
     val movies: StateFlow<List<MovieItem>> = MutableStateFlow(
         (0 until 50).map {
             MovieItem(id = it, images[it])
