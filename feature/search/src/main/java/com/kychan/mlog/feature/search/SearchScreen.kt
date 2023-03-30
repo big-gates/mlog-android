@@ -1,6 +1,7 @@
 package com.kychan.mlog.feature.search
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -60,7 +61,8 @@ fun SearchScreen(
         SearchView(
             text = searchText,
             recentSearchList = recentSearchList,
-            movies = movies
+            movies = movies,
+            deleteAll = viewModel::deleteAll
         )
     }
 }
@@ -118,10 +120,12 @@ fun SearchView(
     text: String,
     recentSearchList: List<RecentSearchView> = listOf(),
     movies: List<MovieItem> = listOf(),
+    deleteAll: () -> Unit = {},
 ) {
     if(text.isEmpty()){
         RecentSearchListView(
-            recentSearchList = recentSearchList
+            recentSearchList = recentSearchList,
+            deleteAll = deleteAll
         )
     }else{
         SearchResultView(movies)
@@ -173,10 +177,13 @@ fun Movie(
 @Composable
 fun RecentSearchListView(
     recentSearchList: List<RecentSearchView>,
+    deleteAll: () -> Unit = {},
 ) {
 
     if(recentSearchList.isNotEmpty()){
-        RecentSearchHeader()
+        RecentSearchHeader(
+            deleteAll = deleteAll
+        )
     }
 
     LazyColumn(
@@ -191,7 +198,9 @@ fun RecentSearchListView(
 }
 
 @Composable
-fun RecentSearchHeader(){
+fun RecentSearchHeader(
+    deleteAll: () -> Unit = {},
+){
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -205,7 +214,10 @@ fun RecentSearchHeader(){
             fontWeight = FontWeight.Bold
         )
 
-        Text(text = "모두 삭제")
+        Text(
+            modifier = Modifier.clickable { deleteAll() },
+            text = "모두 삭제"
+        )
 
     }
 }

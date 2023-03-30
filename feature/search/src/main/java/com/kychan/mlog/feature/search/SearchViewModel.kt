@@ -102,4 +102,8 @@ class SearchViewModel @Inject constructor(
     fun search() = viewModelScope.launch {
         updateRecentSearch(searchText.value)
     }
+
+    fun deleteAll() = viewModelScope.launch {
+        deleteAllRecentSearch()
+    }
 }
