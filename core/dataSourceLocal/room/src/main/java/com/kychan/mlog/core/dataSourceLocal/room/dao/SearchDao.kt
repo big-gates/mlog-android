@@ -14,7 +14,7 @@ abstract class SearchDao {
 
     @Query(value = """
         SELECT * FROM recent_search
-        ORDER BY created_at ASC
+        ORDER BY created_at DESC
     """)
     abstract fun getRecentSearch(): Flow<List<RecentSearchEntity>>
 

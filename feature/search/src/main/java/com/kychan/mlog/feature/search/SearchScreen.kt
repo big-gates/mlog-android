@@ -54,7 +54,8 @@ fun SearchScreen(
     Column(modifier = modifier.fillMaxHeight()) {
         SearchBar(
             text = searchText,
-            onTextChange = viewModel::updateSearchText
+            onTextChange = viewModel::updateSearchText,
+            search = viewModel::search
         )
         SearchView(
             text = searchText,
@@ -71,7 +72,8 @@ fun SearchScreen(
 @Composable
 fun SearchBar(
     text: String,
-    onTextChange: (text: String) -> Unit = {}
+    onTextChange: (text: String) -> Unit = {},
+    search: () -> Unit = {}
 ){
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -99,7 +101,12 @@ fun SearchBar(
             Text(text = "검색")
         },
         keyboardActions = KeyboardActions(
-            onDone = { keyboardController?.hide() }
+            onDone = {
+                keyboardController?.let {
+                    it.hide()
+                    search()
+                }
+            }
         ),
         singleLine = true,
         shape = RoundedCornerShape(50),

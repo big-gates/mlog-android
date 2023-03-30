@@ -11,6 +11,7 @@ import com.kychan.mlog.feature.search.model.RecentSearchView
 import com.kychan.mlog.feature.search.model.toView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -96,5 +97,9 @@ class SearchViewModel @Inject constructor(
 
     fun updateSearchText(text: String){
         _searchText.value = text
+    }
+
+    fun search() = viewModelScope.launch {
+        updateRecentSearch(searchText.value)
     }
 }
