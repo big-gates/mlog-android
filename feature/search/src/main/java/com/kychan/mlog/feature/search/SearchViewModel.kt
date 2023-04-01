@@ -106,4 +106,8 @@ class SearchViewModel @Inject constructor(
     fun deleteAll() = viewModelScope.launch {
         deleteAllRecentSearch()
     }
+
+    fun delete(id:Int) = viewModelScope.launch {
+        deleteRecentSearch(id)
+    }
 }

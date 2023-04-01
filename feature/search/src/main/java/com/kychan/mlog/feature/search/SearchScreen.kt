@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -35,6 +36,7 @@ import com.kychan.mlog.core.design.border.bottomBorder
 import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.core.design.theme.Gray400
 import com.kychan.mlog.core.design.theme.Gray600
+import com.kychan.mlog.core.design.theme.Pink500
 import com.kychan.mlog.feature.search.model.MovieItem
 import com.kychan.mlog.feature.search.model.RecentSearchView
 
@@ -62,7 +64,8 @@ fun SearchScreen(
             text = searchText,
             recentSearchList = recentSearchList,
             movies = movies,
-            deleteAll = viewModel::deleteAll
+            deleteAll = viewModel::deleteAll,
+            delete = viewModel::delete
         )
     }
 }
@@ -120,12 +123,14 @@ fun SearchView(
     text: String,
     recentSearchList: List<RecentSearchView> = listOf(),
     movies: List<MovieItem> = listOf(),
-    deleteAll: () -> Unit = {},
+    deleteAll: () -> Unit,
+    delete: (id: Int) -> Unit,
 ) {
     if(text.isEmpty()){
         RecentSearchListView(
             recentSearchList = recentSearchList,
-            deleteAll = deleteAll
+            deleteAll = deleteAll,
+            delete = delete
         )
     }else{
         SearchResultView(movies)
@@ -177,7 +182,8 @@ fun Movie(
 @Composable
 fun RecentSearchListView(
     recentSearchList: List<RecentSearchView>,
-    deleteAll: () -> Unit = {},
+    deleteAll: () -> Unit,
+    delete: (id: Int) -> Unit,
 ) {
 
     if(recentSearchList.isNotEmpty()){
@@ -192,7 +198,10 @@ fun RecentSearchListView(
         verticalArrangement = Arrangement.Center,
     ){
         items(recentSearchList){
-            RecentSearch(recentSearchView = it)
+            RecentSearch(
+                recentSearchView = it,
+                delete = delete,
+            )
         }
     }
 }
@@ -224,11 +233,25 @@ fun RecentSearchHeader(
 
 @Composable
 fun RecentSearch(
-    recentSearchView: RecentSearchView
+    recentSearchView: RecentSearchView,
+    delete: (id: Int) -> Unit,
 ){
-    Text(
-        modifier = Modifier.padding(vertical = 8.dp),
-        text = recentSearchView.text,
-        fontSize = 16.sp
-    )
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            modifier = Modifier.padding(vertical = 8.dp),
+            text = recentSearchView.text,
+            fontSize = 16.sp
+        )
+
+        Icon(
+            modifier = Modifier.clickable { delete(recentSearchView.id) },
+            imageVector = MLogIcons.Close,
+            contentDescription = null,
+            tint = Pink500
+        )
+    }
 }
