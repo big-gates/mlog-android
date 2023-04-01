@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -36,7 +35,7 @@ import coil.request.ImageRequest
 import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.core.design.theme.Black
 import com.kychan.mlog.core.design.theme.MovieRankBg
-import com.kychan.mlog.core.design.theme.MovieRating
+import com.kychan.mlog.core.design.theme.Pink500
 import com.kychan.mlog.core.design.util.maxScrollFlingBehavior
 import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.feature.home.HomeViewModel.Companion.MLOG_RECOMMENDATION
@@ -276,7 +275,7 @@ fun MovieRating(
     Row(modifier = modifier) {
         Text(
             text = "예상 ★ $rating",
-            color = MovieRating,
+            color = Pink500,
             fontSize = 13.sp
         )
     }
