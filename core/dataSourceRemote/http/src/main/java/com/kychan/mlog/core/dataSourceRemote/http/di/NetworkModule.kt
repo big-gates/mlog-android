@@ -25,10 +25,12 @@ private const val THE_MOVIE_DB_API_KEY = BuildConfig.THE_MOVIE_DB_API_KEY
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton
     fun providesNetworkJson(): Json = Json {
         ignoreUnknownKeys = true
+        explicitNulls = false
     }
 
     @Provides
