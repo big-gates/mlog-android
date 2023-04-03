@@ -1,14 +1,14 @@
 package com.kychan.mlog.feature.search
 
+import android.view.MotionEvent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,6 +20,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -29,14 +30,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.kychan.mlog.core.design.border.bottomBorder
+import com.kychan.mlog.core.design.component.items
 import com.kychan.mlog.core.design.icon.MLogIcons
-import com.kychan.mlog.core.design.theme.Gray400
-import com.kychan.mlog.core.design.theme.Gray600
-import com.kychan.mlog.core.design.theme.Pink500
+import com.kychan.mlog.core.design.icon.MLogIcons.Logo
+import com.kychan.mlog.core.design.theme.*
+import com.kychan.mlog.core.design.util.conditional
 import com.kychan.mlog.feature.search.model.MovieItem
 import com.kychan.mlog.feature.search.model.RecentSearchView
 
@@ -45,20 +50,23 @@ fun SearchRouter(){
     SearchScreen()
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
 ){
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
-    val movies by viewModel.movies.collectAsStateWithLifecycle()
+    val movies = viewModel.movies.collectAsLazyPagingItems()
     val recentSearchList by viewModel.recentSearchList.collectAsStateWithLifecycle()
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(modifier = modifier.fillMaxHeight()) {
         SearchBar(
             text = searchText,
             onTextChange = viewModel::updateSearchText,
-            search = viewModel::search
+            search = viewModel::search,
+            keyboardHide = { keyboardController?.hide() }
         )
         SearchView(
             text = searchText,
@@ -66,22 +74,18 @@ fun SearchScreen(
             movies = movies,
             deleteAll = viewModel::deleteAll,
             delete = viewModel::delete
-        )
+        ) { keyboardController?.hide() }
     }
 }
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-    ExperimentalComposeUiApi::class
-)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(
     text: String,
     onTextChange: (text: String) -> Unit = {},
-    search: () -> Unit = {}
+    search: () -> Unit = {},
+    keyboardHide: () -> Unit,
 ){
-    val keyboardController = LocalSoftwareKeyboardController.current
-
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
@@ -107,14 +111,12 @@ fun SearchBar(
         },
         keyboardActions = KeyboardActions(
             onDone = {
-                keyboardController?.let {
-                    it.hide()
-                    search()
-                }
+                keyboardHide()
+                search()
             }
         ),
         singleLine = true,
-        shape = RoundedCornerShape(50),
+        shape = Shapes.large,
     )
 }
 
@@ -122,9 +124,10 @@ fun SearchBar(
 fun SearchView(
     text: String,
     recentSearchList: List<RecentSearchView> = listOf(),
-    movies: List<MovieItem> = listOf(),
+    movies: LazyPagingItems<MovieItem>,
     deleteAll: () -> Unit,
     delete: (id: Int) -> Unit,
+    keyboardHide: () -> Unit,
 ) {
     if(text.isEmpty()){
         RecentSearchListView(
@@ -133,15 +136,27 @@ fun SearchView(
             delete = delete
         )
     }else{
-        SearchResultView(movies)
+        SearchResultView(
+            movies = movies,
+            keyboardHide = keyboardHide
+        )
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchResultView(
-    movies: List<MovieItem>
+    movies: LazyPagingItems<MovieItem>,
+    keyboardHide: () -> Unit,
 ) {
     LazyVerticalGrid(
+        modifier = Modifier
+            .pointerInteropFilter { motionEvent ->
+                when (motionEvent.action) {
+                    MotionEvent.ACTION_DOWN -> { keyboardHide() }
+                }
+                false
+            },
         columns = GridCells.Fixed(3),
         contentPadding = PaddingValues(10.dp),
         verticalArrangement = Arrangement.spacedBy(5.dp),
@@ -149,9 +164,8 @@ fun SearchResultView(
     ){
         items(
             items = movies,
-            key = { it.id }
-        ){
-            Movie(it)
+        ){ item, _ ->
+            item?.let { Movie(it) }
         }
     }
 }
@@ -160,6 +174,10 @@ fun SearchResultView(
 fun Movie(
     movie: MovieItem
 ){
+    var isError by remember {
+        mutableStateOf(false)
+    }
+
     Image(
         painter = rememberAsyncImagePainter(
             ImageRequest
@@ -168,14 +186,22 @@ fun Movie(
                 .apply(block = fun ImageRequest.Builder.() {
                     crossfade(true)
                 })
+                .error(Logo)
+                .listener(
+                    onSuccess = { _,_ -> isError = false },
+                    onError = { _,_ -> isError = true }
+                )
                 .diskCachePolicy(CachePolicy.ENABLED)
                 .build()
         ),
         contentDescription = "movie poster",
-        contentScale = ContentScale.Crop,
+        contentScale = if(isError) ContentScale.Inside else ContentScale.Crop,
         modifier = Modifier
-            .clip(RoundedCornerShape(10.dp))
+            .clip(Shapes.medium)
             .aspectRatio(MOVIE_ASPECT_RATIO, true)
+            .conditional(isError) {
+                border(width = 1.dp, Gray400, Shapes.medium)
+            }
     )
 }
 
