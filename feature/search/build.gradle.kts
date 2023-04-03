@@ -6,3 +6,8 @@ plugins {
 android {
     namespace = "com.kychan.mlog.feature.search"
 }
+
+dependencies{
+    implementation(libs.androidx.paging.compose)
+    implementation(libs.androidx.paging.runtime.ktx)
+}
