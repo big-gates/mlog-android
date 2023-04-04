@@ -1,5 +1,6 @@
 package com.kychan.mlog.feature.mypage
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,10 +17,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.google.accompanist.pager.*
 import com.kychan.mlog.core.design.component.BottomSheetLayout
 import com.kychan.mlog.core.design.icon.MLogIcons
+import com.kychan.mlog.feature.mypage.model.MyMovieItem
 import kotlinx.coroutines.launch
 
 
@@ -41,6 +45,7 @@ fun MyPageAppBar() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MyPageView(
+    myMovieItem: List<MyMovieItem>,
     onClick: () -> Unit,
 ) {
     Column {
@@ -87,9 +92,9 @@ fun MyPageView(
             state = pagerState
         ) { page ->
             val itemList = when (pagerState.currentPage){
-                0 -> list
-                1 -> list2
-                else -> list
+                0 -> myMovieItem
+                1 -> myMovieItem
+                else -> myMovieItem
             }
             PhotoGrid(
                 photos = itemList,
@@ -101,11 +106,9 @@ fun MyPageView(
     }
 }
 
-val list = listOf<String>("1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3")
-val list2 = listOf<String>("1","2","3","1")
 @Composable
 fun PhotoGrid(
-    photos: List<String>,
+    photos: List<MyMovieItem>,
     onClick: () -> Unit,
 ) {
     LazyVerticalGrid(
@@ -131,10 +134,20 @@ fun PhotoGrid(
     }
 }
 
+@Composable
+fun MyPageRoute(
+    viewModel: MyPageViewModel = hiltViewModel(),
+){
+    val movies by viewModel.myRatedMovies.collectAsStateWithLifecycle()
+
+    MyPageScreen(movies)
+}
+
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun MyPageScreen() {
+fun MyPageScreen(myMovieItem: List<MyMovieItem> = emptyList()) {
+    Log.d("myMovieItem", myMovieItem.toString())
     val coroutineScope = rememberCoroutineScope()
     val modalSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -148,6 +161,7 @@ fun MyPageScreen() {
         Column {
             MyPageAppBar()
             MyPageView(
+                myMovieItem = myMovieItem,
                 onClick = {
                     coroutineScope.launch {
                         if (modalSheetState.isVisible)

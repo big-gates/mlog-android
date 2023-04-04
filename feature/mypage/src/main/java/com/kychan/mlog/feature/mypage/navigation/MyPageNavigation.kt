@@ -4,8 +4,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
-import com.kychan.mlog.feature.mypage.MyPageScreen
 import com.google.accompanist.navigation.animation.composable
+import com.kychan.mlog.feature.mypage.MyPageRoute
 
 const val myPageRoute = "myPage_route"
 
@@ -16,6 +16,6 @@ fun NavController.navigateToMyPage(navOptions: NavOptions? = null) {
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.myPageScreen() {
     composable(route = myPageRoute) {
-        MyPageScreen()
+        MyPageRoute()
     }
 }
