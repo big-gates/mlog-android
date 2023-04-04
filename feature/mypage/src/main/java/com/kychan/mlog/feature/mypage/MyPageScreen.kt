@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.google.accompanist.pager.*
 import com.kychan.mlog.core.design.component.BottomSheetLayout
 import com.kychan.mlog.core.design.icon.MLogIcons
@@ -115,16 +116,16 @@ fun PhotoGrid(
         verticalArrangement = Arrangement.spacedBy(1.dp),
         horizontalArrangement = Arrangement.spacedBy(1.dp)
     ) {
-        items(photos.size) { photo ->
-            Text(
+        items(photos.size) { index ->
+            AsyncImage(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .aspectRatio(0.667f)
                     .background(color = Color.Green)
-                    .height(210.dp)
                     .clickable {
                         onClick()
                     },
-                text = photo.toString(),
+                model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${photos[index].posterPath}",
+                contentDescription = "my_movie_image"
             )
         }
     }
