@@ -1,6 +1,7 @@
 package com.kychan.mlog.core.dataSourceLocal.room
 
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.MyMovieDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,4 +15,9 @@ object DaosModule {
     fun providesMovieDao(
         database: MlogDatabase
     ): MovieDao = database.movieDao()
+
+    @Provides
+    fun providesMyMovieDao(
+        database: MlogDatabase
+    ): MyMovieDao = database.myMovieDao()
 }
