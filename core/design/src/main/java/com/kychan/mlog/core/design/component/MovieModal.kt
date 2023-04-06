@@ -13,11 +13,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.gowtham.ratingbar.RatingBar
 import com.gowtham.ratingbar.RatingBarConfig
 import com.gowtham.ratingbar.RatingBarStyle
@@ -61,98 +63,107 @@ fun MovieModalBottomSheetLayout(
     val initialRating = 2.5f
     var rating: Float by remember { mutableStateOf(initialRating) }
 
-    Column(
-        modifier = modifier.background(Color.Yellow)
-    ) {
-        Row(
+    Box {
+        AsyncImage(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 4.dp, end = 4.dp, top = 65.dp)
-                .background(color = Color.Red)
-                .padding(horizontal = 10.dp, vertical = 12.dp),
-        ) {
-            Text(
-                modifier = Modifier.weight(1f),
-                text = "영화제목텍스트만약에",
-                fontSize = 24.sp,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-            )
-            Column(
+                .align(Alignment.TopStart),
+            contentScale = ContentScale.FillHeight,
+            model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${movieModalTO?.backgroundImage.orEmpty()}",
+            contentDescription = "movie_modal_image"
+        )
+        Column {
+            Row(
                 modifier = Modifier
-                    .background(Color.Blue),
-                horizontalAlignment = Alignment.End,
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_favorite_border),
-                    contentDescription = "unlike_movie",
-                    modifier = Modifier
-                        .width(28.dp)
-                        .height(28.dp)
-                )
-                Icon(
-                    painter = painterResource(id = R.drawable.adult_movie),
-                    contentDescription = "adult_movie",
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                        .width(28.dp)
-                        .height(28.dp)
-                )
-            }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 4.dp, end = 4.dp, top = 41.dp)
-                .background(color = Color.Red)
-                .padding(horizontal = 10.dp, vertical = 12.dp),
-        ) {
-            Column(
-                modifier = Modifier
-                    .background(Color.Blue)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .padding(start = 4.dp, end = 4.dp, top = 65.dp)
+                    .background(color = Color.Red)
+                    .padding(horizontal = 10.dp, vertical = 12.dp),
             ) {
                 Text(
-                    text = "내 점수는요?",
+                    modifier = Modifier.weight(1f),
+                    text = movieModalTO?.title.orEmpty(),
                     fontSize = 24.sp,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Row(
+                Column(
                     modifier = Modifier
-                        .padding(start = 53.dp, end = 19.dp)
-                        .background(color = Color.Yellow)
-                        .align(alignment = Alignment.CenterHorizontally),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                        .background(Color.Blue),
+                    horizontalAlignment = Alignment.End,
                 ) {
-                    TextField(
-                        modifier = Modifier.background(color = Color.Transparent),
-                        value = "안녕하세요 곽하민 입니다.",
-                        onValueChange = { },
-                    )
                     Icon(
-                        painter = painterResource(id = R.drawable.comment_write),
-                        contentDescription = "comment_write",
+                        painter = painterResource(id = R.drawable.ic_favorite_border),
+                        contentDescription = "unlike_movie",
                         modifier = Modifier
-                            .padding(start = 11.dp)
-                            .width(24.dp)
-                            .height(24.dp)
+                            .width(28.dp)
+                            .height(28.dp),
                     )
-                }
-                RatingBar(
-                    modifier = Modifier
-                        .align(alignment = Alignment.CenterHorizontally),
-                    value = rating,
-                    config = RatingBarConfig().size(32.dp)
-                        .style(RatingBarStyle.HighLighted),
-                    onValueChange = {
-                        rating = it
-                    },
-                    onRatingChanged = {
-                        Log.d("TAG", "onRatingChanged: $it")
+                    if (movieModalTO?.adult == true) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.adult_movie),
+                            contentDescription = "adult_movie",
+                            modifier = Modifier
+                                .padding(top = 16.dp)
+                                .width(28.dp)
+                                .height(28.dp)
+                        )
                     }
-                )
+                }
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 4.dp, end = 4.dp, top = 41.dp)
+                    .background(color = Color.Red)
+                    .padding(horizontal = 10.dp, vertical = 12.dp),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .background(Color.Blue)
+                        .fillMaxWidth(),
+                ) {
+                    Text(
+                        text = "내 점수는요?",
+                        fontSize = 24.sp,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                    Row(
+                        modifier = Modifier
+                            .padding(start = 53.dp, end = 19.dp)
+                            .background(color = Color.Yellow)
+                            .align(alignment = Alignment.CenterHorizontally),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        TextField(
+                            modifier = Modifier.background(color = Color.Transparent),
+                            value = "안녕하세요 곽하민 입니다.",
+                            onValueChange = { },
+                        )
+                        Icon(
+                            painter = painterResource(id = R.drawable.comment_write),
+                            contentDescription = "comment_write",
+                            modifier = Modifier
+                                .padding(start = 11.dp)
+                                .width(24.dp)
+                                .height(24.dp)
+                        )
+                    }
+                    RatingBar(
+                        modifier = Modifier
+                            .align(alignment = Alignment.CenterHorizontally),
+                        value = rating,
+                        config = RatingBarConfig().size(32.dp)
+                            .style(RatingBarStyle.HighLighted),
+                        onValueChange = {
+                            rating = it
+                        },
+                        onRatingChanged = {
+                            Log.d("TAG", "onRatingChanged: $it")
+                        }
+                    )
 
                 }
             }
