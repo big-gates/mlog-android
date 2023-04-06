@@ -8,6 +8,8 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.kychan.mlog.feature.home.navigation.homeGraph
 import com.kychan.mlog.feature.home.navigation.navigateToHomeDetail
 import com.kychan.mlog.feature.mypage.navigation.myPageScreen
+import com.kychan.mlog.feature.search.navigation.navigateToSearch
+import com.kychan.mlog.feature.search.navigation.searchScreen
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -25,8 +27,10 @@ fun MLogNavHost(
         homeGraph(
             navigateToHomeDetail = { watchProviders ->
                 navController.navigateToHomeDetail(watchProviders)
-            }
+            },
+            navigateToSearch = { navController.navigateToSearch() }
         )
         myPageScreen()
+        searchScreen()
     }
 }

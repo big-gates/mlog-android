@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.*
 import com.kychan.mlog.core.design.icon.MLogIcons
+import com.kychan.mlog.core.design.theme.Black
 import kotlinx.coroutines.launch
 
 
@@ -71,7 +72,7 @@ fun MyPageView() {
                 painter = painterResource(id = MLogIcons.Sort),
                 contentDescription = "",
                 contentScale = ContentScale.Fit,
-                colorFilter = ColorFilter.tint(Color.Black),
+                colorFilter = ColorFilter.tint(Black),
             )
             Text(
                 text = "정렬 버튼 들어가는 자리"
@@ -99,7 +100,7 @@ fun PhotoGrid(photos: List<String>) {
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.Black),
+            .background(color = Black),
         columns = GridCells.Fixed(3),
         verticalArrangement = Arrangement.spacedBy(1.dp),
         horizontalArrangement = Arrangement.spacedBy(1.dp)

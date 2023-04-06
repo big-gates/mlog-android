@@ -10,6 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.kychan.mlog.core.design.component.DynamicGridComponent.DEFAULT_COL
 import com.kychan.mlog.core.design.component.PagingDynamicLazyVerticalGrid
@@ -52,14 +53,19 @@ fun Movie(
 ) {
     Image(
         painter = rememberAsyncImagePainter(
-            ImageRequest.Builder(LocalContext.current).data(data = movie.image).apply(block = fun ImageRequest.Builder.() {
-                crossfade(true)
-            }).build()
+            ImageRequest
+                .Builder(LocalContext.current)
+                .data(data = movie.image)
+                .apply(block = fun ImageRequest.Builder.() {
+                    crossfade(true)
+                })
+                .diskCachePolicy(CachePolicy.ENABLED)
+                .build()
         ),
         contentDescription = "movie poster",
         contentScale = ContentScale.Crop,
         modifier = modifier
-            .fillMaxWidth()
+//            .fillMaxWidth()
             .aspectRatio(MOVIE_ASPECT_RATIO, true)
 
     )

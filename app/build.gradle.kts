@@ -38,6 +38,7 @@ android {
 dependencies {
     implementation(project(":feature:home"))
     implementation(project(":feature:mypage"))
+    implementation(project(":feature:search"))
     implementation(project(":core:common"))
     implementation(project(":core:model"))
     implementation(project(":core:design"))
