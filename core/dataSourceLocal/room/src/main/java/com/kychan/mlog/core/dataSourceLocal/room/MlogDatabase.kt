@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.kychan.mlog.core.dataSourceLocal.room.converter.SyncLogTypeConverter
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.SearchDao
 import com.kychan.mlog.core.dataSourceLocal.room.model.MlogMovieEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.NetflixMovieEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.SyncLogEntity
@@ -21,6 +22,7 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.*
         NetflixMovieEntity::class,
         WatchaMovieEntity::class,
         SyncLogEntity::class,
+        RecentSearchEntity::class
     ],
     version = 1,
     autoMigrations = [],
@@ -31,4 +33,5 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.*
 )
 abstract class MlogDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
+    abstract fun searchDao(): SearchDao
 }

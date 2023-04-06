@@ -1,15 +1,25 @@
 package com.kychan.mlog.feature.search
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.kychan.mlog.core.domain.observe.ObserveRecentSearch
+import com.kychan.mlog.core.domain.usecase.DeleteAllRecentSearch
+import com.kychan.mlog.core.domain.usecase.DeleteRecentSearch
+import com.kychan.mlog.core.domain.usecase.UpdateRecentSearch
 import com.kychan.mlog.feature.search.model.MovieItem
+import com.kychan.mlog.feature.search.model.RecentSearchView
+import com.kychan.mlog.feature.search.model.toView
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-
+    private val observeRecentSearch: ObserveRecentSearch,
+    private val updateRecentSearch: UpdateRecentSearch,
+    private val deleteAllRecentSearch: DeleteAllRecentSearch,
+    private val deleteRecentSearch: DeleteRecentSearch,
 ):ViewModel() {
 
     private val _searchText: MutableStateFlow<String> = MutableStateFlow("")
@@ -69,6 +79,16 @@ class SearchViewModel @Inject constructor(
         "https://i.annihil.us/u/prod/marvel/i/mg/7/00/545a82f59dd73.jpg",
     )
 
+    val recentSearchList: StateFlow<List<RecentSearchView>> = observeRecentSearch()
+        .map { recentSearches ->
+            recentSearches.map { it.toView() }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = listOf()
+        )
+
     val movies: StateFlow<List<MovieItem>> = MutableStateFlow(
         (0 until 50).map {
             MovieItem(id = it, images[it])
@@ -79,4 +99,15 @@ class SearchViewModel @Inject constructor(
         _searchText.value = text
     }
 
+    fun search() = viewModelScope.launch {
+        updateRecentSearch(searchText.value)
+    }
+
+    fun deleteAll() = viewModelScope.launch {
+        deleteAllRecentSearch()
+    }
+
+    fun delete(id:Int) = viewModelScope.launch {
+        deleteRecentSearch(id)
+    }
 }
