@@ -22,6 +22,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.google.accompanist.pager.*
 import com.kychan.mlog.core.design.component.BottomSheetLayout
+import com.kychan.mlog.core.design.component.movie_modal.MovieModalTO
 import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.feature.mypage.model.MyMovieItem
 import kotlinx.coroutines.launch
@@ -46,7 +47,7 @@ fun MyPageAppBar() {
 @Composable
 fun MyPageView(
     myMovieItem: List<MyMovieItem>,
-    onClick: () -> Unit,
+    onClick: (index: Int) -> Unit,
 ) {
     Column {
         val pages = listOf("평가한", "보고싶어요")
@@ -99,7 +100,7 @@ fun MyPageView(
             PhotoGrid(
                 photos = itemList,
                 onClick = {
-                    onClick()
+                    onClick(it)
                 }
             )
         }
@@ -109,7 +110,7 @@ fun MyPageView(
 @Composable
 fun PhotoGrid(
     photos: List<MyMovieItem>,
-    onClick: () -> Unit,
+    onClick: (index: Int) -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = Modifier
@@ -125,7 +126,7 @@ fun PhotoGrid(
                     .aspectRatio(0.667f)
                     .background(color = Color.Green)
                     .clickable {
-                        onClick()
+                        onClick(index)
                     },
                 model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${photos[index].posterPath}",
                 contentDescription = "my_movie_image"
@@ -157,21 +158,36 @@ fun MyPageScreen(myMovieItem: List<MyMovieItem> = emptyList()) {
         },
         skipHalfExpanded = false
     )
+    var movieModalTOState: MutableState<MovieModalTO?> = remember { mutableStateOf(null) }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
             MyPageAppBar()
             MyPageView(
                 myMovieItem = myMovieItem,
-                onClick = {
+                onClick = { clickItemIndex ->
                     coroutineScope.launch {
-                        if (modalSheetState.isVisible)
+                        if (modalSheetState.isVisible) {
                             modalSheetState.hide()
-                        else
+                        } else {
+                            myMovieItem[clickItemIndex].apply {
+                                movieModalTOState.value = MovieModalTO(
+                                    id = this.myMovieId,
+                                    title = this.title,
+                                    adult = this.adult,
+                                    backgroundImage = this.posterPath,
+                                    tags = emptyList()
+                                )
+                            }
                             modalSheetState.show()
+                        }
                     }
                 }
             )
         }
-        BottomSheetLayout(modalSheetState = modalSheetState)
+        BottomSheetLayout(
+            modalSheetState = modalSheetState,
+            movieModalTO = movieModalTOState.value,
+        )
     }
 }

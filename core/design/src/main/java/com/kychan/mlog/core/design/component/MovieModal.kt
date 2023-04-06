@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.sp
 import com.gowtham.ratingbar.RatingBar
 import com.gowtham.ratingbar.RatingBarConfig
 import com.gowtham.ratingbar.RatingBarStyle
+import com.kychan.mlog.core.design.component.movie_modal.MovieModalTO
+import com.kychan.mlog.core.designsystem.BuildConfig
 import com.kychan.mlog.core.designsystem.R
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -31,7 +33,8 @@ fun BottomSheetLayout(
         initialValue = ModalBottomSheetValue.Hidden,
         confirmStateChange = { it != ModalBottomSheetValue.HalfExpanded },
         skipHalfExpanded = true
-    )
+    ),
+    movieModalTO: MovieModalTO? = null
 ) {
     var isSheetFullScreen by remember { mutableStateOf(false) }
     val roundedCornerRadius = if (isSheetFullScreen) 0.dp else 12.dp
@@ -41,7 +44,7 @@ fun BottomSheetLayout(
         sheetState = modalSheetState,
         sheetShape = RoundedCornerShape(topStart = roundedCornerRadius, topEnd = roundedCornerRadius),
         sheetContent = {
-            MovieModalBottomSheetLayout(modifier)
+            MovieModalBottomSheetLayout(modifier, movieModalTO)
         },
         content = {}
     )
@@ -53,6 +56,7 @@ fun BottomSheetLayout(
 @Composable
 fun MovieModalBottomSheetLayout(
     modifier: Modifier = Modifier.fillMaxSize(),
+    movieModalTO: MovieModalTO? = null
 ) {
     val initialRating = 2.5f
     var rating: Float by remember { mutableStateOf(initialRating) }
@@ -150,20 +154,21 @@ fun MovieModalBottomSheetLayout(
                     }
                 )
 
+                }
             }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp)
-                .background(color = Color.Red)
-                .padding(horizontal = 11.dp, vertical = 9.dp)
-        ) {
-            for (i in 0..3) {
-                Text(
-                    text = "드라마",
-                    modifier = Modifier.padding(start = 13.dp)
-                )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+                    .background(color = Color.Red)
+                    .padding(horizontal = 11.dp, vertical = 9.dp)
+            ) {
+                for (i in 0..3) {
+                    Text(
+                        text = "드라마",
+                        modifier = Modifier.padding(start = 13.dp)
+                    )
+                }
             }
         }
     }
