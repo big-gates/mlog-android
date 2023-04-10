@@ -34,6 +34,7 @@ fun NavController.navigateToHomeDetail(watchProvider: WatchProvider){
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.homeGraph(
     navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit,
+    navigateToSearch: () -> Unit,
 ) {
     navigation(
         route = homeGraph,
@@ -41,7 +42,8 @@ fun NavGraphBuilder.homeGraph(
     ){
         composable(route = homeRoute) {
             HomeRoute(
-                navigateToHomeDetail =  navigateToHomeDetail
+                navigateToHomeDetail =  navigateToHomeDetail,
+                navigateToSearch = navigateToSearch,
             )
         }
 

@@ -5,6 +5,8 @@ import com.kychan.mlog.core.dataSourceRemote.http.datasource.TMDBDataSource
 import com.kychan.mlog.core.data.repository.HomeRepository
 import com.kychan.mlog.core.data.repository.MyPageRepository
 import com.kychan.mlog.core.data.repository.MyPageRepositoryImpl
+import com.kychan.mlog.core.data.repository.SearchRepository
+import com.kychan.mlog.core.data.repository.SearchRepositoryImpl
 import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
 import dagger.Module
 import dagger.Provides
@@ -28,4 +30,11 @@ object DataModule {
     fun providesMyPageRepository(
         roomDataSource: RoomDataSource
     ): MyPageRepository = MyPageRepositoryImpl(roomDataSource)
+
+    @Provides
+    @Singleton
+    fun providesSearchRepository(
+        tmdbDataSource: TMDBDataSource,
+        roomDataSource: RoomDataSource
+    ): SearchRepository = SearchRepositoryImpl(tmdbDataSource, roomDataSource)
 }

@@ -25,6 +25,7 @@ import com.kychan.mlog.core.design.component.BottomSheetLayout
 import com.kychan.mlog.core.design.component.movie_modal.MovieModalTO
 import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.feature.mypage.model.MyMovieItem
+import com.kychan.mlog.core.design.theme.Black
 import kotlinx.coroutines.launch
 
 
@@ -81,7 +82,7 @@ fun MyPageView(
                 painter = painterResource(id = MLogIcons.Sort),
                 contentDescription = "",
                 contentScale = ContentScale.Fit,
-                colorFilter = ColorFilter.tint(Color.Black),
+                colorFilter = ColorFilter.tint(Black),
             )
             Text(
                 text = "정렬 버튼 들어가는 자리"
@@ -115,7 +116,7 @@ fun PhotoGrid(
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.Black),
+            .background(color = Black),
         columns = GridCells.Fixed(3),
         verticalArrangement = Arrangement.spacedBy(1.dp),
         horizontalArrangement = Arrangement.spacedBy(1.dp)

@@ -27,4 +27,14 @@ interface RoomDataSource {
         movieEntities: List<WatchaMovieEntity>,
         nextKey: Int,
     )
+
+    suspend fun updateRecentSearch(
+        recentSearchEntity: RecentSearchEntity,
+    )
+
+    fun getRecentSearch(): Flow<List<RecentSearchEntity>>
+
+    suspend fun deleteAllRecentSearch()
+
+    suspend fun deleteRecentSearch(id: Int)
 }

@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -31,10 +30,12 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberAsyncImagePainter
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.kychan.mlog.core.design.icon.MLogIcons
+import com.kychan.mlog.core.design.theme.Black
 import com.kychan.mlog.core.design.theme.MovieRankBg
-import com.kychan.mlog.core.design.theme.MovieRating
+import com.kychan.mlog.core.design.theme.Pink500
 import com.kychan.mlog.core.design.util.maxScrollFlingBehavior
 import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.feature.home.HomeViewModel.Companion.MLOG_RECOMMENDATION
@@ -45,28 +46,31 @@ import com.kychan.mlog.feature.home.model.MovieCategory
 import com.kychan.mlog.feature.home.model.MovieItem
 
 @Composable
-fun HomeAppBar() {
-    TopAppBar(
-        backgroundColor = Color.White
+fun HomeAppBar(navigateToSearch: () -> Unit) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = CenterVertically,
+        modifier = Modifier
+            .background(color = Color.White)
+            .fillMaxWidth()
+            .padding(
+                horizontal = 10.dp,
+                vertical = 5.dp
+            )
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Image(
-                painter = painterResource(id = MLogIcons.Logo),
-                contentDescription = "",
-                contentScale = ContentScale.Fit
-            )
+        Image(
+            painter = painterResource(id = MLogIcons.Logo),
+            contentDescription = "",
+            contentScale = ContentScale.Fit
+        )
 
-            Image(
-                painter = painterResource(id = MLogIcons.Search),
-                contentDescription = "",
-                contentScale = ContentScale.Fit,
-                colorFilter = ColorFilter.tint(Color.Black),
-            )
-        }
+        Image(
+            modifier = Modifier.clickable { navigateToSearch() },
+            painter = painterResource(id = MLogIcons.Search),
+            contentDescription = "",
+            contentScale = ContentScale.Fit,
+            colorFilter = ColorFilter.tint(Black),
+        )
     }
 }
 
@@ -74,7 +78,8 @@ fun HomeAppBar() {
 fun HomeRoute(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
-    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit
+    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit,
+    navigateToSearch: () -> Unit
 ) {
     HomeScreen(
         categories = listOf(
@@ -91,7 +96,8 @@ fun HomeRoute(
                 movieItem = viewModel.watchaMovieitem.collectAsLazyPagingItems()
             )
         ),
-        navigateToHomeDetail = navigateToHomeDetail
+        navigateToHomeDetail = navigateToHomeDetail,
+        navigateToSearch = navigateToSearch,
     )
 }
 
@@ -99,13 +105,14 @@ fun HomeRoute(
 fun HomeScreen(
     categories: List<MovieCategory>,
     navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit = { },
+    navigateToSearch: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
     Column(Modifier.scrollable(
         state = scrollState,
         orientation = Orientation.Vertical
     )) {
-        HomeAppBar()
+        HomeAppBar(navigateToSearch = navigateToSearch)
 
         LazyColumn(
             contentPadding = PaddingValues(5.dp),
@@ -197,9 +204,14 @@ fun Movie(
         Box {
             Image(
                 painter = rememberAsyncImagePainter(
-                    ImageRequest.Builder(LocalContext.current).data(data = movie.image).apply(block = fun ImageRequest.Builder.() {
-                        crossfade(true)
-                    }).build()
+                    ImageRequest
+                        .Builder(LocalContext.current)
+                        .data(data = movie.image)
+                        .apply(block = fun ImageRequest.Builder.() {
+                            crossfade(true)
+                        })
+                        .diskCachePolicy(CachePolicy.ENABLED)
+                        .build()
                 ),
                 contentDescription = "movie poster",
                 contentScale = ContentScale.Crop,
@@ -263,7 +275,7 @@ fun MovieRating(
     Row(modifier = modifier) {
         Text(
             text = "예상 ★ $rating",
-            color = MovieRating,
+            color = Pink500,
             fontSize = 13.sp
         )
     }

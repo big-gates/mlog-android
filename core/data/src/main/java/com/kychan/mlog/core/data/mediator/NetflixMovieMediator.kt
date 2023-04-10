@@ -30,7 +30,7 @@ class NetflixMovieMediator(
         val latestUpdate = roomDataSource.getSyncLog(SyncLogType.Netflix_Movie).updatedAt.toDate().time
         val cacheTime = TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS)
         return if(System.currentTimeMillis() >= latestUpdate + cacheTime) {
-            roomDataSource.clearMlogMoviesUpdateSyncLogUpdatedAt()
+            roomDataSource.clearNetflixMoviesUpdateSyncLogUpdatedAt()
             InitializeAction.LAUNCH_INITIAL_REFRESH
         } else InitializeAction.SKIP_INITIAL_REFRESH
     }

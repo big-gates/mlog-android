@@ -2,6 +2,7 @@ package com.kychan.mlog.core.dataSourceLocal.room
 
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MyMovieDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.SearchDao
 import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
 import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSourceImpl
 import dagger.Module
@@ -16,5 +17,9 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun providesRoomDataSource(movieDao: MovieDao, myMovieDao: MyMovieDao): RoomDataSource = RoomDataSourceImpl(movieDao, myMovieDao)
+    fun providesRoomDataSource(
+        movieDao: MovieDao,
+        myMovieDao: MyMovieDao,
+        searchDao: SearchDao,
+    ): RoomDataSource = RoomDataSourceImpl(movieDao, myMovieDao, searchDao)
 }
