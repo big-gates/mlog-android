@@ -2,7 +2,6 @@ package com.kychan.mlog.core.dataSourceLocal.room.datasource
 
 import androidx.paging.PagingSource
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
-import com.kychan.mlog.core.dataSourceLocal.room.dao.MyMovieDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.SearchDao
 import com.kychan.mlog.core.dataSourceLocal.room.model.*
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +9,6 @@ import javax.inject.Inject
 
 class RoomDataSourceImpl @Inject constructor(
     private val movieDao: MovieDao,
-    private val myMovieDao: MyMovieDao,
     private val searchDao: SearchDao,
 ): RoomDataSource {
     override fun getMLogMovie(): PagingSource<Int, MlogMovieEntity> {
@@ -76,9 +74,5 @@ class RoomDataSourceImpl @Inject constructor(
 
     override suspend fun deleteRecentSearch(id: Int) {
         searchDao.deleteRecentSearch(id)
-    }
-
-    override fun getMyRatedMovies(): Flow<List<MyRatedMoviesVO>> {
-        return myMovieDao.getMyRatedMovies()
     }
 }

@@ -11,7 +11,6 @@ interface RoomDataSource {
     suspend fun clearMlogMoviesUpdateSyncLogUpdatedAt()
     suspend fun clearNetflixMoviesUpdateSyncLogUpdatedAt()
     suspend fun clearWatchaMoviesUpdateSyncLogUpdatedAt()
-    fun getMyRatedMovies(): Flow<List<MyRatedMoviesVO>>
     suspend fun getSyncLog(syncLogType: SyncLogType): SyncLogEntity
     suspend fun updateMlogMoviesAndSyncLogNextKey(
         movieEntities: List<MlogMovieEntity>,
