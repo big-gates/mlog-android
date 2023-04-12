@@ -22,6 +22,10 @@ class MyPageRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun insertMyRatedMovie(myMovie: MyMovie, rated: Rated) {
+        return myMovieRoomDataSource.insertMyRatedMovie(MyMovieEntity.of(myMovie), RatedEntity.of(rated))
+    }
+
     override suspend fun insertMyWantMovie(myMovie: MyMovie, wantToWatch: WantToWatch) {
         return myMovieRoomDataSource.insertMyWantMovie(MyMovieEntity.of(myMovie), WantToWatchesEntity.of(wantToWatch))
     }

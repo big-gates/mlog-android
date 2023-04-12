@@ -1,6 +1,7 @@
 package com.kychan.mlog.core.dataSourceLocal.room.model
 
 import androidx.room.*
+import com.kychan.mlog.core.model.Rated
 
 @Entity(
     foreignKeys = [
@@ -21,4 +22,13 @@ data class RatedEntity(
     val myMovieId: Int,
     val rated: Float,
     val comment: Int,
-)
+) {
+    companion object {
+        fun of(rated: Rated) = RatedEntity(
+            id = rated.id,
+            myMovieId = rated.myMovieId,
+            rated = rated.rated,
+            comment = rated.comment,
+        )
+    }
+}

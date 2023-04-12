@@ -29,6 +29,11 @@ abstract class MyMovieDao {
     abstract fun getMyWantToWatchMovies(): Flow<List<MyMovieEntity>>
 
     @Transaction
+    open suspend fun insertMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity) {
+        insertMyMovie(myMovieEntity)
+        insertRatedMovie(ratedEntity)
+    }
+    @Transaction
     open suspend fun insertMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity) {
         insertMyMovie(myMovieEntity)
         insertWantMovie(wantToWatchesEntity)
@@ -36,6 +41,9 @@ abstract class MyMovieDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun insertMyMovie(myMovieEntity: MyMovieEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insertRatedMovie(ratedEntity: RatedEntity)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun insertWantMovie(wantToWatchesEntity: WantToWatchesEntity)
