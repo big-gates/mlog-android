@@ -1,7 +1,6 @@
 package com.kychan.mlog.core.dataSourceLocal.room.dao
 
-import androidx.room.Dao
-import androidx.room.Query
+import androidx.room.*
 import com.kychan.mlog.core.dataSourceLocal.room.model.*
 import kotlinx.coroutines.flow.Flow
 import java.util.*
@@ -25,5 +24,18 @@ abstract class MyMovieDao {
         """
     )
     abstract fun getMyRatedMovies(): Flow<List<MyRatedMoviesVO>>
+
+
+    @Transaction
+    open suspend fun insertMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity) {
+        insertMyMovie(myMovieEntity)
+        insertWantMovie(wantToWatchesEntity)
+    }
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insertMyMovie(myMovieEntity: MyMovieEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insertWantMovie(wantToWatchesEntity: WantToWatchesEntity)
 
 }
