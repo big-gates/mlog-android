@@ -47,7 +47,8 @@ fun MyPageAppBar() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MyPageView(
-    myMovieItem: List<MyMovieItem>,
+    myRatedMovies: List<MyMovieItem>,
+    myWantToWatchMovies: List<MyMovieItem>,
     onClick: (index: Int) -> Unit,
 ) {
     Column {
@@ -94,9 +95,9 @@ fun MyPageView(
             state = pagerState
         ) { page ->
             val itemList = when (pagerState.currentPage){
-                0 -> myMovieItem
-                1 -> myMovieItem
-                else -> myMovieItem
+                0 -> myRatedMovies
+                1 -> myWantToWatchMovies
+                else -> emptyList()
             }
             PhotoGrid(
                 photos = itemList,
@@ -140,16 +141,23 @@ fun PhotoGrid(
 fun MyPageRoute(
     viewModel: MyPageViewModel = hiltViewModel(),
 ){
-    val movies by viewModel.myRatedMovies.collectAsStateWithLifecycle()
+    val myRatedMovies by viewModel.myRatedMovies.collectAsStateWithLifecycle()
+    val myWantToWatchMovies by viewModel.myWantToWatchMovies.collectAsStateWithLifecycle()
 
-    MyPageScreen(movies)
+    MyPageScreen(
+        myRatedMovies = myRatedMovies,
+        myWantToWatchMovies = myWantToWatchMovies,
+    )
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun MyPageScreen(myMovieItem: List<MyMovieItem> = emptyList()) {
-    Log.d("myMovieItem", myMovieItem.toString())
+fun MyPageScreen(
+    myRatedMovies: List<MyMovieItem> = emptyList(),
+    myWantToWatchMovies: List<MyMovieItem> = emptyList(),
+    onLikeClick: (MovieModalTO?) -> Unit = {},
+) {
     val coroutineScope = rememberCoroutineScope()
     val modalSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -165,13 +173,14 @@ fun MyPageScreen(myMovieItem: List<MyMovieItem> = emptyList()) {
         Column {
             MyPageAppBar()
             MyPageView(
-                myMovieItem = myMovieItem,
+                myRatedMovies = myRatedMovies,
+                myWantToWatchMovies = myWantToWatchMovies,
                 onClick = { clickItemIndex ->
                     coroutineScope.launch {
                         if (modalSheetState.isVisible) {
                             modalSheetState.hide()
                         } else {
-                            myMovieItem[clickItemIndex].apply {
+                            myRatedMovies[clickItemIndex].apply {
                                 movieModalTOState.value = MovieModalTO(
                                     id = this.myMovieId,
                                     title = this.title,
