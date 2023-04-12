@@ -28,6 +28,18 @@ data class MyMovieEntity(
     val watchProviders: WatchProvider,
     val rank: Int,
 ) {
+    fun toDomain() = MyMovie(
+        id = id,
+        adult = adult,
+        backdropPath = backdropPath,
+        originalTitle = originalTitle,
+        posterPath = posterPath,
+        title = title,
+        voteAverage = voteAverage,
+        watchProviders = watchProviders,
+        rank = rank,
+    )
+
     companion object {
         fun of(myMovie: MyMovie) = MyMovieEntity(
             id = myMovie.id,

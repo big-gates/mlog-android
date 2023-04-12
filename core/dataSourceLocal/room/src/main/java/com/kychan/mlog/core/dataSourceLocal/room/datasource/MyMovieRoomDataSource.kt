@@ -7,5 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface MyMovieRoomDataSource {
     fun getMyRatedMovies(): Flow<List<MyRatedMoviesVO>>
+    fun getMyWantToWatchMovies(): Flow<List<MyMovieEntity>>
     suspend fun insertMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity)
 }

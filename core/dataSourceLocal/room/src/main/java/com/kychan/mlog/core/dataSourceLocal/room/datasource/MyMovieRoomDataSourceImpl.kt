@@ -15,6 +15,10 @@ class MyMovieRoomDataSourceImpl @Inject constructor(
         return myMovieDao.getMyRatedMovies()
     }
 
+    override fun getMyWantToWatchMovies(): Flow<List<MyMovieEntity>> {
+        return myMovieDao.getMyWantToWatchMovies()
+    }
+
     override suspend fun insertMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity) {
         return myMovieDao.insertMyWantMovie(myMovieEntity, wantToWatchesEntity)
     }
