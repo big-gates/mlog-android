@@ -5,4 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface MyPageRepository {
     fun getMyRatedMovies(): Flow<List<MyRatedMovies>>
+
+    suspend fun insertMyWantMovie(myMovie: MyMovie, wantToWatch: WantToWatch)
 }
