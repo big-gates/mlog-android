@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -37,9 +36,10 @@ fun BottomSheetLayout(
         confirmStateChange = { it != ModalBottomSheetValue.HalfExpanded },
         skipHalfExpanded = true
     ),
-    movieModalTO: MovieModalTO? = null
+    movieModalTO: MovieModalTO? = null,
+    onLikeClick: () -> Unit,
 ) {
-    var isSheetFullScreen by remember { mutableStateOf(false) }
+    val isSheetFullScreen by remember { mutableStateOf(false) }
     val roundedCornerRadius = if (isSheetFullScreen) 0.dp else 12.dp
     val modifier = Modifier.fillMaxSize()
 
@@ -47,7 +47,7 @@ fun BottomSheetLayout(
         sheetState = modalSheetState,
         sheetShape = RoundedCornerShape(topStart = roundedCornerRadius, topEnd = roundedCornerRadius),
         sheetContent = {
-            MovieModalBottomSheetLayout(modifier, movieModalTO)
+            MovieModalBottomSheetLayout(modifier, movieModalTO, onLikeClick)
         },
         content = {}
     )
@@ -58,7 +58,8 @@ fun BottomSheetLayout(
 @Composable
 fun MovieModalBottomSheetLayout(
     modifier: Modifier = Modifier.fillMaxSize(),
-    movieModalTO: MovieModalTO? = null
+    movieModalTO: MovieModalTO? = null,
+    onLikeClick: () -> Unit = {},
 ) {
     val initialRating = 2.5f
     var rating: Float by remember { mutableStateOf(initialRating) }
@@ -92,13 +93,21 @@ fun MovieModalBottomSheetLayout(
                 Column(
                     horizontalAlignment = Alignment.End,
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_favorite_border),
-                        contentDescription = "unlike_movie",
+                    IconButton(
                         modifier = Modifier
                             .width(28.dp)
                             .height(28.dp),
-                    )
+                        onClick = {
+                            Log.d("TAG", "클릭했습니다")
+                            onLikeClick()
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_favorite_border),
+                            contentDescription = "unlike_movie",
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
                     if (movieModalTO?.adult == true) {
                         Icon(
                             painter = painterResource(id = R.drawable.adult_movie),

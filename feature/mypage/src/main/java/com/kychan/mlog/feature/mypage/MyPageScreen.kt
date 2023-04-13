@@ -147,6 +147,11 @@ fun MyPageRoute(
     MyPageScreen(
         myRatedMovies = myRatedMovies,
         myWantToWatchMovies = myWantToWatchMovies,
+        onLikeClick = {
+            if (it != null) {
+                viewModel.insertMyWantMovie(it)
+            }
+        }
     )
 }
 
@@ -198,6 +203,7 @@ fun MyPageScreen(
         BottomSheetLayout(
             modalSheetState = modalSheetState,
             movieModalTO = movieModalTOState.value,
+            onLikeClick = { onLikeClick(movieModalTOState.value) },
         )
     }
 }
