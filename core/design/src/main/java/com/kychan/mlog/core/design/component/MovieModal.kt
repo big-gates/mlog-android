@@ -102,9 +102,10 @@ fun MovieModalBottomSheetLayout(
                             onLikeClick()
                         }
                     ) {
+                        val paintId = if (movieModalTO?.isLike == true) R.drawable.ic_favorite_fill else R.drawable.ic_favorite_border
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_favorite_border),
-                            contentDescription = "unlike_movie",
+                            painter = painterResource(id = paintId),
+                            contentDescription = "like_icon_movie",
                             modifier = Modifier.fillMaxSize()
                         )
                     }

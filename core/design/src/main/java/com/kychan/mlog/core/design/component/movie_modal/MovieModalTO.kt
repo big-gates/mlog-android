@@ -5,5 +5,6 @@ data class MovieModalTO(
     val title: String,
     val adult: Boolean,
     val backgroundImage: String,
+    val isLike: Boolean,
     val tags: List<String>,
 )

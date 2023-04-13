@@ -1,6 +1,5 @@
 package com.kychan.mlog.feature.mypage
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,7 +48,7 @@ fun MyPageAppBar() {
 fun MyPageView(
     myRatedMovies: List<MyMovieItem>,
     myWantToWatchMovies: List<MyMovieItem>,
-    onClick: (index: Int) -> Unit,
+    onClick: (index: Int, itemId: Int) -> Unit,
 ) {
     Column {
         val pages = listOf("평가한", "보고싶어요")
@@ -94,15 +93,15 @@ fun MyPageView(
             count = pages.size,
             state = pagerState
         ) { page ->
-            val itemList = when (pagerState.currentPage){
+            val itemList = when (pagerState.currentPage) {
                 0 -> myRatedMovies
                 1 -> myWantToWatchMovies
                 else -> emptyList()
             }
             PhotoGrid(
                 photos = itemList,
-                onClick = {
-                    onClick(it)
+                onClick = { index, itemId ->
+                    onClick(index, itemId)
                 }
             )
         }
@@ -112,7 +111,7 @@ fun MyPageView(
 @Composable
 fun PhotoGrid(
     photos: List<MyMovieItem>,
-    onClick: (index: Int) -> Unit,
+    onClick: (index: Int, itemId: Int) -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = Modifier
@@ -128,7 +127,7 @@ fun PhotoGrid(
                     .aspectRatio(0.667f)
                     .background(color = Color.Green)
                     .clickable {
-                        onClick(index)
+                        onClick(index, photos[index].myMovieId)
                     },
                 model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${photos[index].posterPath}",
                 contentDescription = "my_movie_image"
@@ -140,13 +139,18 @@ fun PhotoGrid(
 @Composable
 fun MyPageRoute(
     viewModel: MyPageViewModel = hiltViewModel(),
-){
+) {
     val myRatedMovies by viewModel.myRatedMovies.collectAsStateWithLifecycle()
     val myWantToWatchMovies by viewModel.myWantToWatchMovies.collectAsStateWithLifecycle()
+    val isLikeState by viewModel.isLikeMovie.collectAsStateWithLifecycle()
 
     MyPageScreen(
         myRatedMovies = myRatedMovies,
         myWantToWatchMovies = myWantToWatchMovies,
+        isLikeState = isLikeState,
+        onShowModal = { _, id ->
+            viewModel.existToMyWantMovie(id)
+        },
         onLikeClick = {
             if (it != null) {
                 viewModel.insertMyWantMovie(it)
@@ -161,6 +165,8 @@ fun MyPageRoute(
 fun MyPageScreen(
     myRatedMovies: List<MyMovieItem> = emptyList(),
     myWantToWatchMovies: List<MyMovieItem> = emptyList(),
+    isLikeState: Boolean = false,
+    onShowModal: (Int, Int) -> Unit = { _: Int, _: Int -> },
     onLikeClick: (MovieModalTO?) -> Unit = {},
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -172,7 +178,7 @@ fun MyPageScreen(
         },
         skipHalfExpanded = false
     )
-    var movieModalTOState: MutableState<MovieModalTO?> = remember { mutableStateOf(null) }
+    val movieModalTOState: MutableState<MovieModalTO?> = remember { mutableStateOf(null) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
@@ -180,7 +186,7 @@ fun MyPageScreen(
             MyPageView(
                 myRatedMovies = myRatedMovies,
                 myWantToWatchMovies = myWantToWatchMovies,
-                onClick = { clickItemIndex ->
+                onClick = { clickItemIndex, clickItemId ->
                     coroutineScope.launch {
                         if (modalSheetState.isVisible) {
                             modalSheetState.hide()
@@ -190,11 +196,13 @@ fun MyPageScreen(
                                     id = this.myMovieId,
                                     title = this.title,
                                     adult = this.adult,
+                                    isLike = isLikeState,
                                     backgroundImage = this.posterPath,
                                     tags = emptyList()
                                 )
                             }
                             modalSheetState.show()
+                            onShowModal(clickItemIndex, clickItemId)
                         }
                     }
                 }
@@ -202,7 +210,7 @@ fun MyPageScreen(
         }
         BottomSheetLayout(
             modalSheetState = modalSheetState,
-            movieModalTO = movieModalTOState.value,
+            movieModalTO = movieModalTOState.value?.copy(isLike = isLikeState),
             onLikeClick = { onLikeClick(movieModalTOState.value) },
         )
     }
