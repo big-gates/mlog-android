@@ -39,6 +39,14 @@ abstract class MyMovieDao {
         insertWantMovie(wantToWatchesEntity)
     }
 
+    @Transaction
+    open suspend fun deleteMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity) {
+        deleteWantMovie(wantToWatchesEntity)
+        if (existToMyRatedMovie(myMovieEntity.id) == null) {
+            deleteMyMovie(myMovieEntity)
+        }
+    }
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun insertMyMovie(myMovieEntity: MyMovieEntity)
 
@@ -47,6 +55,12 @@ abstract class MyMovieDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun insertWantMovie(wantToWatchesEntity: WantToWatchesEntity)
+
+    @Delete
+    abstract suspend fun deleteMyMovie(myMovieEntity: MyMovieEntity)
+
+    @Delete
+    abstract suspend fun deleteWantMovie(wantToWatchesEntity: WantToWatchesEntity)
 
     @Query("SELECT * FROM rated AS r WHERE r.my_movie_id = (:id)")
     abstract suspend fun existToMyRatedMovie(id: Int) : RatedEntity?
