@@ -25,6 +25,7 @@ import com.kychan.mlog.core.design.component.movie_modal.MovieModalTO
 import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.feature.mypage.model.MyMovieItem
 import com.kychan.mlog.core.design.theme.Black
+import com.kychan.mlog.core.model.Rated
 import kotlinx.coroutines.launch
 
 
@@ -48,7 +49,7 @@ fun MyPageAppBar() {
 fun MyPageView(
     myRatedMovies: List<MyMovieItem>,
     myWantToWatchMovies: List<MyMovieItem>,
-    onClick: (index: Int, itemId: Int) -> Unit,
+    onClick: (item: MyMovieItem) -> Unit,
 ) {
     Column {
         val pages = listOf("평가한", "보고싶어요")
@@ -100,8 +101,8 @@ fun MyPageView(
             }
             PhotoGrid(
                 photos = itemList,
-                onClick = { index, itemId ->
-                    onClick(index, itemId)
+                onClick = { item ->
+                    onClick(item)
                 }
             )
         }
@@ -111,7 +112,7 @@ fun MyPageView(
 @Composable
 fun PhotoGrid(
     photos: List<MyMovieItem>,
-    onClick: (index: Int, itemId: Int) -> Unit,
+    onClick: (item: MyMovieItem) -> Unit,
 ) {
     LazyVerticalGrid(
         modifier = Modifier
@@ -127,7 +128,7 @@ fun PhotoGrid(
                     .aspectRatio(0.667f)
                     .background(color = Color.Green)
                     .clickable {
-                        onClick(index, photos[index].myMovieId)
+                        onClick(photos[index])
                     },
                 model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${photos[index].posterPath}",
                 contentDescription = "my_movie_image"
@@ -142,14 +143,17 @@ fun MyPageRoute(
 ) {
     val myRatedMovies by viewModel.myRatedMovies.collectAsStateWithLifecycle()
     val myWantToWatchMovies by viewModel.myWantToWatchMovies.collectAsStateWithLifecycle()
+    val isRatedState by viewModel.ratedMovieInfo.collectAsStateWithLifecycle()
     val isLikeState by viewModel.isLikeMovie.collectAsStateWithLifecycle()
 
     MyPageScreen(
         myRatedMovies = myRatedMovies,
         myWantToWatchMovies = myWantToWatchMovies,
+        isRatedState = isRatedState,
         isLikeState = isLikeState,
-        onShowModal = { _, id ->
-            viewModel.existToMyWantMovie(id)
+        onShowModal = { item ->
+            viewModel.existToMyWantMovie(item.myMovieId)
+            viewModel.existToMyRatedMovie(item.myMovieId)
         },
         onLikeClick = {
             if (it != null) {
@@ -165,8 +169,9 @@ fun MyPageRoute(
 fun MyPageScreen(
     myRatedMovies: List<MyMovieItem> = emptyList(),
     myWantToWatchMovies: List<MyMovieItem> = emptyList(),
+    isRatedState: Rated? = null,
     isLikeState: Boolean = false,
-    onShowModal: (Int, Int) -> Unit = { _: Int, _: Int -> },
+    onShowModal: (item: MyMovieItem) -> Unit = {},
     onLikeClick: (MovieModalTO?) -> Unit = {},
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -186,23 +191,23 @@ fun MyPageScreen(
             MyPageView(
                 myRatedMovies = myRatedMovies,
                 myWantToWatchMovies = myWantToWatchMovies,
-                onClick = { clickItemIndex, clickItemId ->
+                onClick = { item ->
                     coroutineScope.launch {
                         if (modalSheetState.isVisible) {
                             modalSheetState.hide()
                         } else {
-                            myRatedMovies[clickItemIndex].apply {
-                                movieModalTOState.value = MovieModalTO(
-                                    id = this.myMovieId,
-                                    title = this.title,
-                                    adult = this.adult,
-                                    isLike = isLikeState,
-                                    backgroundImage = this.posterPath,
-                                    tags = emptyList()
-                                )
-                            }
+                            movieModalTOState.value = MovieModalTO(
+                                id = item.myMovieId,
+                                title = item.title,
+                                adult = item.adult,
+                                isLike = isLikeState,
+                                comment = isRatedState?.comment.orEmpty(),
+                                rate = isRatedState?.rated ?: 0f,
+                                backgroundImage = item.posterPath,
+                                tags = emptyList()
+                            )
                             modalSheetState.show()
-                            onShowModal(clickItemIndex, clickItemId)
+                            onShowModal(item)
                         }
                     }
                 }
@@ -210,7 +215,11 @@ fun MyPageScreen(
         }
         BottomSheetLayout(
             modalSheetState = modalSheetState,
-            movieModalTO = movieModalTOState.value?.copy(isLike = isLikeState),
+            movieModalTO = movieModalTOState.value?.copy(
+                isLike = isLikeState,
+                comment = isRatedState?.comment.orEmpty(),
+                rate = isRatedState?.rated ?: 0f
+            ),
             onLikeClick = { onLikeClick(movieModalTOState.value) },
         )
     }

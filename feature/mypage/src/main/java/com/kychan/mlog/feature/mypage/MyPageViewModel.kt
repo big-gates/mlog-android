@@ -6,9 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.kychan.mlog.core.design.component.movie_modal.MovieModalTO
 import com.kychan.mlog.core.domain.observe.ObserveMyRatedMovie
 import com.kychan.mlog.core.domain.observe.ObserveMyWantToWatchMovie
+import com.kychan.mlog.core.domain.usecase.ExistToMyRatedMovie
 import com.kychan.mlog.core.domain.usecase.ExistToMyWantMovie
 import com.kychan.mlog.core.domain.usecase.InsertMyWantMovie
 import com.kychan.mlog.core.model.MyMovie
+import com.kychan.mlog.core.model.Rated
 import com.kychan.mlog.core.model.WantToWatch
 import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.feature.mypage.model.MyMovieItem
@@ -22,7 +24,8 @@ class MyPageViewModel @Inject constructor(
     private val observeMyWantToWatchMovie: ObserveMyWantToWatchMovie,
     private val observeMyRatedMovie: ObserveMyRatedMovie,
     private val insertMyWantMovie: InsertMyWantMovie,
-    private val existToMyWantMovie: ExistToMyWantMovie
+    private val existToMyWantMovie: ExistToMyWantMovie,
+    private val existToMyRatedMovie: ExistToMyRatedMovie,
 ) : ViewModel() {
 
     val myWantToWatchMovies: StateFlow<List<MyMovieItem>> = observeMyWantToWatchMovie()
@@ -49,7 +52,15 @@ class MyPageViewModel @Inject constructor(
             initialValue = listOf()
         )
 
+    val ratedMovieInfo: MutableStateFlow<Rated?> = MutableStateFlow(null)
     val isLikeMovie = MutableStateFlow(false)
+
+    fun existToMyRatedMovie(itemId: Int) {
+        viewModelScope.launch {
+            ratedMovieInfo.value = existToMyRatedMovie.invoke(itemId)
+        }
+    }
+
     fun existToMyWantMovie(itemId: Int) {
         viewModelScope.launch {
             isLikeMovie.value = existToMyWantMovie.invoke(itemId) > 0

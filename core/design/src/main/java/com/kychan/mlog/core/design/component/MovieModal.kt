@@ -61,7 +61,7 @@ fun MovieModalBottomSheetLayout(
     movieModalTO: MovieModalTO? = null,
     onLikeClick: () -> Unit = {},
 ) {
-    val initialRating = 2.5f
+    val initialRating = 0f
     var rating: Float by remember { mutableStateOf(initialRating) }
     var text: String by remember { mutableStateOf("") }
 
@@ -155,7 +155,7 @@ fun MovieModalBottomSheetLayout(
                                 focusedIndicatorColor = Color.Gray
                             ),
                             textStyle = TextStyle.Default.copy(color = Color.White, fontSize = 14.sp),
-                            value = text,
+                            value = movieModalTO?.comment.orEmpty(),
                             singleLine = true,
                             onValueChange = { text = it },
                         )
@@ -171,7 +171,7 @@ fun MovieModalBottomSheetLayout(
                     RatingBar(
                         modifier = Modifier
                             .align(alignment = Alignment.CenterHorizontally),
-                        value = rating,
+                        value = movieModalTO?.rate ?: rating,
                         config = RatingBarConfig()
                             .stepSize(StepSize.HALF)
                             .size(32.dp)
