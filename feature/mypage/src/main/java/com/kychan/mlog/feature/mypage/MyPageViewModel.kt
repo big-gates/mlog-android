@@ -1,11 +1,11 @@
 package com.kychan.mlog.feature.mypage
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kychan.mlog.core.design.component.movie_modal.MovieModalTO
 import com.kychan.mlog.core.domain.observe.ObserveMyRatedMovie
 import com.kychan.mlog.core.domain.observe.ObserveMyWantToWatchMovie
+import com.kychan.mlog.core.domain.usecase.DeleteMyWantMovie
 import com.kychan.mlog.core.domain.usecase.ExistToMyRatedMovie
 import com.kychan.mlog.core.domain.usecase.ExistToMyWantMovie
 import com.kychan.mlog.core.domain.usecase.InsertMyWantMovie
@@ -24,6 +24,7 @@ class MyPageViewModel @Inject constructor(
     private val observeMyWantToWatchMovie: ObserveMyWantToWatchMovie,
     private val observeMyRatedMovie: ObserveMyRatedMovie,
     private val insertMyWantMovie: InsertMyWantMovie,
+    private val deleteMyWantMovie: DeleteMyWantMovie,
     private val existToMyWantMovie: ExistToMyWantMovie,
     private val existToMyRatedMovie: ExistToMyRatedMovie,
 ) : ViewModel() {
@@ -67,13 +68,31 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    fun insertMyWantMovie(movieModalTO: MovieModalTO) {
+    fun insertOrDeleteMyWantMovie(movieModalTO: MovieModalTO) {
+        if (isLikeMovie.value) {
+            deleteMyWantMovie(movieModalTO)
+        } else {
+            insertMyWantMovie(movieModalTO)
+        }
+    }
+
+    private fun insertMyWantMovie(movieModalTO: MovieModalTO) {
         viewModelScope.launch {
             insertMyWantMovie.invoke(
                 myMovie = movieModalTO.toMyMovie(),
                 wantToWatch = movieModalTO.toWantToWatch()
             )
             isLikeMovie.value = true
+        }
+    }
+
+    private fun deleteMyWantMovie(movieModalTO: MovieModalTO) {
+        viewModelScope.launch {
+            deleteMyWantMovie.invoke(
+                myMovie = movieModalTO.toMyMovie(),
+                wantToWatch = movieModalTO.toWantToWatch()
+            )
+            isLikeMovie.value = false
         }
     }
 

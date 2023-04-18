@@ -157,7 +157,7 @@ fun MyPageRoute(
         },
         onLikeClick = {
             if (it != null) {
-                viewModel.insertMyWantMovie(it)
+                viewModel.insertOrDeleteMyWantMovie(it)
             }
         }
     )
