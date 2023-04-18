@@ -21,8 +21,14 @@ data class RatedEntity(
     @ColumnInfo(name = "my_movie_id")
     val myMovieId: Int,
     val rated: Float,
-    val comment: Int,
+    val comment: String,
 ) {
+    fun toDomain() = Rated(
+        id = id,
+        myMovieId = myMovieId,
+        rated = rated,
+        comment = comment,
+    )
     companion object {
         fun of(rated: Rated) = RatedEntity(
             id = rated.id,

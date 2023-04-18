@@ -16,7 +16,7 @@ data class Rated(
     val id: Int,
     val myMovieId: Int,
     val rated: Float,
-    val comment: Int,
+    val comment: String,
 )
 
 data class WantToWatch(

@@ -30,6 +30,10 @@ class MyPageRepositoryImpl @Inject constructor(
         return myMovieRoomDataSource.insertMyWantMovie(MyMovieEntity.of(myMovie), WantToWatchesEntity.of(wantToWatch))
     }
 
+    override suspend fun existToMyRatedMovie(id: Int): Rated? {
+        return myMovieRoomDataSource.existToMyRatedMovie(id)?.toDomain()
+    }
+
     override suspend fun existToMyWantMovie(id: Int): Int {
         return myMovieRoomDataSource.existToMyWantMovie(id)
     }
