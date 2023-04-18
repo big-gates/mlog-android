@@ -33,6 +33,7 @@ abstract class MyMovieDao {
         insertMyMovie(myMovieEntity)
         insertRatedMovie(ratedEntity)
     }
+
     @Transaction
     open suspend fun insertMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity) {
         insertMyMovie(myMovieEntity)
@@ -43,6 +44,14 @@ abstract class MyMovieDao {
     open suspend fun deleteMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity) {
         deleteWantMovie(wantToWatchesEntity)
         if (existToMyRatedMovie(myMovieEntity.id) == null) {
+            deleteMyMovie(myMovieEntity)
+        }
+    }
+
+    @Transaction
+    open suspend fun deleteMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity) {
+        deleteRatedMovie(ratedEntity)
+        if (existToMyWantMovie(myMovieEntity.id) > 0) {
             deleteMyMovie(myMovieEntity)
         }
     }
@@ -61,6 +70,9 @@ abstract class MyMovieDao {
 
     @Delete
     abstract suspend fun deleteWantMovie(wantToWatchesEntity: WantToWatchesEntity)
+
+    @Delete
+    abstract suspend fun deleteRatedMovie(ratedEntity: RatedEntity)
 
     @Query("SELECT * FROM rated AS r WHERE r.my_movie_id = (:id)")
     abstract suspend fun existToMyRatedMovie(id: Int) : RatedEntity?

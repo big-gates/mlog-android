@@ -15,6 +15,8 @@ interface MyPageRepository {
 
     suspend fun deleteMyWantMovie(myMovie: MyMovie, wantToWatch: WantToWatch)
 
+    suspend fun deleteMyRatedMovie(myMovie: MyMovie, rated: Rated)
+
     suspend fun existToMyRatedMovie(id: Int): Rated?
 
     suspend fun existToMyWantMovie(id: Int): Int

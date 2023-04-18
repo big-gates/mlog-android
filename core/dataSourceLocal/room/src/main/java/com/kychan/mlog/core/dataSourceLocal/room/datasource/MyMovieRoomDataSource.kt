@@ -17,6 +17,8 @@ interface MyMovieRoomDataSource {
 
     suspend fun deleteMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity)
 
+    suspend fun deleteMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity)
+
     suspend fun existToMyRatedMovie(id: Int): RatedEntity?
 
     suspend fun existToMyWantMovie(id: Int): Int
