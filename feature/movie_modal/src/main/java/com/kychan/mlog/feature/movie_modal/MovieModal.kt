@@ -1,4 +1,4 @@
-package com.kychan.mlog.core.design.component
+package com.kychan.mlog.feature.movie_modal
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -15,7 +15,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -23,7 +22,6 @@ import com.gowtham.ratingbar.RatingBar
 import com.gowtham.ratingbar.RatingBarConfig
 import com.gowtham.ratingbar.RatingBarStyle
 import com.gowtham.ratingbar.StepSize
-import com.kychan.mlog.core.design.component.movie_modal.MovieModalTO
 import com.kychan.mlog.core.designsystem.BuildConfig
 import com.kychan.mlog.core.designsystem.R
 
@@ -36,34 +34,29 @@ fun BottomSheetLayout(
         confirmStateChange = { it != ModalBottomSheetValue.HalfExpanded },
         skipHalfExpanded = true
     ),
-    movieModalTO: MovieModalTO? = null,
-    onLikeClick: () -> Unit,
+    movieModalTO: MovieModalTO,
+    movieModalEvent: MovieModalEvent,
 ) {
     val isSheetFullScreen by remember { mutableStateOf(false) }
     val roundedCornerRadius = if (isSheetFullScreen) 0.dp else 12.dp
-    val modifier = Modifier.fillMaxSize()
 
     ModalBottomSheetLayout(
         sheetState = modalSheetState,
         sheetShape = RoundedCornerShape(topStart = roundedCornerRadius, topEnd = roundedCornerRadius),
         sheetContent = {
-            MovieModalBottomSheetLayout(modifier, movieModalTO, onLikeClick)
+            MovieModalBottomSheetLayout(movieModalTO, movieModalEvent)
         },
         content = {}
     )
 
 }
 
-@Preview
 @Composable
 fun MovieModalBottomSheetLayout(
-    modifier: Modifier = Modifier.fillMaxSize(),
-    movieModalTO: MovieModalTO? = null,
-    onLikeClick: () -> Unit = {},
+    movieModalTO: MovieModalTO,
+    modalEvent: MovieModalEvent,
 ) {
-    val initialRating = 0f
-    var rating: Float by remember { mutableStateOf(initialRating) }
-    var text: String by remember { mutableStateOf("") }
+    val focusRequester = remember { FocusRequester() }
 
     Box {
         AsyncImage(
@@ -71,7 +64,7 @@ fun MovieModalBottomSheetLayout(
                 .fillMaxWidth()
                 .align(Alignment.TopStart),
             contentScale = ContentScale.FillHeight,
-            model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${movieModalTO?.backgroundImage.orEmpty()}",
+            model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${movieModalTO.backgroundImage}",
             contentDescription = "movie_modal_image"
         )
         Column {
@@ -84,7 +77,7 @@ fun MovieModalBottomSheetLayout(
             ) {
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = movieModalTO?.title.orEmpty(),
+                    text = movieModalTO.title,
                     fontSize = 24.sp,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
@@ -98,18 +91,17 @@ fun MovieModalBottomSheetLayout(
                             .width(28.dp)
                             .height(28.dp),
                         onClick = {
-                            Log.d("TAG", "클릭했습니다")
-                            onLikeClick()
+                            modalEvent.onLikeClick()
                         }
                     ) {
-                        val paintId = if (movieModalTO?.isLike == true) R.drawable.ic_favorite_fill else R.drawable.ic_favorite_border
+                        val paintId = if (movieModalTO.isLike) R.drawable.ic_favorite_fill else R.drawable.ic_favorite_border
                         Icon(
                             painter = painterResource(id = paintId),
                             contentDescription = "like_icon_movie",
                             modifier = Modifier.fillMaxSize()
                         )
                     }
-                    if (movieModalTO?.adult == true) {
+                    if (movieModalTO.adult) {
                         Icon(
                             painter = painterResource(id = R.drawable.adult_movie),
                             contentDescription = "adult_movie",
@@ -155,9 +147,9 @@ fun MovieModalBottomSheetLayout(
                                 focusedIndicatorColor = Color.Gray
                             ),
                             textStyle = TextStyle.Default.copy(color = Color.White, fontSize = 14.sp),
-                            value = movieModalTO?.comment.orEmpty(),
+                            value = movieModalTO.comment,
                             singleLine = true,
-                            onValueChange = { text = it },
+                            onValueChange = { modalEvent.onTextChange(it) },
                         )
                         Icon(
                             painter = painterResource(id = R.drawable.comment_write),
@@ -171,14 +163,12 @@ fun MovieModalBottomSheetLayout(
                     RatingBar(
                         modifier = Modifier
                             .align(alignment = Alignment.CenterHorizontally),
-                        value = movieModalTO?.rate ?: rating,
+                        value = movieModalTO.rate,
                         config = RatingBarConfig()
                             .stepSize(StepSize.HALF)
                             .size(32.dp)
                             .style(RatingBarStyle.HighLighted),
-                        onValueChange = {
-                            rating = it
-                        },
+                        onValueChange = { modalEvent.onRateChange(it) },
                         onRatingChanged = {
                             Log.d("TAG", "onRatingChanged: $it")
                         }

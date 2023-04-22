@@ -1,22 +1,16 @@
 package com.kychan.mlog.feature.mypage
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kychan.mlog.core.design.component.movie_modal.MovieModalTO
 import com.kychan.mlog.core.domain.observe.ObserveMyRatedMovie
 import com.kychan.mlog.core.domain.observe.ObserveMyWantToWatchMovie
-import com.kychan.mlog.core.domain.usecase.DeleteMyWantMovie
-import com.kychan.mlog.core.domain.usecase.ExistToMyRatedMovie
-import com.kychan.mlog.core.domain.usecase.ExistToMyWantMovie
-import com.kychan.mlog.core.domain.usecase.InsertMyWantMovie
-import com.kychan.mlog.core.model.MyMovie
-import com.kychan.mlog.core.model.Rated
-import com.kychan.mlog.core.model.WantToWatch
-import com.kychan.mlog.core.model.WatchProvider
+import com.kychan.mlog.core.domain.usecase.*
+import com.kychan.mlog.feature.movie_modal.MovieModalBottomSheetViewModel
 import com.kychan.mlog.feature.mypage.model.MyMovieItem
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,7 +21,9 @@ class MyPageViewModel @Inject constructor(
     private val deleteMyWantMovie: DeleteMyWantMovie,
     private val existToMyWantMovie: ExistToMyWantMovie,
     private val existToMyRatedMovie: ExistToMyRatedMovie,
-) : ViewModel() {
+) : MovieModalBottomSheetViewModel(
+    insertMyWantMovie, deleteMyWantMovie, existToMyWantMovie, existToMyRatedMovie
+) {
 
     val myWantToWatchMovies: StateFlow<List<MyMovieItem>> = observeMyWantToWatchMovie()
         .map { movies ->
@@ -52,64 +48,4 @@ class MyPageViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = listOf()
         )
-
-    val ratedMovieInfo: MutableStateFlow<Rated?> = MutableStateFlow(null)
-    val isLikeMovie = MutableStateFlow(false)
-
-    fun existToMyRatedMovie(itemId: Int) {
-        viewModelScope.launch {
-            ratedMovieInfo.value = existToMyRatedMovie.invoke(itemId)
-        }
-    }
-
-    fun existToMyWantMovie(itemId: Int) {
-        viewModelScope.launch {
-            isLikeMovie.value = existToMyWantMovie.invoke(itemId) > 0
-        }
-    }
-
-    fun insertOrDeleteMyWantMovie(movieModalTO: MovieModalTO) {
-        if (isLikeMovie.value) {
-            deleteMyWantMovie(movieModalTO)
-        } else {
-            insertMyWantMovie(movieModalTO)
-        }
-    }
-
-    private fun insertMyWantMovie(movieModalTO: MovieModalTO) {
-        viewModelScope.launch {
-            insertMyWantMovie.invoke(
-                myMovie = movieModalTO.toMyMovie(),
-                wantToWatch = movieModalTO.toWantToWatch()
-            )
-            isLikeMovie.value = true
-        }
-    }
-
-    private fun deleteMyWantMovie(movieModalTO: MovieModalTO) {
-        viewModelScope.launch {
-            deleteMyWantMovie.invoke(
-                myMovie = movieModalTO.toMyMovie(),
-                wantToWatch = movieModalTO.toWantToWatch()
-            )
-            isLikeMovie.value = false
-        }
-    }
-
-    private fun MovieModalTO.toMyMovie() = MyMovie(
-        id = this.id,
-        adult = this.adult,
-        backdropPath = this.backgroundImage,
-        originalTitle = "originalTitle",
-        posterPath = this.backgroundImage,
-        title = this.title,
-        voteAverage = 3.0,
-        watchProviders = WatchProvider.None,
-        rank = 1,
-    )
-
-    private fun MovieModalTO.toWantToWatch() = WantToWatch(
-        id = this.id,
-        myMovieId = this.id
-    )
 }
