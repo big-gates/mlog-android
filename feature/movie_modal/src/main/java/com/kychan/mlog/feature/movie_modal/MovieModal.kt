@@ -5,13 +5,17 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
@@ -29,25 +33,28 @@ import com.kychan.mlog.core.designsystem.R
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun BottomSheetLayout(
-    modalSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        confirmStateChange = { it != ModalBottomSheetValue.HalfExpanded },
-        skipHalfExpanded = true
-    ),
+    modalSheetState: ModalBottomSheetState,
     movieModalTO: MovieModalTO,
     movieModalEvent: MovieModalEvent,
 ) {
     val isSheetFullScreen by remember { mutableStateOf(false) }
     val roundedCornerRadius = if (isSheetFullScreen) 0.dp else 12.dp
+    val focusManager = LocalFocusManager.current
 
     ModalBottomSheetLayout(
         sheetState = modalSheetState,
         sheetShape = RoundedCornerShape(topStart = roundedCornerRadius, topEnd = roundedCornerRadius),
         sheetContent = {
-            MovieModalBottomSheetLayout(movieModalTO, movieModalEvent)
+            MovieModalBottomSheetLayout(movieModalTO, movieModalEvent, focusManager)
         },
         content = {}
     )
+
+    LaunchedEffect(modalSheetState.isVisible) {
+        if (!modalSheetState.isVisible) {
+            focusManager.clearFocus()
+        }
+    }
 
 }
 
@@ -55,9 +62,8 @@ fun BottomSheetLayout(
 fun MovieModalBottomSheetLayout(
     movieModalTO: MovieModalTO,
     modalEvent: MovieModalEvent,
+    focusManager: FocusManager,
 ) {
-    val focusRequester = remember { FocusRequester() }
-
     Box {
         AsyncImage(
             modifier = Modifier
@@ -112,7 +118,6 @@ fun MovieModalBottomSheetLayout(
                         )
                     }
                 }
-//                }
             }
             Row(
                 modifier = Modifier
@@ -140,7 +145,20 @@ fun MovieModalBottomSheetLayout(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         TextField(
-                            modifier = Modifier.weight(1f),
+                            modifier = Modifier
+                                .weight(1f)
+                                .onFocusChanged {
+                                    if (it.isFocused) {
+                                        // focused
+                                        Log.d("TAG", "focused")
+                                    } else {
+                                        // not focused
+                                        Log.d("TAG", "not focused")
+                                    }
+                                },
+                            keyboardActions = KeyboardActions {
+                                focusManager.clearFocus()
+                            },
                             colors = TextFieldDefaults.textFieldColors(
                                 backgroundColor = Color.Black,
                                 unfocusedIndicatorColor = Color.Gray,
