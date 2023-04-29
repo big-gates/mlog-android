@@ -159,11 +159,11 @@ fun MyPageRoute(
                 onLikeClick = {
                     viewModel.insertOrDeleteMyWantMovie()
                 },
-                onTextChange = {
-                    viewModel.replaceRated(it)
+                onTextChange = { comment, rating ->
+                    viewModel.replaceRated(comment, rating)
                 },
-                onRateChange = {
-                    viewModel.replaceRated(it)
+                onRateChange = { comment, rating ->
+                    viewModel.replaceRated(comment, rating)
                 },
             )
         ),

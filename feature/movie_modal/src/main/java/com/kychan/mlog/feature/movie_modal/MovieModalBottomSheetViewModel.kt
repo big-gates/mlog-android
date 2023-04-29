@@ -27,12 +27,9 @@ abstract class MovieModalBottomSheetViewModel(
         }
     }
 
-    fun replaceRated(comment: String) {
-        ratedMovieInfo.value = ratedMovieInfo.value.copy(comment = comment)
-    }
-    fun replaceRated(rate: Float) {
-        ratedMovieInfo.value = ratedMovieInfo.value.copy(rate = rate)
-        updateMyRatedMovie(onShowModalItem.copy(rate = rate))
+    fun replaceRated(comment: String, rate: Float) {
+        ratedMovieInfo.value = ratedMovieInfo.value.copy(comment = comment, rate = rate)
+        updateMyRatedMovie(onShowModalItem.copy(comment = comment, rate = rate))
     }
 
     fun insertOrDeleteMyWantMovie() {

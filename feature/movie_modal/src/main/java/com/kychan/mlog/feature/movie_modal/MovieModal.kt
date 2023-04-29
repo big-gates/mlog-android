@@ -167,7 +167,7 @@ fun MovieModalBottomSheetLayout(
                             textStyle = TextStyle.Default.copy(color = Color.White, fontSize = 14.sp),
                             value = movieModalTO.comment,
                             singleLine = true,
-                            onValueChange = { modalEvent.onTextChange(it) },
+                            onValueChange = { modalEvent.onTextChange(it, movieModalTO.rate) },
                         )
                         Icon(
                             painter = painterResource(id = R.drawable.comment_write),
@@ -186,7 +186,7 @@ fun MovieModalBottomSheetLayout(
                             .stepSize(StepSize.HALF)
                             .size(32.dp)
                             .style(RatingBarStyle.HighLighted),
-                        onValueChange = { modalEvent.onRateChange(it) },
+                        onValueChange = { modalEvent.onRateChange(movieModalTO.comment, it) },
                         onRatingChanged = {
                             Log.d("TAG", "onRatingChanged: $it")
                         }
