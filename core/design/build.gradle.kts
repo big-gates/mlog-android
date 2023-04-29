@@ -22,4 +22,7 @@ dependencies {
     api(libs.androidx.compose.material3)
     debugApi(libs.androidx.compose.ui.tooling)
     api(libs.androidx.compose.ui.tooling.preview)
+
+    implementation(libs.a914.gowtham.compose.ratingbar)
+    implementation(libs.coil.kt.compose)
 }

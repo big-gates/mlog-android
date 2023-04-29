@@ -1,13 +1,14 @@
 package com.kychan.mlog.feature.mypage
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,8 +17,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
 import com.google.accompanist.pager.*
+import com.kychan.mlog.core.design.component.BottomSheetLayout
+import com.kychan.mlog.core.design.component.movie_modal.MovieModalTO
 import com.kychan.mlog.core.design.icon.MLogIcons
+import com.kychan.mlog.feature.mypage.model.MyMovieItem
 import com.kychan.mlog.core.design.theme.Black
 import kotlinx.coroutines.launch
 
@@ -39,7 +46,10 @@ fun MyPageAppBar() {
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun MyPageView() {
+fun MyPageView(
+    myMovieItem: List<MyMovieItem>,
+    onClick: (index: Int) -> Unit,
+) {
     Column {
         val pages = listOf("평가한", "보고싶어요")
         val pagerState = rememberPagerState()
@@ -84,19 +94,25 @@ fun MyPageView() {
             state = pagerState
         ) { page ->
             val itemList = when (pagerState.currentPage){
-                0 -> list
-                1 -> list2
-                else -> list
+                0 -> myMovieItem
+                1 -> myMovieItem
+                else -> myMovieItem
             }
-            PhotoGrid(itemList)
+            PhotoGrid(
+                photos = itemList,
+                onClick = {
+                    onClick(it)
+                }
+            )
         }
     }
 }
 
-val list = listOf<String>("1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3","1","2","3")
-val list2 = listOf<String>("1","2","3","1")
 @Composable
-fun PhotoGrid(photos: List<String>) {
+fun PhotoGrid(
+    photos: List<MyMovieItem>,
+    onClick: (index: Int) -> Unit,
+) {
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxSize()
@@ -105,23 +121,74 @@ fun PhotoGrid(photos: List<String>) {
         verticalArrangement = Arrangement.spacedBy(1.dp),
         horizontalArrangement = Arrangement.spacedBy(1.dp)
     ) {
-        items(photos.size) { photo ->
-            Text(
+        items(photos.size) { index ->
+            AsyncImage(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .aspectRatio(0.667f)
                     .background(color = Color.Green)
-                    .height(210.dp),
-                text = photo.toString()
+                    .clickable {
+                        onClick(index)
+                    },
+                model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${photos[index].posterPath}",
+                contentDescription = "my_movie_image"
             )
         }
     }
 }
 
+@Composable
+fun MyPageRoute(
+    viewModel: MyPageViewModel = hiltViewModel(),
+){
+    val movies by viewModel.myRatedMovies.collectAsStateWithLifecycle()
+
+    MyPageScreen(movies)
+}
+
+@OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun MyPageScreen() {
-    Column {
-        MyPageAppBar()
-        MyPageView()
+fun MyPageScreen(myMovieItem: List<MyMovieItem> = emptyList()) {
+    Log.d("myMovieItem", myMovieItem.toString())
+    val coroutineScope = rememberCoroutineScope()
+    val modalSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        confirmValueChange = {
+            // Expanded 라면 내비게이션 이동 로직 확인해보기
+            it != ModalBottomSheetValue.Expanded
+        },
+        skipHalfExpanded = false
+    )
+    var movieModalTOState: MutableState<MovieModalTO?> = remember { mutableStateOf(null) }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column {
+            MyPageAppBar()
+            MyPageView(
+                myMovieItem = myMovieItem,
+                onClick = { clickItemIndex ->
+                    coroutineScope.launch {
+                        if (modalSheetState.isVisible) {
+                            modalSheetState.hide()
+                        } else {
+                            myMovieItem[clickItemIndex].apply {
+                                movieModalTOState.value = MovieModalTO(
+                                    id = this.myMovieId,
+                                    title = this.title,
+                                    adult = this.adult,
+                                    backgroundImage = this.posterPath,
+                                    tags = emptyList()
+                                )
+                            }
+                            modalSheetState.show()
+                        }
+                    }
+                }
+            )
+        }
+        BottomSheetLayout(
+            modalSheetState = modalSheetState,
+            movieModalTO = movieModalTOState.value,
+        )
     }
 }

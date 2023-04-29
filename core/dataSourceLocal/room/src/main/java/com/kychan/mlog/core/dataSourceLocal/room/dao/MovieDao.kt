@@ -8,8 +8,6 @@ import androidx.room.Upsert
 import com.kychan.mlog.core.common.extenstions.toDateFormat
 import com.kychan.mlog.core.dataSourceLocal.room.model.*
 import java.util.*
-import com.kychan.mlog.core.dataSourceLocal.room.model.MyRatedMoviesVO
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class MovieDao {
@@ -122,23 +120,5 @@ abstract class MovieDao {
         val syncLog = getSyncLog(SyncLogType.Watcha_Movie)
         upsertSyncLog(syncLog.copy(nextKey = nextKey))
     }
-
-    @Query("""
-            SELECT r.my_movie_id
-            , m.adult
-            , m.backdrop_path
-            , m.original_title
-            , m.poster_path
-            , m.title
-            , m.vote_average
-            , m.watch_providers
-            , m.rank
-            , r.rated
-            , r.comment
-            FROM my_movie AS m
-            INNER JOIN rated AS r ON m.id = r.my_movie_id
-        """
-    )
-    abstract fun getMyRatedMovies(): Flow<List<MyRatedMoviesVO>>
 
 }

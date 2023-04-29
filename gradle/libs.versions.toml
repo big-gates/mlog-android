@@ -38,6 +38,8 @@ androidx-hilt-navigation-compose = "1.0.0"
 androidx-navigation = "2.5.3"
 accompanist = "0.29.0-alpha"
 
+compose-ratingbar = "1.2.4"
+
 compileSdk = "33"
 minSdk = "24"
 targetSdk = "31"
@@ -130,3 +132,5 @@ accompanist-pager-indicators = { group = "com.google.accompanist", name = "accom
 coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil"}
 
 logger = { module = "com.orhanobut:logger", version.ref = "logger" }
+
+a914-gowtham-compose-ratingbar = { module = "com.github.a914-gowtham:compose-ratingbar", version.ref = "compose-ratingbar" }
