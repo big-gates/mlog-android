@@ -32,7 +32,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
@@ -73,7 +72,8 @@ fun SearchScreen(
             recentSearchList = recentSearchList,
             movies = movies,
             deleteAll = viewModel::deleteAll,
-            delete = viewModel::delete
+            delete = viewModel::delete,
+            onItemClick = viewModel::updateSearchText,
         ) { keyboardController?.hide() }
     }
 }
@@ -127,13 +127,15 @@ fun SearchView(
     movies: LazyPagingItems<MovieItem>,
     deleteAll: () -> Unit,
     delete: (id: Int) -> Unit,
-    keyboardHide: () -> Unit,
+    onItemClick: (text: String) -> Unit,
+    keyboardHide: () -> Unit
 ) {
     if(text.isEmpty()){
         RecentSearchListView(
             recentSearchList = recentSearchList,
             deleteAll = deleteAll,
-            delete = delete
+            delete = delete,
+            onItemClick = onItemClick,
         )
     }else{
         SearchResultView(
@@ -210,6 +212,7 @@ fun RecentSearchListView(
     recentSearchList: List<RecentSearchView>,
     deleteAll: () -> Unit,
     delete: (id: Int) -> Unit,
+    onItemClick: (text: String) -> Unit,
 ) {
 
     if(recentSearchList.isNotEmpty()){
@@ -227,6 +230,7 @@ fun RecentSearchListView(
             RecentSearch(
                 recentSearchView = it,
                 delete = delete,
+                onItemClick = onItemClick,
             )
         }
     }
@@ -261,9 +265,12 @@ fun RecentSearchHeader(
 fun RecentSearch(
     recentSearchView: RecentSearchView,
     delete: (id: Int) -> Unit,
+    onItemClick: (text: String) -> Unit,
 ){
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onItemClick(recentSearchView.text) },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
