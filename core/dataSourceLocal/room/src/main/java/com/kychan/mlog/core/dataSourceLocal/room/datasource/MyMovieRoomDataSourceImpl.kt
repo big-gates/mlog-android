@@ -20,8 +20,8 @@ class MyMovieRoomDataSourceImpl @Inject constructor(
         return myMovieDao.getMyWantToWatchMovies()
     }
 
-    override suspend fun insertMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity) {
-        return myMovieDao.insertMyRatedMovie(myMovieEntity, ratedEntity)
+    override suspend fun updateMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity) {
+        return myMovieDao.updateMyRatedMovie(myMovieEntity, ratedEntity)
     }
 
     override suspend fun insertMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity) {

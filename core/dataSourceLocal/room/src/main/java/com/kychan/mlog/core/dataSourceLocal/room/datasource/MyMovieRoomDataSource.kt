@@ -11,7 +11,7 @@ interface MyMovieRoomDataSource {
 
     fun getMyWantToWatchMovies(): Flow<List<MyMovieEntity>>
 
-    suspend fun insertMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity)
+    suspend fun updateMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity)
 
     suspend fun insertMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity)
 

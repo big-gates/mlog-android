@@ -18,11 +18,12 @@ class MyPageViewModel @Inject constructor(
     private val observeMyWantToWatchMovie: ObserveMyWantToWatchMovie,
     private val observeMyRatedMovie: ObserveMyRatedMovie,
     private val insertMyWantMovie: InsertMyWantMovie,
+    private val updateMyRatedMovie: UpdateMyRatedMovie,
     private val deleteMyWantMovie: DeleteMyWantMovie,
     private val existToMyWantMovie: ExistToMyWantMovie,
     private val existToMyRatedMovie: ExistToMyRatedMovie,
 ) : MovieModalBottomSheetViewModel(
-    insertMyWantMovie, deleteMyWantMovie, existToMyWantMovie, existToMyRatedMovie
+    insertMyWantMovie, updateMyRatedMovie, deleteMyWantMovie, existToMyWantMovie, existToMyRatedMovie
 ) {
 
     val myWantToWatchMovies: StateFlow<List<MyMovieItem>> = observeMyWantToWatchMovie()

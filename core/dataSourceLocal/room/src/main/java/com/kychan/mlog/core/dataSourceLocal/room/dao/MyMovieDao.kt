@@ -29,14 +29,18 @@ abstract class MyMovieDao {
     abstract fun getMyWantToWatchMovies(): Flow<List<MyMovieEntity>>
 
     @Transaction
-    open suspend fun insertMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity) {
-        insertMyMovie(myMovieEntity)
-        insertRatedMovie(ratedEntity)
+    open suspend fun updateMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity) {
+        upsertMyMovie(myMovieEntity)
+        if (ratedEntity.rated <= 0f) {
+            deleteMyRatedMovie(myMovieEntity, ratedEntity)
+        } else (
+            upsertRatedMovie(ratedEntity)
+        )
     }
 
     @Transaction
     open suspend fun insertMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity) {
-        insertMyMovie(myMovieEntity)
+        upsertMyMovie(myMovieEntity)
         insertWantMovie(wantToWatchesEntity)
     }
 
@@ -51,16 +55,16 @@ abstract class MyMovieDao {
     @Transaction
     open suspend fun deleteMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity) {
         deleteRatedMovie(ratedEntity)
-        if (existToMyWantMovie(myMovieEntity.id) > 0) {
+        if (existToMyWantMovie(myMovieEntity.id) < 0) {
             deleteMyMovie(myMovieEntity)
         }
     }
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insertMyMovie(myMovieEntity: MyMovieEntity)
+    @Upsert
+    abstract suspend fun upsertMyMovie(myMovieEntity: MyMovieEntity)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insertRatedMovie(ratedEntity: RatedEntity)
+    @Upsert
+    abstract suspend fun upsertRatedMovie(ratedEntity: RatedEntity)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     abstract suspend fun insertWantMovie(wantToWatchesEntity: WantToWatchesEntity)

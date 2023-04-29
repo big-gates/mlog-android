@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 
 abstract class MovieModalBottomSheetViewModel(
     private val insertMyWantMovie: InsertMyWantMovie,
+    private val updateMyRatedMovie: UpdateMyRatedMovie,
     private val deleteMyWantMovie: DeleteMyWantMovie,
     private val existToMyWantMovie: ExistToMyWantMovie,
     private val existToMyRatedMovie: ExistToMyRatedMovie,
@@ -31,7 +32,7 @@ abstract class MovieModalBottomSheetViewModel(
     }
     fun replaceRated(rate: Float) {
         ratedMovieInfo.value = ratedMovieInfo.value.copy(rate = rate)
-        insertMyRatedMovie(onShowModalItem.copy(rate = rate))
+        updateMyRatedMovie(onShowModalItem.copy(rate = rate))
     }
 
     fun insertOrDeleteMyWantMovie() {
@@ -39,6 +40,15 @@ abstract class MovieModalBottomSheetViewModel(
             deleteMyWantMovie(onShowModalItem)
         } else {
             insertMyWantMovie(onShowModalItem)
+        }
+    }
+
+    private fun updateMyRatedMovie(movieModalTO: MovieModalTO) {
+        viewModelScope.launch {
+            updateMyRatedMovie.invoke(
+                myMovie = movieModalTO.toMyMovie(),
+                rated = movieModalTO.toRated()
+            )
         }
     }
 

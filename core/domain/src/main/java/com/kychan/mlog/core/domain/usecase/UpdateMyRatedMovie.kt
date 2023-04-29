@@ -7,11 +7,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class InsertMyRatedMovie @Inject constructor(
+class UpdateMyRatedMovie @Inject constructor(
     private val myPageRepository: MyPageRepository
 ) {
 
     suspend operator fun invoke(myMovie: MyMovie, rated: Rated) = withContext(Dispatchers.IO) {
-        myPageRepository.insertMyRatedMovie(myMovie, rated)
+        myPageRepository.updateMyRatedMovie(myMovie, rated)
     }
 }
