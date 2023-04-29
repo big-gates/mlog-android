@@ -203,8 +203,8 @@ fun MyPageScreen(
                                 title = item.title,
                                 adult = item.adult,
                                 isLike = movieModalItemState.isLikeState,
-                                comment = movieModalItemState.isRatedState?.comment.orEmpty(),
-                                rate = movieModalItemState.isRatedState?.rated ?: 0f,
+                                comment = movieModalItemState.isRatedState.comment,
+                                rate = movieModalItemState.isRatedState.rate,
                                 backgroundImage = item.posterPath,
                                 tags = emptyList()
                             )
@@ -219,8 +219,8 @@ fun MyPageScreen(
             modalSheetState = modalSheetState,
             movieModalTO = movieModalTOState.value.copy(
                 isLike = movieModalItemState.isLikeState,
-                comment = movieModalItemState.isRatedState?.comment.orEmpty(),
-                rate = movieModalItemState.isRatedState?.rated ?: 0f
+                comment = movieModalItemState.isRatedState.comment,
+                rate = movieModalItemState.isRatedState.rate
             ),
             movieModalEvent = movieModalItemState.modalEvent,
         )

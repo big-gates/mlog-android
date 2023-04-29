@@ -1,9 +1,7 @@
 package com.kychan.mlog.feature.movie_modal
 
-import com.kychan.mlog.core.model.Rated
-
 data class MovieModalState(
-    val isRatedState: Rated? = null,
+    val isRatedState: RateItem,
     val isLikeState: Boolean = false,
     val onShowModal: (item: MovieModalTO) -> Unit = {},
     val modalEvent: MovieModalEvent,

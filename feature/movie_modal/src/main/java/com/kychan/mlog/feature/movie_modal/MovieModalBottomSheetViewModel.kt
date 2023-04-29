@@ -3,7 +3,6 @@ package com.kychan.mlog.feature.movie_modal
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kychan.mlog.core.domain.usecase.*
-import com.kychan.mlog.core.model.Rated
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -14,24 +13,25 @@ abstract class MovieModalBottomSheetViewModel(
     private val existToMyRatedMovie: ExistToMyRatedMovie,
 ) : ViewModel() {
 
-    val ratedMovieInfo: MutableStateFlow<Rated?> = MutableStateFlow(null)
+    val ratedMovieInfo: MutableStateFlow<RateItem> = MutableStateFlow(RateItem())
     val isLikeMovie = MutableStateFlow(false)
 
     private var onShowModalItem: MovieModalTO = MovieModalTO()
 
     fun existToMyMovie(item: MovieModalTO) {
         viewModelScope.launch {
-            ratedMovieInfo.value = existToMyRatedMovie.invoke(item.id)
+            ratedMovieInfo.value = existToMyRatedMovie.invoke(item.id)?.toRateItem() ?: RateItem()
             isLikeMovie.value = existToMyWantMovie.invoke(item.id) > 0
             onShowModalItem = item
         }
     }
 
     fun replaceRated(comment: String) {
-        ratedMovieInfo.value = ratedMovieInfo.value?.copy(comment = comment)
+        ratedMovieInfo.value = ratedMovieInfo.value.copy(comment = comment)
     }
     fun replaceRated(rate: Float) {
-        ratedMovieInfo.value = ratedMovieInfo.value?.copy(rated = rate)
+        ratedMovieInfo.value = ratedMovieInfo.value.copy(rate = rate)
+        insertMyRatedMovie(onShowModalItem.copy(rate = rate))
     }
 
     fun insertOrDeleteMyWantMovie() {
