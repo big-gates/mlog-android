@@ -17,7 +17,9 @@ fun NavController.navigateToSearch(navOptions: NavOptions? = null) {
 }
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.searchScreen(){
+fun NavGraphBuilder.searchScreen(
+    onBackClick: ()->Unit
+) {
     composable(
         route = searchRoute,
         enterTransition = { slideIn(
@@ -27,7 +29,9 @@ fun NavGraphBuilder.searchScreen(){
             initialOffset = { IntOffset((it.width - slideInitialOffsetPadding).toInt(),0) }
         ) },
     ){
-        SearchRouter()
+        SearchRouter(
+            onBackClick = onBackClick
+        )
     }
 }
 

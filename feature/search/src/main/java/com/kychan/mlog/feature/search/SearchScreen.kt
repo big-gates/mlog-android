@@ -1,6 +1,7 @@
 package com.kychan.mlog.feature.search
 
 import android.view.MotionEvent
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -45,8 +46,10 @@ import com.kychan.mlog.feature.search.model.MovieItem
 import com.kychan.mlog.feature.search.model.RecentSearchView
 
 @Composable
-fun SearchRouter(){
-    SearchScreen()
+fun SearchRouter(onBackClick: () -> Unit) {
+    SearchScreen(
+        onBackClick = onBackClick
+    )
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -54,11 +57,17 @@ fun SearchRouter(){
 fun SearchScreen(
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
+    onBackClick: () -> Unit,
 ){
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
     val movies = viewModel.movies.collectAsLazyPagingItems()
     val recentSearchList by viewModel.recentSearchList.collectAsStateWithLifecycle()
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    BackHandler {
+        if(searchText.isEmpty()) onBackClick()
+        else viewModel.updateSearchText("")
+    }
 
     Column(modifier = modifier.fillMaxHeight()) {
         SearchBar(
