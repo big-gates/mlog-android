@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import com.kychan.mlog.core.model.RecentSearch
 
 @Entity(
-    indices = [Index(value = ["id", "text"], unique = true)],
+    indices = [Index(value = ["text"], unique = true)],
     tableName = "recent_search"
 )
 data class RecentSearchEntity (
