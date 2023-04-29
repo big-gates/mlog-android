@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(
     private val observeWatchaMovie: ObserveWatchaMovie,
 ): ViewModel() {
 
-    val mLogMovieItem: Flow<PagingData<MovieItem>> = observeMlogMovie()
+    val mLogMovieItem: StateFlow<PagingData<MovieItem>> = observeMlogMovie()
         .map { paging ->
             paging.map { movie ->
                 movie.toView(posterSize = POSTER_SIZE)
@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
             initialValue = PagingData.empty()
         )
 
-    val netflixMovieItem: Flow<PagingData<MovieItem>> = observeNetflixMovie()
+    val netflixMovieItem: StateFlow<PagingData<MovieItem>> = observeNetflixMovie()
         .map { paging ->
             paging.map { movie ->
                 movie.toView(posterSize = POSTER_SIZE)
@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
             initialValue = PagingData.empty()
         )
 
-    val watchaMovieitem: Flow<PagingData<MovieItem>> = observeWatchaMovie()
+    val watchaMovieitem: StateFlow<PagingData<MovieItem>> = observeWatchaMovie()
         .map { paging ->
             paging.map { movie ->
                 movie.toView(posterSize = POSTER_SIZE)

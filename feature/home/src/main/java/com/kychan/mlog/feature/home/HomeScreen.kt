@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,6 +35,7 @@ import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.core.design.theme.Black
 import com.kychan.mlog.core.design.theme.MovieRankBg
 import com.kychan.mlog.core.design.theme.Pink500
+import com.kychan.mlog.core.design.theme.Shapes
 import com.kychan.mlog.core.design.util.maxScrollFlingBehavior
 import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.feature.home.HomeViewModel.Companion.MLOG_RECOMMENDATION
@@ -254,7 +254,7 @@ fun MovieRankBox(
             .height(20.dp)
             .background(
                 color = MovieRankBg,
-                shape = RoundedCornerShape(5.dp)
+                shape = Shapes.small
             ),
         verticalAlignment = CenterVertically,
         horizontalArrangement = Arrangement.Center

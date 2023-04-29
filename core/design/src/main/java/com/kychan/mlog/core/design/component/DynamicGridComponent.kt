@@ -22,7 +22,7 @@ fun LazyGridState.isScrolledToEnd(endOfPaginationReached: Boolean?):Boolean {
     return  endOfPaginationReached?: false && (layoutInfo.visibleItemsInfo.lastOrNull()?.index == layoutInfo.totalItemsCount - 1)
 }
 
-fun <T: DynamicGridItem> LazyGridScope.items(
+fun <T : Any> LazyGridScope.items(
     items: LazyPagingItems<T>,
     key: ((item: T) -> Any)? = null,
     span: ((item: T) -> GridItemSpan)? = null,

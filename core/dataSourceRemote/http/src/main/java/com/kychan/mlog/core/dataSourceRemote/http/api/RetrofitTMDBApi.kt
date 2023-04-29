@@ -2,6 +2,7 @@ package com.kychan.mlog.core.dataSourceRemote.http.api
 
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MoviePopularRes
+import com.kychan.mlog.core.dataSourceRemote.http.model.MovieSearchRes
 import com.kychan.mlog.core.model.Language
 import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.core.model.WatchRegion
@@ -25,4 +26,11 @@ interface RetrofitTMDBApi {
         @Query("region") watchRegion: WatchRegion,
     ): MoviePopularRes
 
+    @GET("/3/search/multi")
+    suspend fun getSearch(
+        @Query("page") page: Int,
+        @Query("language") language: Language,
+        @Query("region") watchRegion: WatchRegion,
+        @Query("query") query: String,
+    ): MovieSearchRes
 }
