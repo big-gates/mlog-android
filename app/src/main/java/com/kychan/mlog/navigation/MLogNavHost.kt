@@ -31,6 +31,8 @@ fun MLogNavHost(
             navigateToSearch = { navController.navigateToSearch() }
         )
         myPageScreen()
-        searchScreen()
+        searchScreen(
+            onBackClick = navController::popBackStack
+        )
     }
 }

@@ -32,7 +32,9 @@ interface RoomDataSource {
         recentSearchEntity: RecentSearchEntity,
     )
 
-    fun getRecentSearch(): Flow<List<RecentSearchEntity>>
+    fun getRecentSearches(): Flow<List<RecentSearchEntity>>
+
+    fun getRecentSearch(text: String): Flow<RecentSearchEntity>
 
     suspend fun deleteAllRecentSearch()
 

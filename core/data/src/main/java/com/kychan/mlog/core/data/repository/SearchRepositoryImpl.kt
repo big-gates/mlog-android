@@ -8,13 +8,13 @@ import com.kychan.mlog.core.data.mediator.SearchMovieMediator
 import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
 import com.kychan.mlog.core.dataSourceLocal.room.model.RecentSearchEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.toDomain
+import com.kychan.mlog.core.dataSourceLocal.room.model.update
 import com.kychan.mlog.core.dataSourceRemote.http.datasource.TMDBDataSource
 import com.kychan.mlog.core.model.Language
 import com.kychan.mlog.core.model.Movie
 import com.kychan.mlog.core.model.RecentSearch
 import com.kychan.mlog.core.model.WatchRegion
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(
@@ -39,11 +39,13 @@ class SearchRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateRecentSearch(text: String) {
-        roomDataSource.updateRecentSearch(text.toRecentSearchEntity())
+        roomDataSource.getRecentSearch(text).firstOrNull()?.let {
+            roomDataSource.updateRecentSearch(it.update())
+        }?: roomDataSource.updateRecentSearch(text.toRecentSearchEntity())
     }
 
     override fun getRecentSearch(): Flow<List<RecentSearch>> {
-        return roomDataSource.getRecentSearch().map { it.map(RecentSearchEntity::toDomain) }
+        return roomDataSource.getRecentSearches().map { it.map(RecentSearchEntity::toDomain) }
     }
 
     override suspend fun deleteAllRecentSearch() {
