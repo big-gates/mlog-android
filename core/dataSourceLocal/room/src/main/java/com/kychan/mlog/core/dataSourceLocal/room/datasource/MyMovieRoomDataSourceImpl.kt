@@ -40,7 +40,7 @@ class MyMovieRoomDataSourceImpl @Inject constructor(
         return myMovieDao.existToMyRatedMovie(id)
     }
 
-    override suspend fun existToMyWantMovie(id: Int): Int {
+    override suspend fun existToMyWantMovie(id: Int): WantToWatchesEntity? {
         return myMovieDao.existToMyWantMovie(id)
     }
 }

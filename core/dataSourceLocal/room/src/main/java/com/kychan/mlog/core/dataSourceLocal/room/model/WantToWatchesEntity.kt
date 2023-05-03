@@ -29,3 +29,8 @@ data class WantToWatchesEntity(
         )
     }
 }
+
+fun WantToWatchesEntity.toDomain() = WantToWatch(
+    id = this.id,
+    myMovieId = this.myMovieId,
+)

@@ -7,7 +7,7 @@ class ExistToMyWantMovie @Inject constructor(
     private val myPageRepository: MyPageRepository
 ){
 
-    suspend operator fun invoke(id: Int): Int {
-        return myPageRepository.existToMyWantMovie(id)
+    suspend operator fun invoke(id: Int): Boolean {
+        return myPageRepository.existToMyWantMovie(id) != null
     }
 }

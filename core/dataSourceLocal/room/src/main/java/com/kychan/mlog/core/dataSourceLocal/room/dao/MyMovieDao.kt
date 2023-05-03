@@ -55,7 +55,7 @@ abstract class MyMovieDao {
     @Transaction
     open suspend fun deleteMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity) {
         deleteRatedMovie(ratedEntity)
-        if (existToMyWantMovie(myMovieEntity.id) < 0) {
+        if (existToMyWantMovie(myMovieEntity.id) == null) {
             deleteMyMovie(myMovieEntity)
         }
     }
@@ -81,6 +81,6 @@ abstract class MyMovieDao {
     @Query("SELECT * FROM rated AS r WHERE r.my_movie_id = (:id)")
     abstract suspend fun existToMyRatedMovie(id: Int) : RatedEntity?
 
-    @Query("SELECT w.id FROM want_to_watches AS w WHERE w.my_movie_id = (:id)")
-    abstract suspend fun existToMyWantMovie(id: Int) : Int
+    @Query("SELECT * FROM want_to_watches AS w WHERE w.my_movie_id = (:id)")
+    abstract suspend fun existToMyWantMovie(id: Int) : WantToWatchesEntity?
 }

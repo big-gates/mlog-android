@@ -1,5 +1,6 @@
 package com.kychan.mlog.core.data.repository
 
+import com.kychan.mlog.core.dataSourceLocal.room.model.WantToWatchesEntity
 import com.kychan.mlog.core.model.*
 import kotlinx.coroutines.flow.Flow
 
@@ -18,5 +19,5 @@ interface MyPageRepository {
 
     suspend fun existToMyRatedMovie(id: Int): Rated?
 
-    suspend fun existToMyWantMovie(id: Int): Int
+    suspend fun existToMyWantMovie(id: Int): WantToWatch?
 }

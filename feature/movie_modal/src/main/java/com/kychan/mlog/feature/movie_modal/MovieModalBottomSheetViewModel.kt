@@ -3,7 +3,7 @@ package com.kychan.mlog.feature.movie_modal
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kychan.mlog.core.domain.usecase.*
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 abstract class MovieModalBottomSheetViewModel(
@@ -22,7 +22,7 @@ abstract class MovieModalBottomSheetViewModel(
     fun existToMyMovie(item: MovieModalTO) {
         viewModelScope.launch {
             ratedMovieInfo.value = existToMyRatedMovie.invoke(item.id)?.toRateItem() ?: RateItem()
-            isLikeMovie.value = existToMyWantMovie.invoke(item.id) > 0
+            isLikeMovie.value = existToMyWantMovie.invoke(item.id)
             onShowModalItem = item
         }
     }
