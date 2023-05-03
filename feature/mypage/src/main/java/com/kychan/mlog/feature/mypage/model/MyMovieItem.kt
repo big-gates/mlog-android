@@ -1,5 +1,6 @@
 package com.kychan.mlog.feature.mypage.model
 
+import com.kychan.mlog.core.model.MyMovie
 import com.kychan.mlog.core.model.MyRatedMovies
 import com.kychan.mlog.core.model.WatchProvider
 
@@ -30,6 +31,22 @@ data class MyMovieItem(
                 rank = myRatedMovie.rank,
                 rated = myRatedMovie.rated,
                 comment = myRatedMovie.comment,
+            )
+        }
+
+        fun of(myMovie: MyMovie): MyMovieItem {
+            return MyMovieItem(
+                myMovieId = myMovie.id,
+                adult = myMovie.adult,
+                backdropPath = myMovie.backdropPath,
+                originalTitle = myMovie.originalTitle,
+                posterPath = myMovie.posterPath,
+                title = myMovie.title,
+                voteAverage = myMovie.voteAverage,
+                watchProviders = myMovie.watchProviders,
+                rank = myMovie.rank,
+                rated = 0.0f,
+                comment = "",
             )
         }
     }

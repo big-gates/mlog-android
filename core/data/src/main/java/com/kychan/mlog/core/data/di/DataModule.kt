@@ -7,6 +7,7 @@ import com.kychan.mlog.core.data.repository.MyPageRepository
 import com.kychan.mlog.core.data.repository.MyPageRepositoryImpl
 import com.kychan.mlog.core.data.repository.SearchRepository
 import com.kychan.mlog.core.data.repository.SearchRepositoryImpl
+import com.kychan.mlog.core.dataSourceLocal.room.datasource.MyMovieRoomDataSource
 import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
 import dagger.Module
 import dagger.Provides
@@ -28,8 +29,8 @@ object DataModule {
     @Provides
     @Singleton
     fun providesMyPageRepository(
-        roomDataSource: RoomDataSource
-    ): MyPageRepository = MyPageRepositoryImpl(roomDataSource)
+        myMovieRoomDataSource: MyMovieRoomDataSource
+    ): MyPageRepository = MyPageRepositoryImpl(myMovieRoomDataSource)
 
     @Provides
     @Singleton
