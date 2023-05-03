@@ -10,8 +10,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -25,6 +28,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -44,6 +48,11 @@ import com.kychan.mlog.feature.home.HomeViewModel.Companion.WATCHA_RECOMMENDATIO
 import com.kychan.mlog.feature.home.model.Header
 import com.kychan.mlog.feature.home.model.MovieCategory
 import com.kychan.mlog.feature.home.model.MovieItem
+import com.kychan.mlog.feature.movie_modal.BottomSheetLayout
+import com.kychan.mlog.feature.movie_modal.MovieModalEvent
+import com.kychan.mlog.feature.movie_modal.MovieModalState
+import com.kychan.mlog.feature.movie_modal.MovieModalUiModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun HomeAppBar(navigateToSearch: () -> Unit) {
@@ -81,6 +90,8 @@ fun HomeRoute(
     navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit,
     navigateToSearch: () -> Unit
 ) {
+    val isRatedState by viewModel.ratedMovieInfo.collectAsStateWithLifecycle()
+    val isLikeState by viewModel.isLikeMovie.collectAsStateWithLifecycle()
     HomeScreen(
         categories = listOf(
             MovieCategory(
@@ -98,36 +109,100 @@ fun HomeRoute(
         ),
         navigateToHomeDetail = navigateToHomeDetail,
         navigateToSearch = navigateToSearch,
+        movieModalItemState = MovieModalState(
+            isRatedState = isRatedState,
+            isLikeState = isLikeState,
+            onShowModal = { item ->
+                viewModel.existToMyMovie(item)
+            },
+            modalEvent = MovieModalEvent(
+                onLikeClick = {
+                    viewModel.insertOrDeleteMyWantMovie()
+                },
+                onTextChange = { comment, rating ->
+                    viewModel.replaceRated(comment, rating)
+                },
+                onRateChange = { comment, rating ->
+                    viewModel.replaceRated(comment, rating)
+                },
+            )
+        ),
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     categories: List<MovieCategory>,
+    movieModalItemState: MovieModalState,
     navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit = { },
     navigateToSearch: () -> Unit,
 ) {
     val scrollState = rememberScrollState()
-    Column(Modifier.scrollable(
-        state = scrollState,
-        orientation = Orientation.Vertical
-    )) {
-        HomeAppBar(navigateToSearch = navigateToSearch)
+    val coroutineScope = rememberCoroutineScope()
+    val modalSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        confirmValueChange = {
+            it != ModalBottomSheetValue.Expanded
+        },
+        skipHalfExpanded = false
+    )
+    val movieModalUiModelState: MutableState<MovieModalUiModel> = remember { mutableStateOf(MovieModalUiModel()) }
 
-        LazyColumn(
-            contentPadding = PaddingValues(5.dp),
-            flingBehavior = maxScrollFlingBehavior(0F),
-        ){
-            items(
-                items = categories
-            ){
-                MovieRankingsByCategory(
-                    header = it.header,
-                    movie = it.movieItem,
-                    navigateToHomeDetail = navigateToHomeDetail
-                )
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            Modifier.scrollable(
+                state = scrollState,
+                orientation = Orientation.Vertical
+            )
+        ) {
+            HomeAppBar(navigateToSearch = navigateToSearch)
+
+            LazyColumn(
+                contentPadding = PaddingValues(5.dp),
+                flingBehavior = maxScrollFlingBehavior(0F),
+            ) {
+                items(
+                    items = categories
+                ) {
+                    MovieRankingsByCategory(
+                        header = it.header,
+                        movie = it.movieItem,
+                        navigateToHomeDetail = navigateToHomeDetail,
+                        onClick = { item ->
+                            coroutineScope.launch {
+                                if (modalSheetState.isVisible) {
+                                    modalSheetState.hide()
+                                } else {
+                                    movieModalUiModelState.value = MovieModalUiModel(
+                                        id = item.id,
+                                        title = item.title,
+                                        adult = false, // 성인 영화 데이터 없음 추후 리팩토링 예정
+                                        isLike = movieModalItemState.isLikeState,
+                                        comment = movieModalItemState.isRatedState.comment,
+                                        rate = movieModalItemState.isRatedState.rate,
+                                        backgroundImage = item.image,
+                                        tags = emptyList()
+                                    )
+                                    modalSheetState.show()
+                                    movieModalItemState.onShowModal(movieModalUiModelState.value)
+                                }
+                            }
+                        }
+                    )
+                }
             }
         }
+
+        BottomSheetLayout(
+            modalSheetState = modalSheetState,
+            movieModalUiModel = movieModalUiModelState.value.copy(
+                isLike = movieModalItemState.isLikeState,
+                comment = movieModalItemState.isRatedState.comment,
+                rate = movieModalItemState.isRatedState.rate
+            ),
+            movieModalEvent = movieModalItemState.modalEvent,
+        )
     }
 }
 
@@ -135,7 +210,8 @@ fun HomeScreen(
 fun MovieRankingsByCategory(
     header: Header,
     movie: LazyPagingItems<MovieItem>,
-    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit
+    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit,
+    onClick: (item: MovieItem) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -154,7 +230,7 @@ fun MovieRankingsByCategory(
                 items = movie
             ) { movie ->
                 if (movie != null) {
-                    Movie(movie = movie)
+                    Movie(movie = movie, onClick = onClick)
                 }
             }
         }
@@ -195,11 +271,15 @@ fun CategoryTitle(
 @Composable
 fun Movie(
     movie: MovieItem,
+    onClick: (item: MovieItem) -> Unit,
 ) {
     Column(
         modifier = Modifier
             .width(MOVIE_ITEM_WIDTH.dp)
             .padding(end = 7.dp)
+            .clickable {
+                onClick(movie)
+            }
     ) {
         Box {
             Image(
