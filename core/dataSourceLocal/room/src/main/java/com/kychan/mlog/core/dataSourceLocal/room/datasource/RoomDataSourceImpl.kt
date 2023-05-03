@@ -64,8 +64,12 @@ class RoomDataSourceImpl @Inject constructor(
         searchDao.upsertRecentSearch(recentSearchEntity)
     }
 
-    override fun getRecentSearch(): Flow<List<RecentSearchEntity>> {
-        return searchDao.getRecentSearch()
+    override fun getRecentSearches(): Flow<List<RecentSearchEntity>> {
+        return searchDao.getRecentSearches()
+    }
+
+    override fun getRecentSearch(text: String): Flow<RecentSearchEntity> {
+        return searchDao.getRecentSearch(text)
     }
 
     override suspend fun deleteAllRecentSearch() {

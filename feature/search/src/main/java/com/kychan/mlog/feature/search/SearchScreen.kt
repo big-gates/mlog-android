@@ -1,6 +1,7 @@
 package com.kychan.mlog.feature.search
 
 import android.view.MotionEvent
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -32,7 +33,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
@@ -46,8 +46,10 @@ import com.kychan.mlog.feature.search.model.MovieItem
 import com.kychan.mlog.feature.search.model.RecentSearchView
 
 @Composable
-fun SearchRouter(){
-    SearchScreen()
+fun SearchRouter(onBackClick: () -> Unit) {
+    SearchScreen(
+        onBackClick = onBackClick
+    )
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -55,11 +57,17 @@ fun SearchRouter(){
 fun SearchScreen(
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel(),
+    onBackClick: () -> Unit,
 ){
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
     val movies = viewModel.movies.collectAsLazyPagingItems()
     val recentSearchList by viewModel.recentSearchList.collectAsStateWithLifecycle()
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    BackHandler {
+        if(searchText.isEmpty()) onBackClick()
+        else viewModel.updateSearchText("")
+    }
 
     Column(modifier = modifier.fillMaxHeight()) {
         SearchBar(
@@ -73,7 +81,8 @@ fun SearchScreen(
             recentSearchList = recentSearchList,
             movies = movies,
             deleteAll = viewModel::deleteAll,
-            delete = viewModel::delete
+            delete = viewModel::delete,
+            onItemClick = viewModel::updateSearchText,
         ) { keyboardController?.hide() }
     }
 }
@@ -127,13 +136,15 @@ fun SearchView(
     movies: LazyPagingItems<MovieItem>,
     deleteAll: () -> Unit,
     delete: (id: Int) -> Unit,
-    keyboardHide: () -> Unit,
+    onItemClick: (text: String) -> Unit,
+    keyboardHide: () -> Unit
 ) {
     if(text.isEmpty()){
         RecentSearchListView(
             recentSearchList = recentSearchList,
             deleteAll = deleteAll,
-            delete = delete
+            delete = delete,
+            onItemClick = onItemClick,
         )
     }else{
         SearchResultView(
@@ -210,6 +221,7 @@ fun RecentSearchListView(
     recentSearchList: List<RecentSearchView>,
     deleteAll: () -> Unit,
     delete: (id: Int) -> Unit,
+    onItemClick: (text: String) -> Unit,
 ) {
 
     if(recentSearchList.isNotEmpty()){
@@ -227,6 +239,7 @@ fun RecentSearchListView(
             RecentSearch(
                 recentSearchView = it,
                 delete = delete,
+                onItemClick = onItemClick,
             )
         }
     }
@@ -261,9 +274,12 @@ fun RecentSearchHeader(
 fun RecentSearch(
     recentSearchView: RecentSearchView,
     delete: (id: Int) -> Unit,
+    onItemClick: (text: String) -> Unit,
 ){
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onItemClick(recentSearchView.text) },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

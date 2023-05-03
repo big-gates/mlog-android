@@ -16,7 +16,14 @@ abstract class SearchDao {
         SELECT * FROM recent_search
         ORDER BY created_at DESC
     """)
-    abstract fun getRecentSearch(): Flow<List<RecentSearchEntity>>
+    abstract fun getRecentSearches(): Flow<List<RecentSearchEntity>>
+
+    @Query(value = """
+        SELECT * FROM recent_search
+        WHERE text = :text
+        ORDER BY created_at DESC
+    """)
+    abstract fun getRecentSearch(text: String): Flow<RecentSearchEntity>
 
     @Query(value = """
         DELETE FROM recent_search
