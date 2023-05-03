@@ -25,7 +25,7 @@ import com.kychan.mlog.core.design.theme.Black
 import com.kychan.mlog.feature.movie_modal.BottomSheetLayout
 import com.kychan.mlog.feature.movie_modal.MovieModalEvent
 import com.kychan.mlog.feature.movie_modal.MovieModalState
-import com.kychan.mlog.feature.movie_modal.MovieModalTO
+import com.kychan.mlog.feature.movie_modal.MovieModalUiModel
 import kotlinx.coroutines.launch
 
 
@@ -185,7 +185,7 @@ fun MyPageScreen(
         },
         skipHalfExpanded = false
     )
-    val movieModalTOState: MutableState<MovieModalTO> = remember { mutableStateOf(MovieModalTO()) }
+    val movieModalUiModelState: MutableState<MovieModalUiModel> = remember { mutableStateOf(MovieModalUiModel()) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
@@ -198,7 +198,7 @@ fun MyPageScreen(
                         if (modalSheetState.isVisible) {
                             modalSheetState.hide()
                         } else {
-                            movieModalTOState.value = MovieModalTO(
+                            movieModalUiModelState.value = MovieModalUiModel(
                                 id = item.myMovieId,
                                 title = item.title,
                                 adult = item.adult,
@@ -209,7 +209,7 @@ fun MyPageScreen(
                                 tags = emptyList()
                             )
                             modalSheetState.show()
-                            movieModalItemState.onShowModal(movieModalTOState.value)
+                            movieModalItemState.onShowModal(movieModalUiModelState.value)
                         }
                     }
                 }
@@ -217,7 +217,7 @@ fun MyPageScreen(
         }
         BottomSheetLayout(
             modalSheetState = modalSheetState,
-            movieModalTO = movieModalTOState.value.copy(
+            movieModalUiModel = movieModalUiModelState.value.copy(
                 isLike = movieModalItemState.isLikeState,
                 comment = movieModalItemState.isRatedState.comment,
                 rate = movieModalItemState.isRatedState.rate

@@ -17,9 +17,9 @@ abstract class MovieModalBottomSheetViewModel(
     val ratedMovieInfo: MutableStateFlow<RateItem> = MutableStateFlow(RateItem())
     val isLikeMovie = MutableStateFlow(false)
 
-    private var onShowModalItem: MovieModalTO = MovieModalTO()
+    private var onShowModalItem: MovieModalUiModel = MovieModalUiModel()
 
-    fun existToMyMovie(item: MovieModalTO) {
+    fun existToMyMovie(item: MovieModalUiModel) {
         viewModelScope.launch {
             ratedMovieInfo.value = existToMyRatedMovie.invoke(item.id)?.toRateItem() ?: RateItem()
             isLikeMovie.value = existToMyWantMovie.invoke(item.id)
@@ -40,30 +40,30 @@ abstract class MovieModalBottomSheetViewModel(
         }
     }
 
-    private fun updateMyRatedMovie(movieModalTO: MovieModalTO) {
+    private fun updateMyRatedMovie(movieModalUiModel: MovieModalUiModel) {
         viewModelScope.launch {
             updateMyRatedMovie.invoke(
-                myMovie = movieModalTO.toMyMovie(),
-                rated = movieModalTO.toRated()
+                myMovie = movieModalUiModel.toMyMovie(),
+                rated = movieModalUiModel.toRated()
             )
         }
     }
 
-    private fun insertMyWantMovie(movieModalTO: MovieModalTO) {
+    private fun insertMyWantMovie(movieModalUiModel: MovieModalUiModel) {
         viewModelScope.launch {
             insertMyWantMovie.invoke(
-                myMovie = movieModalTO.toMyMovie(),
-                wantToWatch = movieModalTO.toWantToWatch()
+                myMovie = movieModalUiModel.toMyMovie(),
+                wantToWatch = movieModalUiModel.toWantToWatch()
             )
             isLikeMovie.value = true
         }
     }
 
-    private fun deleteMyWantMovie(movieModalTO: MovieModalTO) {
+    private fun deleteMyWantMovie(movieModalUiModel: MovieModalUiModel) {
         viewModelScope.launch {
             deleteMyWantMovie.invoke(
-                myMovie = movieModalTO.toMyMovie(),
-                wantToWatch = movieModalTO.toWantToWatch()
+                myMovie = movieModalUiModel.toMyMovie(),
+                wantToWatch = movieModalUiModel.toWantToWatch()
             )
             isLikeMovie.value = false
         }

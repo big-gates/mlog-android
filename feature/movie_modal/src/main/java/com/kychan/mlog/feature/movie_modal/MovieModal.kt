@@ -34,7 +34,7 @@ import com.kychan.mlog.core.designsystem.R
 @Composable
 fun BottomSheetLayout(
     modalSheetState: ModalBottomSheetState,
-    movieModalTO: MovieModalTO,
+    movieModalUiModel: MovieModalUiModel,
     movieModalEvent: MovieModalEvent,
 ) {
     val isSheetFullScreen by remember { mutableStateOf(false) }
@@ -45,7 +45,7 @@ fun BottomSheetLayout(
         sheetState = modalSheetState,
         sheetShape = RoundedCornerShape(topStart = roundedCornerRadius, topEnd = roundedCornerRadius),
         sheetContent = {
-            MovieModalBottomSheetLayout(movieModalTO, movieModalEvent, focusManager)
+            MovieModalBottomSheetLayout(movieModalUiModel, movieModalEvent, focusManager)
         },
         content = {}
     )
@@ -60,7 +60,7 @@ fun BottomSheetLayout(
 
 @Composable
 fun MovieModalBottomSheetLayout(
-    movieModalTO: MovieModalTO,
+    movieModalUiModel: MovieModalUiModel,
     modalEvent: MovieModalEvent,
     focusManager: FocusManager,
 ) {
@@ -70,7 +70,7 @@ fun MovieModalBottomSheetLayout(
                 .fillMaxWidth()
                 .align(Alignment.TopStart),
             contentScale = ContentScale.FillHeight,
-            model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${movieModalTO.backgroundImage}",
+            model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${movieModalUiModel.backgroundImage}",
             contentDescription = "movie_modal_image"
         )
         Column {
@@ -83,7 +83,7 @@ fun MovieModalBottomSheetLayout(
             ) {
                 Text(
                     modifier = Modifier.weight(1f),
-                    text = movieModalTO.title,
+                    text = movieModalUiModel.title,
                     fontSize = 24.sp,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
@@ -100,14 +100,14 @@ fun MovieModalBottomSheetLayout(
                             modalEvent.onLikeClick()
                         }
                     ) {
-                        val paintId = if (movieModalTO.isLike) R.drawable.ic_favorite_fill else R.drawable.ic_favorite_border
+                        val paintId = if (movieModalUiModel.isLike) R.drawable.ic_favorite_fill else R.drawable.ic_favorite_border
                         Icon(
                             painter = painterResource(id = paintId),
                             contentDescription = "like_icon_movie",
                             modifier = Modifier.fillMaxSize()
                         )
                     }
-                    if (movieModalTO.adult) {
+                    if (movieModalUiModel.adult) {
                         Icon(
                             painter = painterResource(id = R.drawable.adult_movie),
                             contentDescription = "adult_movie",
@@ -165,9 +165,9 @@ fun MovieModalBottomSheetLayout(
                                 focusedIndicatorColor = Color.Gray
                             ),
                             textStyle = TextStyle.Default.copy(color = Color.White, fontSize = 14.sp),
-                            value = movieModalTO.comment,
+                            value = movieModalUiModel.comment,
                             singleLine = true,
-                            onValueChange = { modalEvent.onTextChange(it, movieModalTO.rate) },
+                            onValueChange = { modalEvent.onTextChange(it, movieModalUiModel.rate) },
                         )
                         Icon(
                             painter = painterResource(id = R.drawable.comment_write),
@@ -181,12 +181,12 @@ fun MovieModalBottomSheetLayout(
                     RatingBar(
                         modifier = Modifier
                             .align(alignment = Alignment.CenterHorizontally),
-                        value = movieModalTO.rate,
+                        value = movieModalUiModel.rate,
                         config = RatingBarConfig()
                             .stepSize(StepSize.HALF)
                             .size(32.dp)
                             .style(RatingBarStyle.HighLighted),
-                        onValueChange = { modalEvent.onRateChange(movieModalTO.comment, it) },
+                        onValueChange = { modalEvent.onRateChange(movieModalUiModel.comment, it) },
                         onRatingChanged = {
                             Log.d("TAG", "onRatingChanged: $it")
                         }

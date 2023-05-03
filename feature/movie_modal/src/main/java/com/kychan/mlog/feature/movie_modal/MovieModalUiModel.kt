@@ -5,7 +5,7 @@ import com.kychan.mlog.core.model.Rated
 import com.kychan.mlog.core.model.WantToWatch
 import com.kychan.mlog.core.model.WatchProvider
 
-data class MovieModalTO(
+data class MovieModalUiModel(
     val id: Int = -1,
     val title: String = "",
     val adult: Boolean = false,
