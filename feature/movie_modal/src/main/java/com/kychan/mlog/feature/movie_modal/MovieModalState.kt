@@ -8,6 +8,7 @@ data class MovieModalState(
 )
 
 data class MovieModalEvent(
+    val navigateToMovieDetail: () -> Unit,
     val onLikeClick: () -> Unit,
     val onTextChange: (String, Float) -> Unit,
     val onRateChange: (String, Float) -> Unit,

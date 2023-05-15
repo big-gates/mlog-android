@@ -1,6 +1,8 @@
 package com.kychan.mlog.feature.movie_modal
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -55,7 +57,12 @@ fun MovieModalBottomSheetLayout(
         AsyncImage(
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.TopStart),
+                .align(Alignment.TopStart)
+                .clickable(
+                    interactionSource = MutableInteractionSource(),
+                    indication = null,
+                    onClick = { modalEvent.navigateToMovieDetail() }
+                ),
             contentScale = ContentScale.FillHeight,
             model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${movieModalUiModel.backgroundImage}",
             contentDescription = "movie_modal_image"

@@ -140,6 +140,7 @@ fun PhotoGrid(
 @Composable
 fun MyPageRoute(
     viewModel: MyPageViewModel = hiltViewModel(),
+    navigateToMovieDetail: () -> Unit,
 ) {
     val myRatedMovies by viewModel.myRatedMovies.collectAsStateWithLifecycle()
     val myWantToWatchMovies by viewModel.myWantToWatchMovies.collectAsStateWithLifecycle()
@@ -165,6 +166,7 @@ fun MyPageRoute(
                 onRateChange = { comment, rating ->
                     viewModel.replaceRated(comment, rating)
                 },
+                navigateToMovieDetail = navigateToMovieDetail
             )
         ),
     )
