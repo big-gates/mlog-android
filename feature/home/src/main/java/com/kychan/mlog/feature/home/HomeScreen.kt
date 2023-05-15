@@ -88,7 +88,8 @@ fun HomeRoute(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit,
-    navigateToSearch: () -> Unit
+    navigateToSearch: () -> Unit,
+    navigateToMovieDetail: () -> Unit
 ) {
     val isRatedState by viewModel.ratedMovieInfo.collectAsStateWithLifecycle()
     val isLikeState by viewModel.isLikeMovie.collectAsStateWithLifecycle()
@@ -125,6 +126,7 @@ fun HomeRoute(
                 onRateChange = { comment, rating ->
                     viewModel.replaceRated(comment, rating)
                 },
+                navigateToMovieDetail = navigateToMovieDetail
             )
         ),
     )

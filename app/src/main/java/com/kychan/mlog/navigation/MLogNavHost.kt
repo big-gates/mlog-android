@@ -30,7 +30,8 @@ fun MLogNavHost(
             navigateToHomeDetail = { watchProviders ->
                 navController.navigateToHomeDetail(watchProviders)
             },
-            navigateToSearch = { navController.navigateToSearch() }
+            navigateToSearch = { navController.navigateToSearch() },
+            navigateToMovieDetail = { navController.navigateToMovieDetail() }
         )
         myPageScreen(
             navigateToMovieDetail = { navController.navigateToMovieDetail() }
