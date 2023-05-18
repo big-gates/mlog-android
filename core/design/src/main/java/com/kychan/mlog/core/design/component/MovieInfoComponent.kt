@@ -5,7 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,6 +29,7 @@ import com.gowtham.ratingbar.RatingBar
 import com.gowtham.ratingbar.RatingBarConfig
 import com.gowtham.ratingbar.RatingBarStyle
 import com.gowtham.ratingbar.StepSize
+import com.kychan.mlog.core.design.theme.Black
 import com.kychan.mlog.core.design.theme.White
 import com.kychan.mlog.core.designsystem.R
 
@@ -47,11 +48,11 @@ fun MovieInfoHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 4.dp, end = 4.dp, top = 65.dp)
+            .padding(start = 8.dp, end = 8.dp, top = 65.dp)
             .background(Color.Black)
             .padding(horizontal = 10.dp, vertical = 12.dp),
     ) {
-        androidx.compose.material3.Text(
+        Text(
             modifier = Modifier.weight(1f),
             text = title,
             fontSize = 24.sp,
@@ -91,6 +92,7 @@ fun MovieInfoHeader(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieInfoRated(
     comment: String,
@@ -98,21 +100,22 @@ fun MovieInfoRated(
     onTextChange: (String, Float) -> Unit,
     onRateChange: (String, Float) -> Unit,
     focusManager: FocusManager,
-){
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 4.dp, end = 4.dp, top = 41.dp)
-            .background(color = Color.Black)
+            .padding(start = 8.dp, end = 8.dp, top = 41.dp)
+            .background(color = Black)
             .padding(horizontal = 10.dp, vertical = 12.dp),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            androidx.compose.material3.Text(
+            Text(
                 text = "내 점수는요?",
-                color = Color.White,
+                color = White,
+                fontWeight = FontWeight.Bold,
                 fontSize = 15.sp,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
@@ -140,7 +143,7 @@ fun MovieInfoRated(
                         focusManager.clearFocus()
                     },
                     colors = TextFieldDefaults.textFieldColors(
-                        backgroundColor = Color.Black,
+                        containerColor = Black,
                         unfocusedIndicatorColor = Color.Gray,
                         focusedIndicatorColor = Color.Gray
                     ),
@@ -176,17 +179,91 @@ fun MovieInfoRated(
     }
 }
 
+@Preview
 @Composable
-fun MovieInfoRated() {
+fun MovieInfoStoryAndTags() {
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 8.dp, end = 8.dp, top = 41.dp)
+            .background(color = Black)
+            .padding(start = 11.dp, end = 18.dp, top = 20.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+            Text(
+                text = "줄거리",
+                color = White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+            )
+
+            Text(
+                modifier = Modifier
+                    .padding(top = 17.dp, end = 38.dp),
+                text = "빚 떼려다 혹 붙였다!\n" +
+                    "책입지고 받아 키워 드립니다!\n" +
+                    "\n" +
+                    "1993년 인천 거칠고 까칠한 사채업자 두석과\n" +
+                    "종배는 떼인 돈 받으러 갔다가 얼떨결에 9살 승이를 \n" +
+                    "담보로 맡게 된다 ...\n",
+                color = White,
+                fontSize = 14.sp,
+                maxLines = 6,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            MovieInfoDirect()
+            MovieInfoTags()
+        }
+    }
+}
+
+@Preview
+@Composable
+fun MovieInfoDirect() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 5.dp),
+        horizontalAlignment = Alignment.End,
+    ) {
+        Text(
+            text = "감독 : 곽하민",
+            color = White,
+            fontSize = 14.sp,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
+
+        Text(
+            modifier = Modifier.padding(top = 11.dp),
+            text = "2018년 6월 12일",
+            color = White,
+            fontSize = 14.sp,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
+@Composable
+fun MovieInfoTags() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp, start = 8.dp, end = 7.dp)
-            .background(color = Color.Black)
+            .background(color = Black)
             .padding(horizontal = 11.dp, vertical = 9.dp)
     ) {
         for (i in 0..3) {
-            MovieTag(tagName = "드라마")
+            MovieTag(tagName = "드라마", size = 42.dp)
+            Divider(
+                color = Color.Transparent,
+                modifier = Modifier.width(13.dp)
+            )
         }
     }
 }

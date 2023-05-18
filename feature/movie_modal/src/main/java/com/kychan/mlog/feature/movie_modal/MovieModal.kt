@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.kychan.mlog.core.design.component.MovieInfoHeader
 import com.kychan.mlog.core.design.component.MovieInfoRated
+import com.kychan.mlog.core.design.component.MovieInfoTags
 import com.kychan.mlog.core.designsystem.BuildConfig
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -81,7 +82,7 @@ fun MovieModalBottomSheetLayout(
                 onRateChange = modalEvent.onRateChange,
                 focusManager = focusManager,
             )
-            MovieInfoRated()
+            MovieInfoTags()
         }
     }
 }
