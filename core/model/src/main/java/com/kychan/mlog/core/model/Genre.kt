@@ -27,3 +27,11 @@ enum class Genre(val id: List<Int>,val kr: String, val en: String) {
     Talk(listOf(10767),"대화","Talk"),
     Politics(listOf(10768),"정치","Politics"),
 }
+
+/**
+ * API TEST를 위한 임시 데이터 모델
+ */
+data class Genre2(
+    val id: Int,
+    val name: String
+)
