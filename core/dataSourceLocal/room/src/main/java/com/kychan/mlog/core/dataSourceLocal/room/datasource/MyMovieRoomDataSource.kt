@@ -1,9 +1,6 @@
 package com.kychan.mlog.core.dataSourceLocal.room.datasource
 
-import com.kychan.mlog.core.dataSourceLocal.room.model.MyMovieEntity
-import com.kychan.mlog.core.dataSourceLocal.room.model.MyRatedMoviesVO
-import com.kychan.mlog.core.dataSourceLocal.room.model.RatedEntity
-import com.kychan.mlog.core.dataSourceLocal.room.model.WantToWatchesEntity
+import com.kychan.mlog.core.dataSourceLocal.room.model.*
 import kotlinx.coroutines.flow.Flow
 
 interface MyMovieRoomDataSource {
@@ -22,4 +19,6 @@ interface MyMovieRoomDataSource {
     suspend fun existToMyRatedMovie(id: Int): RatedEntity?
 
     suspend fun existToMyWantMovie(id: Int): WantToWatchesEntity?
+
+    fun getMyMovieRatedAndWanted(id: Int): Flow<MyMovieRatedAndWantedVO>
 }
