@@ -38,5 +38,6 @@ object DataModule {
     @Singleton
     fun providesMovieDetailRepository(
         tmdbDataSource: TMDBDataSource,
-    ): MovieDetailRepository = MovieDetailRepositoryImpl(tmdbDataSource)
+        myMovieRoomDataSource: MyMovieRoomDataSource,
+    ): MovieDetailRepository = MovieDetailRepositoryImpl(tmdbDataSource, myMovieRoomDataSource)
 }
