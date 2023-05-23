@@ -31,10 +31,14 @@ fun MLogNavHost(
                 navController.navigateToHomeDetail(watchProviders)
             },
             navigateToSearch = { navController.navigateToSearch() },
-            navigateToMovieDetail = { navController.navigateToMovieDetail() }
+            navigateToMovieDetail = { id ->
+                navController.navigateToMovieDetail(id)
+            }
         )
         myPageScreen(
-            navigateToMovieDetail = { navController.navigateToMovieDetail() }
+            navigateToMovieDetail = { id ->
+                navController.navigateToMovieDetail(id)
+            }
         )
         searchScreen(
             onBackClick = navController::popBackStack

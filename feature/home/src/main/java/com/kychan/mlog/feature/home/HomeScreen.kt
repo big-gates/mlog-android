@@ -89,7 +89,7 @@ fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit,
     navigateToSearch: () -> Unit,
-    navigateToMovieDetail: () -> Unit
+    navigateToMovieDetail: (id: Int) -> Unit
 ) {
     val isRatedState by viewModel.ratedMovieInfo.collectAsStateWithLifecycle()
     val isLikeState by viewModel.isLikeMovie.collectAsStateWithLifecycle()

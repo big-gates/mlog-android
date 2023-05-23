@@ -62,7 +62,7 @@ fun MovieModalBottomSheetLayout(
                 .clickable(
                     interactionSource = MutableInteractionSource(),
                     indication = null,
-                    onClick = { modalEvent.navigateToMovieDetail() }
+                    onClick = { modalEvent.navigateToMovieDetail(movieModalUiModel.id) }
                 ),
             contentScale = ContentScale.FillHeight,
             model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${movieModalUiModel.backgroundImage}",

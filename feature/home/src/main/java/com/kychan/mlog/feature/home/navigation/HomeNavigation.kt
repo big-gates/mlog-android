@@ -35,7 +35,7 @@ fun NavController.navigateToHomeDetail(watchProvider: WatchProvider){
 fun NavGraphBuilder.homeGraph(
     navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit,
     navigateToSearch: () -> Unit,
-    navigateToMovieDetail: () -> Unit,
+    navigateToMovieDetail: (id: Int) -> Unit,
 ) {
     navigation(
         route = homeGraph,
