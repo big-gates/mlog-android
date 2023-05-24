@@ -15,6 +15,7 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -29,13 +30,12 @@ import com.gowtham.ratingbar.RatingBar
 import com.gowtham.ratingbar.RatingBarConfig
 import com.gowtham.ratingbar.RatingBarStyle
 import com.gowtham.ratingbar.StepSize
-import com.kychan.mlog.core.design.theme.Black
+import com.kychan.mlog.core.design.theme.AlphaBlack80
+import com.kychan.mlog.core.design.theme.Gray600
 import com.kychan.mlog.core.design.theme.White
 import com.kychan.mlog.core.designsystem.R
 
-/***
- *
- * 추후 아래 영화 정보에 관한 Component는
+/*** 추후 아래 영화 정보에 관한 Component는
  * 다른 Screen에서 사용할 떄에 함수 인자에 modifier를 넣을 예정!
  */
 @Composable
@@ -49,7 +49,7 @@ fun MovieInfoHeader(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 8.dp, end = 8.dp, top = 65.dp)
-            .background(Color.Black)
+            .background(AlphaBlack80)
             .padding(horizontal = 10.dp, vertical = 12.dp),
     ) {
         Text(
@@ -72,10 +72,12 @@ fun MovieInfoHeader(
                 }
             ) {
                 val paintId = if (isLike) R.drawable.ic_favorite_fill else R.drawable.ic_favorite_border
+                val paintColor = if (isLike) Color.Red else Color.White
                 Icon(
                     painter = painterResource(id = paintId),
                     contentDescription = "like_icon_movie",
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    tint = paintColor,
                 )
             }
             if (isAdult) {
@@ -85,7 +87,8 @@ fun MovieInfoHeader(
                     modifier = Modifier
                         .padding(top = 16.dp)
                         .width(28.dp)
-                        .height(28.dp)
+                        .height(28.dp),
+                    tint = White,
                 )
             }
         }
@@ -105,7 +108,7 @@ fun MovieInfoRated(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 8.dp, end = 8.dp, top = 41.dp)
-            .background(color = Black)
+            .background(AlphaBlack80)
             .padding(horizontal = 10.dp, vertical = 12.dp),
     ) {
         Column(
@@ -143,7 +146,7 @@ fun MovieInfoRated(
                         focusManager.clearFocus()
                     },
                     colors = TextFieldDefaults.textFieldColors(
-                        containerColor = Black,
+                        containerColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Gray,
                         focusedIndicatorColor = Color.Gray
                     ),
@@ -158,7 +161,8 @@ fun MovieInfoRated(
                     modifier = Modifier
                         .padding(start = 11.dp)
                         .width(24.dp)
-                        .height(24.dp)
+                        .height(24.dp),
+                    tint = Gray600,
                 )
             }
             RatingBar(
@@ -179,14 +183,13 @@ fun MovieInfoRated(
     }
 }
 
-@Preview
 @Composable
 fun MovieInfoStoryAndTags() {
     Row(
         modifier = Modifier
             .fillMaxSize()
             .padding(start = 8.dp, end = 8.dp, top = 41.dp)
-            .background(color = Black)
+            .background(AlphaBlack80)
             .padding(start = 11.dp, end = 18.dp, top = 20.dp),
     ) {
         Column(
@@ -221,7 +224,6 @@ fun MovieInfoStoryAndTags() {
     }
 }
 
-@Preview
 @Composable
 fun MovieInfoDirect() {
     Column(
@@ -255,7 +257,7 @@ fun MovieInfoTags() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 16.dp, start = 8.dp, end = 7.dp)
-            .background(color = Black)
+            .background(AlphaBlack80)
             .padding(horizontal = 11.dp, vertical = 9.dp)
     ) {
         for (i in 0..3) {
@@ -277,7 +279,7 @@ fun MovieTag(
     fontSize: TextUnit = 10.sp,
     fontWeight: FontWeight = FontWeight.Bold,
     overflow: TextOverflow = TextOverflow.Ellipsis,
-){
+) {
     val widthRatio = 0.64
     val heightRatio = 0.5
     val offsetRatio = 0.07
@@ -289,8 +291,7 @@ fun MovieTag(
         Image(
             modifier = Modifier
                 .size(size)
-                .scale(1.4f)
-            ,
+                .scale(1.4f),
             contentScale = ContentScale.Fit,
             painter = painterResource(R.drawable.tag),
             contentDescription = "",
@@ -300,23 +301,40 @@ fun MovieTag(
                 .widthIn(max = (size.value * widthRatio).dp)
                 .heightIn(max = (size.value * heightRatio).dp)
                 .offset(-(size.value * offsetRatio).dp, (0).dp)
-                .align(Alignment.Center)
-            ,
+                .align(Alignment.Center),
             textAlign = TextAlign.Center,
-            text = if(tagName.length >=5) tagName.breakDown(2) else tagName,
+            text = if (tagName.length >= 5) tagName.breakDown(2) else tagName,
             fontSize = fontSize,
             fontWeight = fontWeight,
-            overflow = overflow
+            overflow = overflow,
+            color = White
         )
     }
 }
 
-private fun String.breakDown(breakDownIndex: Int) = "${this.substring(0,breakDownIndex)}\n${this.substring(breakDownIndex)}"
+private fun String.breakDown(breakDownIndex: Int) = "${this.substring(0, breakDownIndex)}\n${this.substring(breakDownIndex)}"
 
 @Preview
 @Composable
-fun MovieTagPreview(){
-    MovieTag(
-        tagName = "드라마",
-    )
+fun MovieComponentPreview() {
+    Column() {
+        MovieInfoHeader(
+            title = "샹치와 텐링즈의 전설은 아마 나의 것이지 않을까",
+            isAdult = true,
+            isLike = true,
+            onLikeClick = {},
+        )
+        MovieInfoRated(
+            comment = "좀 많이 아쉬운 영화..",
+            rate = 4.0f,
+            onTextChange = { _, _ -> },
+            onRateChange = { _, _ -> },
+            focusManager = LocalFocusManager.current,
+        )
+        MovieInfoStoryAndTags()
+        MovieInfoDirect()
+        MovieTag(
+            tagName = "드라마",
+        )
+    }
 }
