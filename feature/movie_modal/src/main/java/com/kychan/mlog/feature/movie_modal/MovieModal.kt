@@ -82,7 +82,9 @@ fun MovieModalBottomSheetLayout(
                 onRateChange = modalEvent.onRateChange,
                 focusManager = focusManager,
             )
-            MovieInfoTags()
+            MovieInfoTags(
+                tags = listOf("드라마")
+            )
         }
     }
 }

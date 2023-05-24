@@ -184,7 +184,12 @@ fun MovieInfoRated(
 }
 
 @Composable
-fun MovieInfoStoryAndTags() {
+fun MovieInfoStoryAndTags(
+    story: String,
+    directer: String,
+    releaseDate: String,
+    tags: List<String>,
+) {
     Row(
         modifier = Modifier
             .fillMaxSize()
@@ -206,26 +211,24 @@ fun MovieInfoStoryAndTags() {
             Text(
                 modifier = Modifier
                     .padding(top = 17.dp, end = 38.dp),
-                text = "빚 떼려다 혹 붙였다!\n" +
-                    "책입지고 받아 키워 드립니다!\n" +
-                    "\n" +
-                    "1993년 인천 거칠고 까칠한 사채업자 두석과\n" +
-                    "종배는 떼인 돈 받으러 갔다가 얼떨결에 9살 승이를 \n" +
-                    "담보로 맡게 된다 ...\n",
+                text = story,
                 color = White,
                 fontSize = 14.sp,
                 maxLines = 6,
                 overflow = TextOverflow.Ellipsis,
             )
             Spacer(modifier = Modifier.weight(1f))
-            MovieInfoDirect()
-            MovieInfoTags()
+            MovieInfoDirect(directer, releaseDate)
+            MovieInfoTags(tags)
         }
     }
 }
 
 @Composable
-fun MovieInfoDirect() {
+fun MovieInfoDirect(
+    directer: String,
+    releaseDate: String,
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -233,7 +236,7 @@ fun MovieInfoDirect() {
         horizontalAlignment = Alignment.End,
     ) {
         Text(
-            text = "감독 : 곽하민",
+            text = "감독 : $directer",
             color = White,
             fontSize = 14.sp,
             maxLines = 2,
@@ -242,7 +245,7 @@ fun MovieInfoDirect() {
 
         Text(
             modifier = Modifier.padding(top = 11.dp),
-            text = "2018년 6월 12일",
+            text = releaseDate,
             color = White,
             fontSize = 14.sp,
             maxLines = 2,
@@ -252,7 +255,9 @@ fun MovieInfoDirect() {
 }
 
 @Composable
-fun MovieInfoTags() {
+fun MovieInfoTags(
+    tags: List<String>,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -260,8 +265,8 @@ fun MovieInfoTags() {
             .background(AlphaBlack80)
             .padding(horizontal = 11.dp, vertical = 9.dp)
     ) {
-        for (i in 0..3) {
-            MovieTag(tagName = "드라마", size = 42.dp)
+        for (tagName in tags) {
+            MovieTag(tagName = tagName, size = 42.dp)
             Divider(
                 color = Color.Transparent,
                 modifier = Modifier.width(13.dp)
@@ -318,6 +323,9 @@ private fun String.breakDown(breakDownIndex: Int) = "${this.substring(0, breakDo
 @Composable
 fun MovieComponentPreview() {
     Column() {
+        MovieTag(
+            tagName = "드라마",
+        )
         MovieInfoHeader(
             title = "샹치와 텐링즈의 전설은 아마 나의 것이지 않을까",
             isAdult = true,
@@ -331,10 +339,16 @@ fun MovieComponentPreview() {
             onRateChange = { _, _ -> },
             focusManager = LocalFocusManager.current,
         )
-        MovieInfoStoryAndTags()
-        MovieInfoDirect()
-        MovieTag(
-            tagName = "드라마",
+        MovieInfoStoryAndTags(
+            story = "빚 떼려다 혹 붙였다!\n" +
+                "책입지고 받아 키워 드립니다!\n" +
+                "\n" +
+                "1993년 인천 거칠고 까칠한 사채업자 두석과\n" +
+                "종배는 떼인 돈 받으러 갔다가 얼떨결에 9살 승이를 \n" +
+                "담보로 맡게 된다 ...",
+            directer = "곽하민",
+            releaseDate = "2018년 6월 12일",
+            tags = listOf("액션","코미디","판타지","이건일곱글자지","블록버스터"),
         )
     }
 }
