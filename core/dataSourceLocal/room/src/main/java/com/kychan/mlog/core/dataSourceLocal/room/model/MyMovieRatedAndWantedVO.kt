@@ -9,8 +9,8 @@ data class MyMovieRatedAndWantedVO(
     @ColumnInfo("my_movie_id") val wantToMovieId: Int?,
 )
 
-fun MyMovieRatedAndWantedVO.toDomain() = MyMovieRatedAndWanted(
-    rated = rated ?: 0f,
-    comment = comment.orEmpty(),
-    isLike = (wantToMovieId ?: -1) > -1,
+fun MyMovieRatedAndWantedVO?.toDomain() = MyMovieRatedAndWanted(
+    rated = this?.rated ?: 0f,
+    comment = this?.comment.orEmpty(),
+    isLike = (this?.wantToMovieId ?: -1) > -1,
 )
