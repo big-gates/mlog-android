@@ -43,23 +43,23 @@ fun MovieDetailScreen(
                 isAdult = uiModel.adult,
                 isLike = myMovieRatedAndWanted.isLike,
                 onLikeClick = {
-                    // 동작 viewModel.insertOrDeleteMyWantMovie()
+                    viewModel.insertOrDeleteMyWantMovie()
                 },
             )
             MovieInfoRated(
                 comment = myMovieRatedAndWanted.comment,
                 rate = myMovieRatedAndWanted.rated,
                 onTextChange = { comment, rating ->
-                    // 동작 viewModel.replaceRated(comment, rating)
+                     viewModel.updateMyRatedMovie(comment, rating)
                 },
                 onRateChange = { comment, rating ->
-                    // 동작 viewModel.replaceRated(comment, rating)
+                     viewModel.updateMyRatedMovie(comment, rating)
                 },
                 focusManager = focusManager,
             )
             MovieInfoStoryAndTags(
                 story = uiModel.overview.orEmpty(),
-                directer = "감독 없음", // detail api response에 감독,출연진 등이 내려오지 않음.
+                directer = "감독 없음",
                 releaseDate = uiModel.releaseDate,
                 tags = uiModel.genres.map { it.name },
             )
