@@ -17,26 +17,25 @@ abstract class MovieModalBottomSheetViewModel(
     val ratedMovieInfo: MutableStateFlow<RateItem> = MutableStateFlow(RateItem())
     val isLikeMovie = MutableStateFlow(false)
 
-    private var onShowModalItem: MovieModalUiModel = MovieModalUiModel()
-
-    fun existToMyMovie(item: MovieModalUiModel) {
+    val movieModalUiModel: MutableStateFlow<MovieModalUiModel> = MutableStateFlow(MovieModalUiModel())
+    fun setModalItem(item: MovieModalUiModel) {
         viewModelScope.launch {
             ratedMovieInfo.value = existToMyRatedMovie.invoke(item.id)?.toRateItem() ?: RateItem()
             isLikeMovie.value = existToMyWantMovie.invoke(item.id)
-            onShowModalItem = item
+            movieModalUiModel.value = item
         }
     }
 
     fun replaceRated(comment: String, rate: Float) {
         ratedMovieInfo.value = ratedMovieInfo.value.copy(comment = comment, rate = rate)
-        updateMyRatedMovie(onShowModalItem.copy(comment = comment, rate = rate))
+        updateMyRatedMovie(movieModalUiModel.value.copy(comment = comment, rate = rate))
     }
 
     fun insertOrDeleteMyWantMovie() {
         if (isLikeMovie.value) {
-            deleteMyWantMovie(onShowModalItem)
+            deleteMyWantMovie(movieModalUiModel.value)
         } else {
-            insertMyWantMovie(onShowModalItem)
+            insertMyWantMovie(movieModalUiModel.value)
         }
     }
 

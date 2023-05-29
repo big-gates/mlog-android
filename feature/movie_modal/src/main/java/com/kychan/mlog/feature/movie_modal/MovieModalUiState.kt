@@ -1,14 +1,13 @@
 package com.kychan.mlog.feature.movie_modal
 
-data class MovieModalState(
+data class MovieModalUiState(
+    val movieModalUiModel: MovieModalUiModel,
     val isRatedState: RateItem,
     val isLikeState: Boolean,
-    val onShowModal: (item: MovieModalUiModel) -> Unit,
     val modalEvent: MovieModalEvent,
 )
 
 data class MovieModalEvent(
-    val navigateToMovieDetail: (id: Int) -> Unit,
     val onLikeClick: () -> Unit,
     val onTextChange: (String, Float) -> Unit,
     val onRateChange: (String, Float) -> Unit,

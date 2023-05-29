@@ -24,7 +24,7 @@ import com.kychan.mlog.feature.mypage.model.MyMovieItem
 import com.kychan.mlog.core.design.theme.Black
 import com.kychan.mlog.feature.movie_modal.BottomSheetLayout
 import com.kychan.mlog.feature.movie_modal.MovieModalEvent
-import com.kychan.mlog.feature.movie_modal.MovieModalState
+import com.kychan.mlog.feature.movie_modal.MovieModalUiState
 import com.kychan.mlog.feature.movie_modal.MovieModalUiModel
 import kotlinx.coroutines.launch
 
@@ -146,16 +146,15 @@ fun MyPageRoute(
     val myWantToWatchMovies by viewModel.myWantToWatchMovies.collectAsStateWithLifecycle()
     val isRatedState by viewModel.ratedMovieInfo.collectAsStateWithLifecycle()
     val isLikeState by viewModel.isLikeMovie.collectAsStateWithLifecycle()
+    val movieModalUiModel by viewModel.movieModalUiModel.collectAsStateWithLifecycle()
 
     MyPageScreen(
         myRatedMovies = myRatedMovies,
         myWantToWatchMovies = myWantToWatchMovies,
-        movieModalItemState = MovieModalState(
+        movieModalUiState = MovieModalUiState(
+            movieModalUiModel = movieModalUiModel,
             isRatedState = isRatedState,
             isLikeState = isLikeState,
-            onShowModal = { item ->
-                viewModel.existToMyMovie(item)
-            },
             modalEvent = MovieModalEvent(
                 onLikeClick = {
                     viewModel.insertOrDeleteMyWantMovie()
@@ -166,9 +165,19 @@ fun MyPageRoute(
                 onRateChange = { comment, rating ->
                     viewModel.replaceRated(comment, rating)
                 },
-                navigateToMovieDetail = navigateToMovieDetail
             )
         ),
+        onClickMovieItem = { item ->
+            viewModel.setModalItem(
+                MovieModalUiModel(
+                    id = item.myMovieId,
+                    title = item.title,
+                    adult = item.adult,
+                    backgroundImage = item.posterPath,
+                )
+            )
+        },
+        navigateToMovieDetail = navigateToMovieDetail,
     )
 }
 
@@ -177,8 +186,10 @@ fun MyPageRoute(
 fun MyPageScreen(
     myRatedMovies: List<MyMovieItem> = emptyList(),
     myWantToWatchMovies: List<MyMovieItem> = emptyList(),
-    movieModalItemState: MovieModalState,
-) {
+    movieModalUiState: MovieModalUiState,
+    onClickMovieItem: (MyMovieItem) -> Unit,
+    navigateToMovieDetail: (id: Int) -> Unit,
+    ) {
     val coroutineScope = rememberCoroutineScope()
     val modalSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -187,7 +198,6 @@ fun MyPageScreen(
         },
         skipHalfExpanded = false
     )
-    val movieModalUiModelState: MutableState<MovieModalUiModel> = remember { mutableStateOf(MovieModalUiModel()) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
@@ -200,18 +210,8 @@ fun MyPageScreen(
                         if (modalSheetState.isVisible) {
                             modalSheetState.hide()
                         } else {
-                            movieModalUiModelState.value = MovieModalUiModel(
-                                id = item.myMovieId,
-                                title = item.title,
-                                adult = item.adult,
-                                isLike = movieModalItemState.isLikeState,
-                                comment = movieModalItemState.isRatedState.comment,
-                                rate = movieModalItemState.isRatedState.rate,
-                                backgroundImage = item.posterPath,
-                                tags = emptyList()
-                            )
+                            onClickMovieItem(item)
                             modalSheetState.show()
-                            movieModalItemState.onShowModal(movieModalUiModelState.value)
                         }
                     }
                 }
@@ -219,12 +219,8 @@ fun MyPageScreen(
         }
         BottomSheetLayout(
             modalSheetState = modalSheetState,
-            movieModalUiModel = movieModalUiModelState.value.copy(
-                isLike = movieModalItemState.isLikeState,
-                comment = movieModalItemState.isRatedState.comment,
-                rate = movieModalItemState.isRatedState.rate
-            ),
-            movieModalEvent = movieModalItemState.modalEvent,
+            movieModalUiState = movieModalUiState,
+            navigateToMovieDetail = navigateToMovieDetail,
         )
     }
 }

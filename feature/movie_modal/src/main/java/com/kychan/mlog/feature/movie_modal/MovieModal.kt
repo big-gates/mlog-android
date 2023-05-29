@@ -24,8 +24,8 @@ import com.kychan.mlog.core.designsystem.BuildConfig
 @Composable
 fun BottomSheetLayout(
     modalSheetState: ModalBottomSheetState,
-    movieModalUiModel: MovieModalUiModel,
-    movieModalEvent: MovieModalEvent,
+    movieModalUiState: MovieModalUiState,
+    navigateToMovieDetail: (id: Int) -> Unit,
 ) {
     val isSheetFullScreen by remember { mutableStateOf(false) }
     val roundedCornerRadius = if (isSheetFullScreen) 0.dp else 12.dp
@@ -35,7 +35,7 @@ fun BottomSheetLayout(
         sheetState = modalSheetState,
         sheetShape = RoundedCornerShape(topStart = roundedCornerRadius, topEnd = roundedCornerRadius),
         sheetContent = {
-            MovieModalBottomSheetLayout(movieModalUiModel, movieModalEvent, focusManager)
+            MovieModalBottomSheetLayout(movieModalUiState, focusManager, navigateToMovieDetail)
         },
         content = {}
     )
@@ -50,9 +50,9 @@ fun BottomSheetLayout(
 
 @Composable
 fun MovieModalBottomSheetLayout(
-    movieModalUiModel: MovieModalUiModel,
-    modalEvent: MovieModalEvent,
+    movieModalUiState: MovieModalUiState,
     focusManager: FocusManager,
+    navigateToMovieDetail: (id: Int) -> Unit,
 ) {
     Box {
         AsyncImage(
@@ -62,24 +62,24 @@ fun MovieModalBottomSheetLayout(
                 .clickable(
                     interactionSource = MutableInteractionSource(),
                     indication = null,
-                    onClick = { modalEvent.navigateToMovieDetail(movieModalUiModel.id) }
+                    onClick = { navigateToMovieDetail(movieModalUiState.movieModalUiModel.id) }
                 ),
             contentScale = ContentScale.FillHeight,
-            model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${movieModalUiModel.backgroundImage}",
+            model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${movieModalUiState.movieModalUiModel.backgroundImage}",
             contentDescription = "movie_modal_image"
         )
         Column {
             MovieInfoHeader(
-                title = movieModalUiModel.title,
-                isAdult = movieModalUiModel.adult,
-                isLike = movieModalUiModel.isLike,
-                onLikeClick = modalEvent.onLikeClick,
+                title = movieModalUiState.movieModalUiModel.title,
+                isAdult = movieModalUiState.movieModalUiModel.adult,
+                isLike = movieModalUiState.isLikeState,
+                onLikeClick = movieModalUiState.modalEvent.onLikeClick,
             )
             MovieInfoRated(
-                comment = movieModalUiModel.comment,
-                rate = movieModalUiModel.rate,
-                onTextChange = modalEvent.onTextChange,
-                onRateChange = modalEvent.onRateChange,
+                comment = movieModalUiState.isRatedState.comment,
+                rate = movieModalUiState.isRatedState.rate,
+                onTextChange = movieModalUiState.modalEvent.onTextChange,
+                onRateChange = movieModalUiState.modalEvent.onRateChange,
                 focusManager = focusManager,
             )
             MovieInfoTags(

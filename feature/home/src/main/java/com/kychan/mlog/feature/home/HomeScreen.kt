@@ -50,7 +50,7 @@ import com.kychan.mlog.feature.home.model.MovieCategory
 import com.kychan.mlog.feature.home.model.MovieItem
 import com.kychan.mlog.feature.movie_modal.BottomSheetLayout
 import com.kychan.mlog.feature.movie_modal.MovieModalEvent
-import com.kychan.mlog.feature.movie_modal.MovieModalState
+import com.kychan.mlog.feature.movie_modal.MovieModalUiState
 import com.kychan.mlog.feature.movie_modal.MovieModalUiModel
 import kotlinx.coroutines.launch
 
@@ -93,6 +93,7 @@ fun HomeRoute(
 ) {
     val isRatedState by viewModel.ratedMovieInfo.collectAsStateWithLifecycle()
     val isLikeState by viewModel.isLikeMovie.collectAsStateWithLifecycle()
+    val movieModalUiModel by viewModel.movieModalUiModel.collectAsStateWithLifecycle()
     HomeScreen(
         categories = listOf(
             MovieCategory(
@@ -108,14 +109,10 @@ fun HomeRoute(
                 movieItem = viewModel.watchaMovieitem.collectAsLazyPagingItems()
             )
         ),
-        navigateToHomeDetail = navigateToHomeDetail,
-        navigateToSearch = navigateToSearch,
-        movieModalItemState = MovieModalState(
+        movieModalUiState = MovieModalUiState(
+            movieModalUiModel = movieModalUiModel,
             isRatedState = isRatedState,
             isLikeState = isLikeState,
-            onShowModal = { item ->
-                viewModel.existToMyMovie(item)
-            },
             modalEvent = MovieModalEvent(
                 onLikeClick = {
                     viewModel.insertOrDeleteMyWantMovie()
@@ -126,9 +123,19 @@ fun HomeRoute(
                 onRateChange = { comment, rating ->
                     viewModel.replaceRated(comment, rating)
                 },
-                navigateToMovieDetail = navigateToMovieDetail
             )
         ),
+        onClickMovieItem = { item ->
+            viewModel.setModalItem(MovieModalUiModel(
+                id = item.id,
+                title = item.title,
+                adult = false,
+                backgroundImage = item.image,
+            ))
+        },
+        navigateToHomeDetail = navigateToHomeDetail,
+        navigateToSearch = navigateToSearch,
+        navigateToMovieDetail = navigateToMovieDetail
     )
 }
 
@@ -136,9 +143,11 @@ fun HomeRoute(
 @Composable
 fun HomeScreen(
     categories: List<MovieCategory>,
-    movieModalItemState: MovieModalState,
+    movieModalUiState: MovieModalUiState,
+    onClickMovieItem: (MovieItem) -> Unit,
     navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit = { },
     navigateToSearch: () -> Unit,
+    navigateToMovieDetail: (id: Int) -> Unit
 ) {
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
@@ -149,7 +158,6 @@ fun HomeScreen(
         },
         skipHalfExpanded = false
     )
-    val movieModalUiModelState: MutableState<MovieModalUiModel> = remember { mutableStateOf(MovieModalUiModel()) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -176,18 +184,8 @@ fun HomeScreen(
                                 if (modalSheetState.isVisible) {
                                     modalSheetState.hide()
                                 } else {
-                                    movieModalUiModelState.value = MovieModalUiModel(
-                                        id = item.id,
-                                        title = item.title,
-                                        adult = false, // 성인 영화 데이터 없음 추후 리팩토링 예정
-                                        isLike = movieModalItemState.isLikeState,
-                                        comment = movieModalItemState.isRatedState.comment,
-                                        rate = movieModalItemState.isRatedState.rate,
-                                        backgroundImage = item.image,
-                                        tags = emptyList()
-                                    )
+                                    onClickMovieItem(item)
                                     modalSheetState.show()
-                                    movieModalItemState.onShowModal(movieModalUiModelState.value)
                                 }
                             }
                         }
@@ -198,12 +196,8 @@ fun HomeScreen(
 
         BottomSheetLayout(
             modalSheetState = modalSheetState,
-            movieModalUiModel = movieModalUiModelState.value.copy(
-                isLike = movieModalItemState.isLikeState,
-                comment = movieModalItemState.isRatedState.comment,
-                rate = movieModalItemState.isRatedState.rate
-            ),
-            movieModalEvent = movieModalItemState.modalEvent,
+            movieModalUiState = movieModalUiState,
+            navigateToMovieDetail = navigateToMovieDetail,
         )
     }
 }
