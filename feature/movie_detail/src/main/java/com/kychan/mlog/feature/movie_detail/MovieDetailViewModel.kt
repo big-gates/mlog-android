@@ -31,7 +31,7 @@ class MovieDetailViewModel @Inject constructor(
     private val insertMyWantMovie: InsertMyWantMovie,
     private val deleteMyWantMovie: DeleteMyWantMovie,
     private val updateMyRatedMovie: UpdateMyRatedMovie,
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val movieId: Int = savedStateHandle["movieId"]!!
 
