@@ -68,14 +68,3 @@ abstract class MovieModalBottomSheetViewModel : ViewModel() {
         }
     }
 }
-data class MyMovieRatedAndWantedItemUiModel(
-    val rated: Float,
-    val comment: String,
-    val isLike: Boolean,
-)
-
-fun MyMovieRatedAndWanted.toMyMovieRatedAndWantedItemUiModel() = MyMovieRatedAndWantedItemUiModel(
-    rated = rated,
-    comment = comment,
-    isLike = isLike,
-)

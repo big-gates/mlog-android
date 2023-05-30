@@ -1,4 +1,4 @@
-package com.kychan.mlog.feature.movie_detail
+package com.kychan.mlog.feature.movie_modal
 
 import com.kychan.mlog.core.model.MyMovieRatedAndWanted
 
