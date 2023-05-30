@@ -72,12 +72,12 @@ fun MovieModalBottomSheetLayout(
             MovieInfoHeader(
                 title = movieModalUiState.movieModalUiModel.title,
                 isAdult = movieModalUiState.movieModalUiModel.adult,
-                isLike = movieModalUiState.isLikeState,
+                isLike = movieModalUiState.myMovieRatedAndWantedItemUiModel.isLike,
                 onLikeClick = movieModalUiState.modalEvent.onLikeClick,
             )
             MovieInfoRated(
-                comment = movieModalUiState.isRatedState.comment,
-                rate = movieModalUiState.isRatedState.rate,
+                comment = movieModalUiState.myMovieRatedAndWantedItemUiModel.comment,
+                rate = movieModalUiState.myMovieRatedAndWantedItemUiModel.rated,
                 onTextChange = movieModalUiState.modalEvent.onTextChange,
                 onRateChange = movieModalUiState.modalEvent.onRateChange,
                 focusManager = focusManager,

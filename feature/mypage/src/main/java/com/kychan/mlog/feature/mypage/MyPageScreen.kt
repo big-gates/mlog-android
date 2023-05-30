@@ -144,17 +144,15 @@ fun MyPageRoute(
 ) {
     val myRatedMovies by viewModel.myRatedMovies.collectAsStateWithLifecycle()
     val myWantToWatchMovies by viewModel.myWantToWatchMovies.collectAsStateWithLifecycle()
-    val isRatedState by viewModel.ratedMovieInfo.collectAsStateWithLifecycle()
-    val isLikeState by viewModel.isLikeMovie.collectAsStateWithLifecycle()
     val movieModalUiModel by viewModel.movieModalUiModel.collectAsStateWithLifecycle()
+    val myMovieRatedAndWantedItemUiModel by viewModel.myMovieRatedAndWantedItemUiModel.collectAsStateWithLifecycle()
 
     MyPageScreen(
         myRatedMovies = myRatedMovies,
         myWantToWatchMovies = myWantToWatchMovies,
         movieModalUiState = MovieModalUiState(
             movieModalUiModel = movieModalUiModel,
-            isRatedState = isRatedState,
-            isLikeState = isLikeState,
+            myMovieRatedAndWantedItemUiModel = myMovieRatedAndWantedItemUiModel,
             modalEvent = MovieModalEvent(
                 onLikeClick = {
                     viewModel.insertOrDeleteMyWantMovie()

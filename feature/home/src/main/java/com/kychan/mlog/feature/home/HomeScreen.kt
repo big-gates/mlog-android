@@ -91,9 +91,9 @@ fun HomeRoute(
     navigateToSearch: () -> Unit,
     navigateToMovieDetail: (id: Int) -> Unit
 ) {
-    val isRatedState by viewModel.ratedMovieInfo.collectAsStateWithLifecycle()
-    val isLikeState by viewModel.isLikeMovie.collectAsStateWithLifecycle()
     val movieModalUiModel by viewModel.movieModalUiModel.collectAsStateWithLifecycle()
+    val myMovieRatedAndWantedItemUiModel by viewModel.myMovieRatedAndWantedItemUiModel.collectAsStateWithLifecycle()
+
     HomeScreen(
         categories = listOf(
             MovieCategory(
@@ -111,8 +111,7 @@ fun HomeRoute(
         ),
         movieModalUiState = MovieModalUiState(
             movieModalUiModel = movieModalUiModel,
-            isRatedState = isRatedState,
-            isLikeState = isLikeState,
+            myMovieRatedAndWantedItemUiModel = myMovieRatedAndWantedItemUiModel,
             modalEvent = MovieModalEvent(
                 onLikeClick = {
                     viewModel.insertOrDeleteMyWantMovie()

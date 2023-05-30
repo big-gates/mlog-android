@@ -5,6 +5,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.kychan.mlog.core.domain.observe.ObserveMlogMovie
+import com.kychan.mlog.core.domain.observe.ObserveMyMovieRatedAndWanted
 import com.kychan.mlog.core.domain.observe.ObserveNetflixMovie
 import com.kychan.mlog.core.domain.observe.ObserveWatchaMovie
 import com.kychan.mlog.core.domain.usecase.*
@@ -23,10 +24,9 @@ class HomeViewModel @Inject constructor(
     private val insertMyWantMovie: InsertMyWantMovie,
     private val updateMyRatedMovie: UpdateMyRatedMovie,
     private val deleteMyWantMovie: DeleteMyWantMovie,
-    private val existToMyWantMovie: ExistToMyWantMovie,
-    private val existToMyRatedMovie: ExistToMyRatedMovie,
+    private val observeMyMovieRatedAndWanted: ObserveMyMovieRatedAndWanted,
 ) : MovieModalBottomSheetViewModel(
-    insertMyWantMovie, updateMyRatedMovie, deleteMyWantMovie, existToMyWantMovie, existToMyRatedMovie
+    insertMyWantMovie, updateMyRatedMovie, deleteMyWantMovie, observeMyMovieRatedAndWanted,
 ) {
 
     val mLogMovieItem: StateFlow<PagingData<MovieItem>> = observeMlogMovie()

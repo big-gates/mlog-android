@@ -2,8 +2,7 @@ package com.kychan.mlog.feature.movie_modal
 
 data class MovieModalUiState(
     val movieModalUiModel: MovieModalUiModel,
-    val isRatedState: RateItem,
-    val isLikeState: Boolean,
+    val myMovieRatedAndWantedItemUiModel: MyMovieRatedAndWantedItemUiModel,
     val modalEvent: MovieModalEvent,
 )
 

@@ -2,7 +2,9 @@ package com.kychan.mlog.feature.movie_modal
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kychan.mlog.core.domain.observe.ObserveMyMovieRatedAndWanted
 import com.kychan.mlog.core.domain.usecase.*
+import com.kychan.mlog.core.model.MyMovieRatedAndWanted
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -10,29 +12,32 @@ abstract class MovieModalBottomSheetViewModel(
     private val insertMyWantMovie: InsertMyWantMovie,
     private val updateMyRatedMovie: UpdateMyRatedMovie,
     private val deleteMyWantMovie: DeleteMyWantMovie,
-    private val existToMyWantMovie: ExistToMyWantMovie,
-    private val existToMyRatedMovie: ExistToMyRatedMovie,
+    private val observeMyMovieRatedAndWanted: ObserveMyMovieRatedAndWanted,
 ) : ViewModel() {
 
-    val ratedMovieInfo: MutableStateFlow<RateItem> = MutableStateFlow(RateItem())
-    val isLikeMovie = MutableStateFlow(false)
-
     val movieModalUiModel: MutableStateFlow<MovieModalUiModel> = MutableStateFlow(MovieModalUiModel())
+
+    val myMovieRatedAndWantedItemUiModel: StateFlow<MyMovieRatedAndWantedItemUiModel> = movieModalUiModel.map {
+        observeMyMovieRatedAndWanted(it.id)
+    }.flatMapLatest { it }
+    .map(MyMovieRatedAndWanted::toMyMovieRatedAndWantedItemUiModel)
+    .stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = MyMovieRatedAndWantedItemUiModel(0f, "", false)
+    )
     fun setModalItem(item: MovieModalUiModel) {
         viewModelScope.launch {
-            ratedMovieInfo.value = existToMyRatedMovie.invoke(item.id)?.toRateItem() ?: RateItem()
-            isLikeMovie.value = existToMyWantMovie.invoke(item.id)
             movieModalUiModel.value = item
         }
     }
 
     fun replaceRated(comment: String, rate: Float) {
-        ratedMovieInfo.value = ratedMovieInfo.value.copy(comment = comment, rate = rate)
         updateMyRatedMovie(movieModalUiModel.value.copy(comment = comment, rate = rate))
     }
 
     fun insertOrDeleteMyWantMovie() {
-        if (isLikeMovie.value) {
+        if (myMovieRatedAndWantedItemUiModel.value.isLike) {
             deleteMyWantMovie(movieModalUiModel.value)
         } else {
             insertMyWantMovie(movieModalUiModel.value)
@@ -54,7 +59,6 @@ abstract class MovieModalBottomSheetViewModel(
                 myMovie = movieModalUiModel.toMyMovie(),
                 wantToWatch = movieModalUiModel.toWantToWatch()
             )
-            isLikeMovie.value = true
         }
     }
 
@@ -64,7 +68,17 @@ abstract class MovieModalBottomSheetViewModel(
                 myMovie = movieModalUiModel.toMyMovie(),
                 wantToWatch = movieModalUiModel.toWantToWatch()
             )
-            isLikeMovie.value = false
         }
     }
 }
+data class MyMovieRatedAndWantedItemUiModel(
+    val rated: Float,
+    val comment: String,
+    val isLike: Boolean,
+)
+
+fun MyMovieRatedAndWanted.toMyMovieRatedAndWantedItemUiModel() = MyMovieRatedAndWantedItemUiModel(
+    rated = rated,
+    comment = comment,
+    isLike = isLike,
+)
