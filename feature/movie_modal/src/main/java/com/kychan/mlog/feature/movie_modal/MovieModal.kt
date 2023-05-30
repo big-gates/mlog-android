@@ -25,6 +25,7 @@ import com.kychan.mlog.core.designsystem.BuildConfig
 fun BottomSheetLayout(
     modalSheetState: ModalBottomSheetState,
     movieModalUiState: MovieModalUiState,
+    content: @Composable () -> Unit = {},
     navigateToMovieDetail: (id: Int) -> Unit,
 ) {
     val isSheetFullScreen by remember { mutableStateOf(false) }
@@ -37,7 +38,7 @@ fun BottomSheetLayout(
         sheetContent = {
             MovieModalBottomSheetLayout(movieModalUiState, focusManager, navigateToMovieDetail)
         },
-        content = {}
+        content = content
     )
 
     LaunchedEffect(modalSheetState.isVisible) {

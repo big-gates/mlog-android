@@ -137,6 +137,7 @@ fun PhotoGrid(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MyPageRoute(
     viewModel: MyPageViewModel = hiltViewModel(),
@@ -147,9 +148,17 @@ fun MyPageRoute(
     val movieModalUiModel by viewModel.movieModalUiModel.collectAsStateWithLifecycle()
     val myMovieRatedAndWantedItemUiModel by viewModel.myMovieRatedAndWantedItemUiModel.collectAsStateWithLifecycle()
 
-    MyPageScreen(
-        myRatedMovies = myRatedMovies,
-        myWantToWatchMovies = myWantToWatchMovies,
+    val coroutineScope = rememberCoroutineScope()
+    val modalSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        confirmValueChange = {
+            it != ModalBottomSheetValue.Expanded
+        },
+        skipHalfExpanded = false
+    )
+
+    BottomSheetLayout(
+        modalSheetState = modalSheetState,
         movieModalUiState = MovieModalUiState(
             movieModalUiModel = movieModalUiModel,
             myMovieRatedAndWantedItemUiModel = myMovieRatedAndWantedItemUiModel,
@@ -165,37 +174,37 @@ fun MyPageRoute(
                 },
             )
         ),
-        onClickMovieItem = { item ->
-            viewModel.setModalItem(
-                MovieModalUiModel(
-                    id = item.myMovieId,
-                    title = item.title,
-                    adult = item.adult,
-                    backgroundImage = item.posterPath,
-                )
+        content = {
+            MyPageScreen(
+                myRatedMovies = myRatedMovies,
+                myWantToWatchMovies = myWantToWatchMovies,
+                onClickMovieItem = { item ->
+                    coroutineScope.launch {
+                        if (!modalSheetState.isVisible) {
+                            viewModel.setModalItem(
+                                MovieModalUiModel(
+                                    id = item.myMovieId,
+                                    title = item.title,
+                                    adult = item.adult,
+                                    backgroundImage = item.posterPath,
+                                )
+                            )
+                            modalSheetState.show()
+                        }
+                    }
+                },
             )
         },
         navigateToMovieDetail = navigateToMovieDetail,
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MyPageScreen(
     myRatedMovies: List<MyMovieItem> = emptyList(),
     myWantToWatchMovies: List<MyMovieItem> = emptyList(),
-    movieModalUiState: MovieModalUiState,
     onClickMovieItem: (MyMovieItem) -> Unit,
-    navigateToMovieDetail: (id: Int) -> Unit,
-    ) {
-    val coroutineScope = rememberCoroutineScope()
-    val modalSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        confirmValueChange = {
-            it != ModalBottomSheetValue.Expanded
-        },
-        skipHalfExpanded = false
-    )
+) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
@@ -204,21 +213,9 @@ fun MyPageScreen(
                 myRatedMovies = myRatedMovies,
                 myWantToWatchMovies = myWantToWatchMovies,
                 onClick = { item ->
-                    coroutineScope.launch {
-                        if (modalSheetState.isVisible) {
-                            modalSheetState.hide()
-                        } else {
-                            onClickMovieItem(item)
-                            modalSheetState.show()
-                        }
-                    }
+                    onClickMovieItem(item)
                 }
             )
         }
-        BottomSheetLayout(
-            modalSheetState = modalSheetState,
-            movieModalUiState = movieModalUiState,
-            navigateToMovieDetail = navigateToMovieDetail,
-        )
     }
 }
