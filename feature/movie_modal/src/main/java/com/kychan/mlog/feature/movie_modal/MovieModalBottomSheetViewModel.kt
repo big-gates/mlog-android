@@ -33,7 +33,13 @@ abstract class MovieModalBottomSheetViewModel(
     }
 
     fun replaceRated(comment: String, rate: Float) {
-        updateMyRatedMovie(movieModalUiModel.value.copy(comment = comment, rate = rate))
+        val model = movieModalUiModel.value.copy(comment = comment, rate = rate)
+        viewModelScope.launch {
+            updateMyRatedMovie.invoke(
+                myMovie = model.toMyMovie(),
+                rated = model.toRated()
+            )
+        }
     }
 
     fun insertOrDeleteMyWantMovie() {
@@ -41,15 +47,6 @@ abstract class MovieModalBottomSheetViewModel(
             deleteMyWantMovie(movieModalUiModel.value)
         } else {
             insertMyWantMovie(movieModalUiModel.value)
-        }
-    }
-
-    private fun updateMyRatedMovie(movieModalUiModel: MovieModalUiModel) {
-        viewModelScope.launch {
-            updateMyRatedMovie.invoke(
-                myMovie = movieModalUiModel.toMyMovie(),
-                rated = movieModalUiModel.toRated()
-            )
         }
     }
 
