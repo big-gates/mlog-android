@@ -21,13 +21,7 @@ class HomeViewModel @Inject constructor(
     private val observeMlogMovie: ObserveMlogMovie,
     private val observeNetflixMovie: ObserveNetflixMovie,
     private val observeWatchaMovie: ObserveWatchaMovie,
-    private val insertMyWantMovie: InsertMyWantMovie,
-    private val updateMyRatedMovie: UpdateMyRatedMovie,
-    private val deleteMyWantMovie: DeleteMyWantMovie,
-    private val observeMyMovieRatedAndWanted: ObserveMyMovieRatedAndWanted,
-) : MovieModalBottomSheetViewModel(
-    insertMyWantMovie, updateMyRatedMovie, deleteMyWantMovie, observeMyMovieRatedAndWanted,
-) {
+) : MovieModalBottomSheetViewModel() {
 
     val mLogMovieItem: StateFlow<PagingData<MovieItem>> = observeMlogMovie()
         .map { paging ->

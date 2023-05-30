@@ -7,13 +7,13 @@ import com.kychan.mlog.core.domain.usecase.*
 import com.kychan.mlog.core.model.MyMovieRatedAndWanted
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-abstract class MovieModalBottomSheetViewModel(
-    private val insertMyWantMovie: InsertMyWantMovie,
-    private val updateMyRatedMovie: UpdateMyRatedMovie,
-    private val deleteMyWantMovie: DeleteMyWantMovie,
-    private val observeMyMovieRatedAndWanted: ObserveMyMovieRatedAndWanted,
-) : ViewModel() {
+abstract class MovieModalBottomSheetViewModel : ViewModel() {
+    @Inject lateinit var insertMyWantMovie: InsertMyWantMovie
+    @Inject lateinit var updateMyRatedMovie: UpdateMyRatedMovie
+    @Inject lateinit var deleteMyWantMovie: DeleteMyWantMovie
+    @Inject lateinit var observeMyMovieRatedAndWanted: ObserveMyMovieRatedAndWanted
 
     val movieModalUiModel: MutableStateFlow<MovieModalUiModel> = MutableStateFlow(MovieModalUiModel())
 
