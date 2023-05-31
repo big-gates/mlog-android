@@ -59,7 +59,7 @@ fun NavGraphBuilder.homeGraph(
             popEnterTransition = { scaleIn() },
             popExitTransition = { scaleOut() }
         ) {
-            HomeDetailRoute()
+            HomeDetailRoute(navigateToMovieDetail = navigateToMovieDetail)
         }
     }
 }
