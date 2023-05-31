@@ -1,6 +1,7 @@
 package com.kychan.mlog.feature.movie_modal
 
 import android.annotation.SuppressLint
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -18,6 +19,7 @@ import com.kychan.mlog.core.design.component.MovieInfoHeader
 import com.kychan.mlog.core.design.component.MovieInfoRated
 import com.kychan.mlog.core.design.component.MovieInfoTags
 import com.kychan.mlog.core.designsystem.BuildConfig
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterialApi::class)
@@ -29,9 +31,16 @@ fun BottomSheetLayout(
     content: @Composable () -> Unit = {},
     navigateToMovieDetail: (id: Int) -> Unit,
 ) {
+    val coroutineScope = rememberCoroutineScope()
     val isSheetFullScreen by remember { mutableStateOf(false) }
     val roundedCornerRadius = if (isSheetFullScreen) 0.dp else 12.dp
     val focusManager = LocalFocusManager.current
+
+    BackHandler(modalSheetState.isVisible) {
+        coroutineScope.launch {
+            modalSheetState.hide()
+        }
+    }
 
     ModalBottomSheetLayout(
         sheetState = modalSheetState,
