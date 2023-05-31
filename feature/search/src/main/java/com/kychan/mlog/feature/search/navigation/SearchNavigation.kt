@@ -18,7 +18,8 @@ fun NavController.navigateToSearch(navOptions: NavOptions? = null) {
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.searchScreen(
-    onBackClick: ()->Unit
+    onBackClick: () -> Unit,
+    navigateToMovieDetail: (id: Int) -> Unit,
 ) {
     composable(
         route = searchRoute,
@@ -30,7 +31,8 @@ fun NavGraphBuilder.searchScreen(
         ) },
     ){
         SearchRouter(
-            onBackClick = onBackClick
+            onBackClick = onBackClick,
+            navigateToMovieDetail = navigateToMovieDetail,
         )
     }
 }

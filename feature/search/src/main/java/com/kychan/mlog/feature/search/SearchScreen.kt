@@ -11,6 +11,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
@@ -42,13 +45,63 @@ import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.core.design.icon.MLogIcons.Logo
 import com.kychan.mlog.core.design.theme.*
 import com.kychan.mlog.core.design.util.conditional
+import com.kychan.mlog.feature.movie_modal.BottomSheetLayout
+import com.kychan.mlog.feature.movie_modal.ModalAction
+import com.kychan.mlog.feature.movie_modal.MovieModalUiModel
+import com.kychan.mlog.feature.movie_modal.MovieModalUiState
 import com.kychan.mlog.feature.search.model.MovieItem
 import com.kychan.mlog.feature.search.model.RecentSearchView
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SearchRouter(onBackClick: () -> Unit) {
-    SearchScreen(
-        onBackClick = onBackClick
+fun SearchRouter(
+    viewModel: SearchViewModel = hiltViewModel(),
+    onBackClick: () -> Unit,
+    navigateToMovieDetail: (id: Int) -> Unit,
+) {
+    val movieModalUiModel by viewModel.movieModalUiModel.collectAsStateWithLifecycle()
+    val myMovieRatedAndWantedItemUiModel by viewModel.myMovieRatedAndWantedItemUiModel.collectAsStateWithLifecycle()
+    val action: ModalAction = viewModel
+
+    val coroutineScope = rememberCoroutineScope()
+    val modalSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        confirmValueChange = {
+            it != ModalBottomSheetValue.Expanded
+        },
+        skipHalfExpanded = false
+    )
+
+    BottomSheetLayout(
+        modalSheetState = modalSheetState,
+        movieModalUiState = MovieModalUiState(
+            movieModalUiModel = movieModalUiModel,
+            myMovieRatedAndWantedItemUiModel = myMovieRatedAndWantedItemUiModel,
+        ),
+        content = {
+            SearchScreen(
+                viewModel = viewModel,
+                onImageClick = { item ->
+                    coroutineScope.launch {
+                        if (!modalSheetState.isVisible) {
+                            viewModel.setModalItem(
+                                MovieModalUiModel(
+                                    id = item.id,
+                                    title = item.title,
+                                    adult = item.adult,
+                                    backgroundImage = item.image,
+                                )
+                            )
+                            modalSheetState.show()
+                        }
+                    }
+                },
+                onBackClick = onBackClick
+            )
+        },
+        action = action,
+        navigateToMovieDetail = navigateToMovieDetail,
     )
 }
 
@@ -56,7 +109,8 @@ fun SearchRouter(onBackClick: () -> Unit) {
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
-    viewModel: SearchViewModel = hiltViewModel(),
+    viewModel: SearchViewModel,
+    onImageClick: (item: MovieItem) -> Unit,
     onBackClick: () -> Unit,
 ){
     val searchText by viewModel.searchText.collectAsStateWithLifecycle()
@@ -83,6 +137,7 @@ fun SearchScreen(
             deleteAll = viewModel::deleteAll,
             delete = viewModel::delete,
             onItemClick = viewModel::updateSearchText,
+            onImageClick = onImageClick
         ) { keyboardController?.hide() }
     }
 }
@@ -137,6 +192,7 @@ fun SearchView(
     deleteAll: () -> Unit,
     delete: (id: Int) -> Unit,
     onItemClick: (text: String) -> Unit,
+    onImageClick: (item: MovieItem) -> Unit,
     keyboardHide: () -> Unit
 ) {
     if(text.isEmpty()){
@@ -149,7 +205,8 @@ fun SearchView(
     }else{
         SearchResultView(
             movies = movies,
-            keyboardHide = keyboardHide
+            onImageClick = onImageClick,
+            keyboardHide = keyboardHide,
         )
     }
 }
@@ -158,6 +215,7 @@ fun SearchView(
 @Composable
 fun SearchResultView(
     movies: LazyPagingItems<MovieItem>,
+    onImageClick: (item: MovieItem) -> Unit,
     keyboardHide: () -> Unit,
 ) {
     LazyVerticalGrid(
@@ -176,14 +234,15 @@ fun SearchResultView(
         items(
             items = movies,
         ){ item, _ ->
-            item?.let { Movie(it) }
+            item?.let { Movie(it, onImageClick) }
         }
     }
 }
 
 @Composable
 fun Movie(
-    movie: MovieItem
+    movie: MovieItem,
+    onImageClick: (item: MovieItem) -> Unit,
 ){
     var isError by remember {
         mutableStateOf(false)
@@ -213,6 +272,9 @@ fun Movie(
             .conditional(isError) {
                 border(width = 1.dp, Gray400, Shapes.medium)
             }
+            .clickable {
+                onImageClick(movie)
+            },
     )
 }
 
