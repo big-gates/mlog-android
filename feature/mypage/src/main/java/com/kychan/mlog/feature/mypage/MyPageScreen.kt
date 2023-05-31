@@ -23,7 +23,7 @@ import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.feature.mypage.model.MyMovieItem
 import com.kychan.mlog.core.design.theme.Black
 import com.kychan.mlog.feature.movie_modal.BottomSheetLayout
-import com.kychan.mlog.feature.movie_modal.MovieModalEvent
+import com.kychan.mlog.feature.movie_modal.ModalAction
 import com.kychan.mlog.feature.movie_modal.MovieModalUiState
 import com.kychan.mlog.feature.movie_modal.MovieModalUiModel
 import kotlinx.coroutines.launch
@@ -147,6 +147,7 @@ fun MyPageRoute(
     val myWantToWatchMovies by viewModel.myWantToWatchMovies.collectAsStateWithLifecycle()
     val movieModalUiModel by viewModel.movieModalUiModel.collectAsStateWithLifecycle()
     val myMovieRatedAndWantedItemUiModel by viewModel.myMovieRatedAndWantedItemUiModel.collectAsStateWithLifecycle()
+    val action: ModalAction = viewModel
 
     val coroutineScope = rememberCoroutineScope()
     val modalSheetState = rememberModalBottomSheetState(
@@ -162,17 +163,6 @@ fun MyPageRoute(
         movieModalUiState = MovieModalUiState(
             movieModalUiModel = movieModalUiModel,
             myMovieRatedAndWantedItemUiModel = myMovieRatedAndWantedItemUiModel,
-            modalEvent = MovieModalEvent(
-                onLikeClick = {
-                    viewModel.insertOrDeleteMyWantMovie()
-                },
-                onTextChange = { comment, rating ->
-                    viewModel.replaceRated(comment, rating)
-                },
-                onRateChange = { comment, rating ->
-                    viewModel.replaceRated(comment, rating)
-                },
-            )
         ),
         content = {
             MyPageScreen(
@@ -195,6 +185,7 @@ fun MyPageRoute(
                 },
             )
         },
+        action = action,
         navigateToMovieDetail = navigateToMovieDetail,
     )
 }

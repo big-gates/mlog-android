@@ -9,7 +9,13 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-abstract class MovieModalBottomSheetViewModel : ViewModel() {
+interface ModalAction {
+    fun onLikeClick()
+    fun onTextChange(comment: String)
+    fun onRateChange(rate: Float)
+}
+
+abstract class MovieModalBottomSheetViewModel : ViewModel(), ModalAction {
     @Inject lateinit var insertMyWantMovie: InsertMyWantMovie
     @Inject lateinit var updateMyRatedMovie: UpdateMyRatedMovie
     @Inject lateinit var deleteMyWantMovie: DeleteMyWantMovie
@@ -32,7 +38,10 @@ abstract class MovieModalBottomSheetViewModel : ViewModel() {
         }
     }
 
-    fun replaceRated(comment: String, rate: Float) {
+    fun replaceRated(
+        comment: String = myMovieRatedAndWantedItemUiModel.value.comment,
+        rate: Float = myMovieRatedAndWantedItemUiModel.value.rated
+    ) {
         val model = movieModalUiModel.value.copy(comment = comment, rate = rate)
         viewModelScope.launch {
             updateMyRatedMovie.invoke(

@@ -80,7 +80,10 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
-    fun updateMyRatedMovie(comment: String, rate: Float) {
+    fun updateMyRatedMovie(
+        comment: String = myMovieRatedAndWanted.value.comment,
+        rate: Float = myMovieRatedAndWanted.value.rated
+    ) {
         viewModelScope.launch {
             updateMyRatedMovie.invoke(
                 myMovie = uiModel.value.toMyMovie(),

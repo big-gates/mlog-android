@@ -49,7 +49,7 @@ import com.kychan.mlog.feature.home.model.Header
 import com.kychan.mlog.feature.home.model.MovieCategory
 import com.kychan.mlog.feature.home.model.MovieItem
 import com.kychan.mlog.feature.movie_modal.BottomSheetLayout
-import com.kychan.mlog.feature.movie_modal.MovieModalEvent
+import com.kychan.mlog.feature.movie_modal.ModalAction
 import com.kychan.mlog.feature.movie_modal.MovieModalUiState
 import com.kychan.mlog.feature.movie_modal.MovieModalUiModel
 import kotlinx.coroutines.launch
@@ -93,6 +93,7 @@ fun HomeRoute(
 ) {
     val movieModalUiModel by viewModel.movieModalUiModel.collectAsStateWithLifecycle()
     val myMovieRatedAndWantedItemUiModel by viewModel.myMovieRatedAndWantedItemUiModel.collectAsStateWithLifecycle()
+    val action: ModalAction = viewModel
 
     HomeScreen(
         categories = listOf(
@@ -112,18 +113,8 @@ fun HomeRoute(
         movieModalUiState = MovieModalUiState(
             movieModalUiModel = movieModalUiModel,
             myMovieRatedAndWantedItemUiModel = myMovieRatedAndWantedItemUiModel,
-            modalEvent = MovieModalEvent(
-                onLikeClick = {
-                    viewModel.insertOrDeleteMyWantMovie()
-                },
-                onTextChange = { comment, rating ->
-                    viewModel.replaceRated(comment, rating)
-                },
-                onRateChange = { comment, rating ->
-                    viewModel.replaceRated(comment, rating)
-                },
-            )
         ),
+        action = action,
         onClickMovieItem = { item ->
             viewModel.setModalItem(MovieModalUiModel(
                 id = item.id,
@@ -143,6 +134,7 @@ fun HomeRoute(
 fun HomeScreen(
     categories: List<MovieCategory>,
     movieModalUiState: MovieModalUiState,
+    action: ModalAction,
     onClickMovieItem: (MovieItem) -> Unit,
     navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit = { },
     navigateToSearch: () -> Unit,
@@ -196,6 +188,7 @@ fun HomeScreen(
         BottomSheetLayout(
             modalSheetState = modalSheetState,
             movieModalUiState = movieModalUiState,
+            action = action,
             navigateToMovieDetail = navigateToMovieDetail,
         )
     }

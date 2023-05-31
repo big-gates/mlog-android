@@ -100,8 +100,8 @@ fun MovieInfoHeader(
 fun MovieInfoRated(
     comment: String,
     rate: Float,
-    onTextChange: (String, Float) -> Unit,
-    onRateChange: (String, Float) -> Unit,
+    onTextChange: (String) -> Unit,
+    onRateChange: (Float) -> Unit,
     focusManager: FocusManager,
 ) {
     Row(
@@ -153,7 +153,7 @@ fun MovieInfoRated(
                     textStyle = TextStyle.Default.copy(color = Color.White, fontSize = 14.sp),
                     value = comment,
                     singleLine = true,
-                    onValueChange = { onTextChange(it, rate) },
+                    onValueChange = { onTextChange(it) },
                 )
                 Icon(
                     painter = painterResource(id = R.drawable.comment_write),
@@ -173,7 +173,7 @@ fun MovieInfoRated(
                     .stepSize(StepSize.HALF)
                     .size(32.dp)
                     .style(RatingBarStyle.HighLighted),
-                onValueChange = { onRateChange(comment, it) },
+                onValueChange = { onRateChange(it) },
                 onRatingChanged = {
                     Log.d("TAG", "onRatingChanged: $it")
                 }
@@ -335,8 +335,8 @@ fun MovieComponentPreview() {
         MovieInfoRated(
             comment = "좀 많이 아쉬운 영화..",
             rate = 4.0f,
-            onTextChange = { _, _ -> },
-            onRateChange = { _, _ -> },
+            onTextChange = {},
+            onRateChange = {},
             focusManager = LocalFocusManager.current,
         )
         MovieInfoStoryAndTags(

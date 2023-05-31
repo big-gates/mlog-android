@@ -1,10 +1,8 @@
 package com.kychan.mlog.feature.mypage
 
 import androidx.lifecycle.viewModelScope
-import com.kychan.mlog.core.domain.observe.ObserveMyMovieRatedAndWanted
 import com.kychan.mlog.core.domain.observe.ObserveMyRatedMovie
 import com.kychan.mlog.core.domain.observe.ObserveMyWantToWatchMovie
-import com.kychan.mlog.core.domain.usecase.*
 import com.kychan.mlog.feature.movie_modal.MovieModalBottomSheetViewModel
 import com.kychan.mlog.feature.mypage.model.MyMovieItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -43,4 +41,16 @@ class MyPageViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = listOf()
         )
+
+    override fun onLikeClick() {
+        insertOrDeleteMyWantMovie()
+    }
+
+    override fun onTextChange(comment: String) {
+        replaceRated(comment = comment)
+    }
+
+    override fun onRateChange(rate: Float) {
+        replaceRated(rate = rate)
+    }
 }
