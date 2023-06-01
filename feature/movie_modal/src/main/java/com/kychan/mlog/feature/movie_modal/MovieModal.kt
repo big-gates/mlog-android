@@ -19,6 +19,7 @@ import com.kychan.mlog.core.design.component.MovieInfoHeader
 import com.kychan.mlog.core.design.component.MovieInfoRated
 import com.kychan.mlog.core.design.component.MovieInfoTags
 import com.kychan.mlog.core.designsystem.BuildConfig
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -66,6 +67,31 @@ fun MovieModalBottomSheetLayout(
     focusManager: FocusManager,
     navigateToMovieDetail: (id: Int) -> Unit,
 ) {
+    val comment = remember { mutableStateOf(movieModalUiState.myMovieRatedAndWantedItemUiModel.comment) }
+    val rate = remember { mutableStateOf(movieModalUiState.myMovieRatedAndWantedItemUiModel.rated) }
+    val debounceTime = 500L // 딜레이 시간 설정 (밀리초 단위)
+
+    LaunchedEffect(movieModalUiState) { // flow 값 적용 mutableStateOf로하면 변경값 안먹힘
+        comment.value = movieModalUiState.myMovieRatedAndWantedItemUiModel.comment
+        rate.value = movieModalUiState.myMovieRatedAndWantedItemUiModel.rated
+    }
+    LaunchedEffect(comment.value) { // comment 변경 시 마다 debounce
+        snapshotFlow { comment.value }
+            .debounce(debounceTime)
+            .collect {
+                if (it != movieModalUiState.myMovieRatedAndWantedItemUiModel.comment)
+                    action.onTextChange(it)
+            }
+    }
+    LaunchedEffect(rate.value) { // rate 변경 시 마다 debounce
+        snapshotFlow { rate.value }
+            .debounce(debounceTime)
+            .collect {
+                if (it != movieModalUiState.myMovieRatedAndWantedItemUiModel.rated)
+                    action.onRateChange(it)
+            }
+    }
+
     Box {
         AsyncImage(
             modifier = Modifier
@@ -85,19 +111,13 @@ fun MovieModalBottomSheetLayout(
                 title = movieModalUiState.movieModalUiModel.title,
                 isAdult = movieModalUiState.movieModalUiModel.adult,
                 isLike = movieModalUiState.myMovieRatedAndWantedItemUiModel.isLike,
-                onLikeClick = {
-                    action.onLikeClick()
-                },
+                onLikeClick = { action.onLikeClick() },
             )
             MovieInfoRated(
-                comment = movieModalUiState.myMovieRatedAndWantedItemUiModel.comment,
-                rate = movieModalUiState.myMovieRatedAndWantedItemUiModel.rated,
-                onTextChange = { comment ->
-                    action.onTextChange(comment)
-                },
-                onRateChange = { rate ->
-                    action.onRateChange(rate)
-                },
+                comment = comment.value,
+                rate = rate.value,
+                onTextChange = { comment.value = it },
+                onRateChange = { rate.value = it },
                 focusManager = focusManager,
             )
             MovieInfoTags(
