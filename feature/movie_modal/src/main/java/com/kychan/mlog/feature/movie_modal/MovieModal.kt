@@ -25,6 +25,8 @@ import com.kychan.mlog.core.designsystem.BuildConfig
 fun BottomSheetLayout(
     modalSheetState: ModalBottomSheetState,
     movieModalUiState: MovieModalUiState,
+    action: ModalAction,
+    content: @Composable () -> Unit = {},
     navigateToMovieDetail: (id: Int) -> Unit,
 ) {
     val isSheetFullScreen by remember { mutableStateOf(false) }
@@ -35,9 +37,9 @@ fun BottomSheetLayout(
         sheetState = modalSheetState,
         sheetShape = RoundedCornerShape(topStart = roundedCornerRadius, topEnd = roundedCornerRadius),
         sheetContent = {
-            MovieModalBottomSheetLayout(movieModalUiState, focusManager, navigateToMovieDetail)
+            MovieModalBottomSheetLayout(movieModalUiState, action, focusManager, navigateToMovieDetail)
         },
-        content = {}
+        content = content
     )
 
     LaunchedEffect(modalSheetState.isVisible) {
@@ -51,6 +53,7 @@ fun BottomSheetLayout(
 @Composable
 fun MovieModalBottomSheetLayout(
     movieModalUiState: MovieModalUiState,
+    action: ModalAction,
     focusManager: FocusManager,
     navigateToMovieDetail: (id: Int) -> Unit,
 ) {
@@ -72,14 +75,20 @@ fun MovieModalBottomSheetLayout(
             MovieInfoHeader(
                 title = movieModalUiState.movieModalUiModel.title,
                 isAdult = movieModalUiState.movieModalUiModel.adult,
-                isLike = movieModalUiState.isLikeState,
-                onLikeClick = movieModalUiState.modalEvent.onLikeClick,
+                isLike = movieModalUiState.myMovieRatedAndWantedItemUiModel.isLike,
+                onLikeClick = {
+                    action.onLikeClick()
+                },
             )
             MovieInfoRated(
-                comment = movieModalUiState.isRatedState.comment,
-                rate = movieModalUiState.isRatedState.rate,
-                onTextChange = movieModalUiState.modalEvent.onTextChange,
-                onRateChange = movieModalUiState.modalEvent.onRateChange,
+                comment = movieModalUiState.myMovieRatedAndWantedItemUiModel.comment,
+                rate = movieModalUiState.myMovieRatedAndWantedItemUiModel.rated,
+                onTextChange = { comment ->
+                    action.onTextChange(comment)
+                },
+                onRateChange = { rate ->
+                    action.onRateChange(rate)
+                },
                 focusManager = focusManager,
             )
             MovieInfoTags(

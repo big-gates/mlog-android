@@ -7,12 +7,14 @@ import androidx.paging.map
 import com.kychan.mlog.core.domain.observe.ObserveMlogMovie
 import com.kychan.mlog.core.domain.observe.ObserveNetflixMovie
 import com.kychan.mlog.core.domain.observe.ObserveWatchaMovie
-import com.kychan.mlog.core.domain.usecase.*
 import com.kychan.mlog.feature.home.model.MovieItem
 import com.kychan.mlog.feature.home.model.toView
 import com.kychan.mlog.feature.movie_modal.MovieModalBottomSheetViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,14 +22,7 @@ class HomeViewModel @Inject constructor(
     private val observeMlogMovie: ObserveMlogMovie,
     private val observeNetflixMovie: ObserveNetflixMovie,
     private val observeWatchaMovie: ObserveWatchaMovie,
-    private val insertMyWantMovie: InsertMyWantMovie,
-    private val updateMyRatedMovie: UpdateMyRatedMovie,
-    private val deleteMyWantMovie: DeleteMyWantMovie,
-    private val existToMyWantMovie: ExistToMyWantMovie,
-    private val existToMyRatedMovie: ExistToMyRatedMovie,
-) : MovieModalBottomSheetViewModel(
-    insertMyWantMovie, updateMyRatedMovie, deleteMyWantMovie, existToMyWantMovie, existToMyRatedMovie
-) {
+) : MovieModalBottomSheetViewModel() {
 
     val mLogMovieItem: StateFlow<PagingData<MovieItem>> = observeMlogMovie()
         .map { paging ->
@@ -73,5 +68,17 @@ class HomeViewModel @Inject constructor(
         const val MLOG_RECOMMENDATION = "Mlog 추천 Pick"
         const val NETFLIX_RECOMMENDATION = "Mlog가 추천하는 Netflix"
         const val WATCHA_RECOMMENDATION = "Mlog가 추천하는 Watcha"
+    }
+
+    override fun onLikeClick() {
+        insertOrDeleteMyWantMovie()
+    }
+
+    override fun onTextChange(comment: String) {
+        replaceRated(comment = comment)
+    }
+
+    override fun onRateChange(rate: Float) {
+        replaceRated(rate = rate)
     }
 }

@@ -12,6 +12,8 @@ import com.kychan.mlog.core.model.Language
 import com.kychan.mlog.core.model.MyMovieRatedAndWanted
 import com.kychan.mlog.core.model.Rated
 import com.kychan.mlog.core.model.WantToWatch
+import com.kychan.mlog.feature.movie_modal.MyMovieRatedAndWantedItemUiModel
+import com.kychan.mlog.feature.movie_modal.toMyMovieRatedAndWantedItemUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -29,7 +31,7 @@ class MovieDetailViewModel @Inject constructor(
     private val insertMyWantMovie: InsertMyWantMovie,
     private val deleteMyWantMovie: DeleteMyWantMovie,
     private val updateMyRatedMovie: UpdateMyRatedMovie,
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val movieId: Int = savedStateHandle["movieId"]!!
 
@@ -78,7 +80,10 @@ class MovieDetailViewModel @Inject constructor(
         }
     }
 
-    fun updateMyRatedMovie(comment: String, rate: Float) {
+    fun updateMyRatedMovie(
+        comment: String = myMovieRatedAndWanted.value.comment,
+        rate: Float = myMovieRatedAndWanted.value.rated
+    ) {
         viewModelScope.launch {
             updateMyRatedMovie.invoke(
                 myMovie = uiModel.value.toMyMovie(),

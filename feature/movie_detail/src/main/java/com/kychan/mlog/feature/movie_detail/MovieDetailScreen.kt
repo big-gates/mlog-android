@@ -49,11 +49,11 @@ fun MovieDetailScreen(
             MovieInfoRated(
                 comment = myMovieRatedAndWanted.comment,
                 rate = myMovieRatedAndWanted.rated,
-                onTextChange = { comment, rating ->
-                     viewModel.updateMyRatedMovie(comment, rating)
+                onTextChange = { comment ->
+                     viewModel.updateMyRatedMovie(comment = comment)
                 },
-                onRateChange = { comment, rating ->
-                     viewModel.updateMyRatedMovie(comment, rating)
+                onRateChange = { rating ->
+                     viewModel.updateMyRatedMovie(rate = rating)
                 },
                 focusManager = focusManager,
             )

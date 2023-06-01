@@ -3,7 +3,6 @@ package com.kychan.mlog.feature.mypage
 import androidx.lifecycle.viewModelScope
 import com.kychan.mlog.core.domain.observe.ObserveMyRatedMovie
 import com.kychan.mlog.core.domain.observe.ObserveMyWantToWatchMovie
-import com.kychan.mlog.core.domain.usecase.*
 import com.kychan.mlog.feature.movie_modal.MovieModalBottomSheetViewModel
 import com.kychan.mlog.feature.mypage.model.MyMovieItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,14 +16,7 @@ import javax.inject.Inject
 class MyPageViewModel @Inject constructor(
     private val observeMyWantToWatchMovie: ObserveMyWantToWatchMovie,
     private val observeMyRatedMovie: ObserveMyRatedMovie,
-    private val insertMyWantMovie: InsertMyWantMovie,
-    private val updateMyRatedMovie: UpdateMyRatedMovie,
-    private val deleteMyWantMovie: DeleteMyWantMovie,
-    private val existToMyWantMovie: ExistToMyWantMovie,
-    private val existToMyRatedMovie: ExistToMyRatedMovie,
-) : MovieModalBottomSheetViewModel(
-    insertMyWantMovie, updateMyRatedMovie, deleteMyWantMovie, existToMyWantMovie, existToMyRatedMovie
-) {
+) : MovieModalBottomSheetViewModel() {
 
     val myWantToWatchMovies: StateFlow<List<MyMovieItem>> = observeMyWantToWatchMovie()
         .map { movies ->
@@ -49,4 +41,16 @@ class MyPageViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = listOf()
         )
+
+    override fun onLikeClick() {
+        insertOrDeleteMyWantMovie()
+    }
+
+    override fun onTextChange(comment: String) {
+        replaceRated(comment = comment)
+    }
+
+    override fun onRateChange(rate: Float) {
+        replaceRated(rate = rate)
+    }
 }
