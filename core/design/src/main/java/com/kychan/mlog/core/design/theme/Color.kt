@@ -16,3 +16,5 @@ val Gray600 = Color(0xFF757575)
 val Gray800 = Color(0xFF424242)
 
 val Pink500 = Color(0xFFE91E63)
+
+val White = Color(0xFFFFFFFF)
