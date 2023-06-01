@@ -1,6 +1,7 @@
 package com.kychan.mlog.core.dataSourceRemote.http.datasource
 
 import com.kychan.mlog.core.dataSourceRemote.http.api.RetrofitTMDBApi
+import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDetailRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MoviePopularRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieSearchRes
@@ -36,6 +37,14 @@ class TMDBDataSourceImpl @Inject constructor(
         query: String
     ): MovieSearchRes {
         return tmdbApi.getSearch(page, language, watchRegion, query)
+    }
+
+    override suspend fun getMovieDetail(
+        movieId: Int,
+        language: Language,
+        appendToResponse: String
+    ): MovieDetailRes {
+        return tmdbApi.getMovieDetail(movieId, language, appendToResponse)
     }
 
 }

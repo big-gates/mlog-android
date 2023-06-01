@@ -23,8 +23,8 @@ import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.feature.mypage.model.MyMovieItem
 import com.kychan.mlog.core.design.theme.Black
 import com.kychan.mlog.feature.movie_modal.BottomSheetLayout
-import com.kychan.mlog.feature.movie_modal.MovieModalEvent
-import com.kychan.mlog.feature.movie_modal.MovieModalState
+import com.kychan.mlog.feature.movie_modal.ModalAction
+import com.kychan.mlog.feature.movie_modal.MovieModalUiState
 import com.kychan.mlog.feature.movie_modal.MovieModalUiModel
 import kotlinx.coroutines.launch
 
@@ -137,46 +137,18 @@ fun PhotoGrid(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MyPageRoute(
     viewModel: MyPageViewModel = hiltViewModel(),
+    navigateToMovieDetail: (id: Int) -> Unit,
 ) {
     val myRatedMovies by viewModel.myRatedMovies.collectAsStateWithLifecycle()
     val myWantToWatchMovies by viewModel.myWantToWatchMovies.collectAsStateWithLifecycle()
-    val isRatedState by viewModel.ratedMovieInfo.collectAsStateWithLifecycle()
-    val isLikeState by viewModel.isLikeMovie.collectAsStateWithLifecycle()
+    val movieModalUiModel by viewModel.movieModalUiModel.collectAsStateWithLifecycle()
+    val myMovieRatedAndWantedItemUiModel by viewModel.myMovieRatedAndWantedItemUiModel.collectAsStateWithLifecycle()
+    val action: ModalAction = viewModel
 
-    MyPageScreen(
-        myRatedMovies = myRatedMovies,
-        myWantToWatchMovies = myWantToWatchMovies,
-        movieModalItemState = MovieModalState(
-            isRatedState = isRatedState,
-            isLikeState = isLikeState,
-            onShowModal = { item ->
-                viewModel.existToMyMovie(item)
-            },
-            modalEvent = MovieModalEvent(
-                onLikeClick = {
-                    viewModel.insertOrDeleteMyWantMovie()
-                },
-                onTextChange = { comment, rating ->
-                    viewModel.replaceRated(comment, rating)
-                },
-                onRateChange = { comment, rating ->
-                    viewModel.replaceRated(comment, rating)
-                },
-            )
-        ),
-    )
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun MyPageScreen(
-    myRatedMovies: List<MyMovieItem> = emptyList(),
-    myWantToWatchMovies: List<MyMovieItem> = emptyList(),
-    movieModalItemState: MovieModalState,
-) {
     val coroutineScope = rememberCoroutineScope()
     val modalSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -185,7 +157,45 @@ fun MyPageScreen(
         },
         skipHalfExpanded = false
     )
-    val movieModalUiModelState: MutableState<MovieModalUiModel> = remember { mutableStateOf(MovieModalUiModel()) }
+
+    BottomSheetLayout(
+        modalSheetState = modalSheetState,
+        movieModalUiState = MovieModalUiState(
+            movieModalUiModel = movieModalUiModel,
+            myMovieRatedAndWantedItemUiModel = myMovieRatedAndWantedItemUiModel,
+        ),
+        content = {
+            MyPageScreen(
+                myRatedMovies = myRatedMovies,
+                myWantToWatchMovies = myWantToWatchMovies,
+                onClickMovieItem = { item ->
+                    coroutineScope.launch {
+                        if (!modalSheetState.isVisible) {
+                            viewModel.setModalItem(
+                                MovieModalUiModel(
+                                    id = item.myMovieId,
+                                    title = item.title,
+                                    adult = item.adult,
+                                    backgroundImage = item.posterPath,
+                                )
+                            )
+                            modalSheetState.show()
+                        }
+                    }
+                },
+            )
+        },
+        action = action,
+        navigateToMovieDetail = navigateToMovieDetail,
+    )
+}
+
+@Composable
+fun MyPageScreen(
+    myRatedMovies: List<MyMovieItem> = emptyList(),
+    myWantToWatchMovies: List<MyMovieItem> = emptyList(),
+    onClickMovieItem: (MyMovieItem) -> Unit,
+) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
@@ -194,35 +204,9 @@ fun MyPageScreen(
                 myRatedMovies = myRatedMovies,
                 myWantToWatchMovies = myWantToWatchMovies,
                 onClick = { item ->
-                    coroutineScope.launch {
-                        if (modalSheetState.isVisible) {
-                            modalSheetState.hide()
-                        } else {
-                            movieModalUiModelState.value = MovieModalUiModel(
-                                id = item.myMovieId,
-                                title = item.title,
-                                adult = item.adult,
-                                isLike = movieModalItemState.isLikeState,
-                                comment = movieModalItemState.isRatedState.comment,
-                                rate = movieModalItemState.isRatedState.rate,
-                                backgroundImage = item.posterPath,
-                                tags = emptyList()
-                            )
-                            modalSheetState.show()
-                            movieModalItemState.onShowModal(movieModalUiModelState.value)
-                        }
-                    }
+                    onClickMovieItem(item)
                 }
             )
         }
-        BottomSheetLayout(
-            modalSheetState = modalSheetState,
-            movieModalUiModel = movieModalUiModelState.value.copy(
-                isLike = movieModalItemState.isLikeState,
-                comment = movieModalItemState.isRatedState.comment,
-                rate = movieModalItemState.isRatedState.rate
-            ),
-            movieModalEvent = movieModalItemState.modalEvent,
-        )
     }
 }

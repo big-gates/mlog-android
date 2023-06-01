@@ -10,6 +10,7 @@ val Teal200 = Color(0xFF03DAC5)
 val MovieRankBg = Color(0xA6000000)
 
 val Black = Color(0xFF000000)
+val AlphaBlack80 = Color(0xCC000000)
 val Gray200 = Color(0xFFEEEEEE)
 val Gray400 = Color(0xFFBDBDBD)
 val Gray600 = Color(0xFF757575)

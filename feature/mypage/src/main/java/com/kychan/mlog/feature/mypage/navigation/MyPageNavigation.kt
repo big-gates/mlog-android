@@ -14,8 +14,12 @@ fun NavController.navigateToMyPage(navOptions: NavOptions? = null) {
 }
 
 @OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.myPageScreen() {
+fun NavGraphBuilder.myPageScreen(
+    navigateToMovieDetail: (id: Int) -> Unit,
+) {
     composable(route = myPageRoute) {
-        MyPageRoute()
+        MyPageRoute(
+            navigateToMovieDetail = navigateToMovieDetail,
+        )
     }
 }

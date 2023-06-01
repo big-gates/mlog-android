@@ -83,4 +83,19 @@ abstract class MyMovieDao {
 
     @Query("SELECT * FROM want_to_watches AS w WHERE w.my_movie_id = (:id)")
     abstract suspend fun existToMyWantMovie(id: Int) : WantToWatchesEntity?
+
+    @Query(
+        """
+        SELECT r.rated
+        ,r.comment
+        ,w.my_movie_id
+            FROM my_movie AS m
+                LEFT JOIN rated AS r
+                    ON m.id = r.my_movie_id
+                LEFT JOIN want_to_watches AS w
+                    ON m.id = w.my_movie_id
+            WHERE m.id = (:id)
+        """
+    )
+    abstract fun getMyMovieRatedAndWanted(id: Int): Flow<MyMovieRatedAndWantedVO>
 }

@@ -1,5 +1,6 @@
 package com.kychan.mlog.core.dataSourceRemote.http.model
 
+import com.kychan.mlog.core.model.Genre2
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
 
@@ -51,6 +52,10 @@ data class CreatedBy(
 data class Genre(
     val id: Int,
     val name: String
+)
+fun Genre.toDomain() = Genre2(
+    id = id,
+    name = name,
 )
 
 @Serializable

@@ -1,12 +1,11 @@
 package com.kychan.mlog.core.dataSourceRemote.http.api
 
-import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
-import com.kychan.mlog.core.dataSourceRemote.http.model.MoviePopularRes
-import com.kychan.mlog.core.dataSourceRemote.http.model.MovieSearchRes
+import com.kychan.mlog.core.dataSourceRemote.http.model.*
 import com.kychan.mlog.core.model.Language
 import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.core.model.WatchRegion
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RetrofitTMDBApi {
@@ -33,4 +32,11 @@ interface RetrofitTMDBApi {
         @Query("region") watchRegion: WatchRegion,
         @Query("query") query: String,
     ): MovieSearchRes
+
+    @GET("/3/movie/{movie_id}")
+    suspend fun getMovieDetail(
+        @Path("movie_id") movieId: Int,
+        @Query("language") language: Language,
+        @Query("append_to_response") appendToResponse: String,
+    ): MovieDetailRes
 }
