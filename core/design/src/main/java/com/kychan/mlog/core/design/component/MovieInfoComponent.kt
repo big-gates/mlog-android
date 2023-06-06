@@ -191,7 +191,11 @@ fun MovieInfoRated(
                 .style(RatingBarStyle.HighLighted),
             onValueChange = { changeRate = it },
             onRatingChanged = {
-                onRateChange(it)
+                /*
+                 onRatingChanged는 드래그 하는 도중이 아닌 드래그가 시작되는 시점, 끝나는 시점에 호출이 됨
+                 영화 별점 설정을 0점으로 했을 때 -1이라는 플래그값으로 삭제를 의미 영화를 저장할 때는 0점으로 저장.
+                 */
+                if (it <= 0f) onRateChange(-1f) else onRateChange(it)
             }
         )
 
