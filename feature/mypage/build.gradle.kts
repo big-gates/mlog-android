@@ -10,5 +10,5 @@ android {
 dependencies {
     implementation(libs.accompanist.pager.layout)
     implementation(libs.accompanist.pager.indicators)
-    implementation(project(mapOf("path" to ":feature:movie_modal")))
+    implementation(project(":feature:movie_modal"))
 }

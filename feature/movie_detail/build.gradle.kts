@@ -10,6 +10,6 @@ android {
 dependencies {
 
     implementation(libs.a914.gowtham.compose.ratingbar)
-    implementation(project(mapOf("path" to ":feature:movie_modal")))
+    implementation(project(":feature:movie_modal"))
 
 }
