@@ -10,5 +10,5 @@ android {
 dependencies {
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime.ktx)
-    implementation(project(mapOf("path" to ":feature:movie_modal")))
+    implementation(project(":feature:movie_modal"))
 }
