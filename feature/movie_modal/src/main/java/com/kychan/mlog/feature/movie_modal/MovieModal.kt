@@ -19,6 +19,7 @@ import com.kychan.mlog.core.design.component.MovieInfoHeader
 import com.kychan.mlog.core.design.component.MovieInfoRated
 import com.kychan.mlog.core.design.component.MovieInfoTags
 import com.kychan.mlog.core.designsystem.BuildConfig
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -66,6 +67,7 @@ fun MovieModalBottomSheetLayout(
     focusManager: FocusManager,
     navigateToMovieDetail: (id: Int) -> Unit,
 ) {
+
     Box {
         AsyncImage(
             modifier = Modifier
@@ -85,19 +87,13 @@ fun MovieModalBottomSheetLayout(
                 title = movieModalUiState.movieModalUiModel.title,
                 isAdult = movieModalUiState.movieModalUiModel.adult,
                 isLike = movieModalUiState.myMovieRatedAndWantedItemUiModel.isLike,
-                onLikeClick = {
-                    action.onLikeClick()
-                },
+                onLikeClick = { action.onLikeClick() },
             )
             MovieInfoRated(
                 comment = movieModalUiState.myMovieRatedAndWantedItemUiModel.comment,
                 rate = movieModalUiState.myMovieRatedAndWantedItemUiModel.rated,
-                onTextChange = { comment ->
-                    action.onTextChange(comment)
-                },
-                onRateChange = { rate ->
-                    action.onRateChange(rate)
-                },
+                onTextChange = { action.onTextChange(it) },
+                onRateChange = { action.onRateChange(it) },
                 focusManager = focusManager,
             )
             MovieInfoTags(

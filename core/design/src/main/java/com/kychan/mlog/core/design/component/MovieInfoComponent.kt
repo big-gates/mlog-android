@@ -7,6 +7,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -34,6 +39,7 @@ import com.kychan.mlog.core.design.theme.AlphaBlack80
 import com.kychan.mlog.core.design.theme.Gray600
 import com.kychan.mlog.core.design.theme.White
 import com.kychan.mlog.core.designsystem.R
+import kotlinx.coroutines.delay
 
 /*** 추후 아래 영화 정보에 관한 Component는
  * 다른 Screen에서 사용할 떄에 함수 인자에 modifier를 넣을 예정!
@@ -104,82 +110,95 @@ fun MovieInfoRated(
     onRateChange: (Float) -> Unit,
     focusManager: FocusManager,
 ) {
-    Row(
+    var changeComment by remember { mutableStateOf(comment) }
+    var changeRate by remember { mutableStateOf(0f) }
+
+    // 각 영화 Item 마다 다른 데이터로 초기화 하기 위함.
+    LaunchedEffect(rate) {
+        changeRate = rate
+    }
+    LaunchedEffect(comment) {
+        changeComment = comment
+    }
+    LaunchedEffect(changeComment) { // comment 변경 시 마다 delay 후 방출
+        delay(500L)
+        if (changeComment != comment) onTextChange(changeComment)
+    }
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 8.dp, end = 8.dp, top = 41.dp)
             .background(AlphaBlack80)
             .padding(horizontal = 10.dp, vertical = 12.dp),
     ) {
-        Column(
+        Text(
+            text = "내 점수는요?",
+            color = White,
+            fontWeight = FontWeight.Bold,
+            fontSize = 15.sp,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
+        Row(
             modifier = Modifier
-                .fillMaxWidth(),
+                .padding(start = 53.dp, end = 19.dp)
+                .align(alignment = Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = "내 점수는요?",
-                color = White,
-                fontWeight = FontWeight.Bold,
-                fontSize = 15.sp,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-            )
-            Row(
+            TextField(
                 modifier = Modifier
-                    .padding(start = 53.dp, end = 19.dp)
-                    .align(alignment = Alignment.CenterHorizontally),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                TextField(
-                    modifier = Modifier
-                        .weight(1f)
-                        .onFocusChanged {
-                            if (it.isFocused) {
-                                // focused
-                                Log.d("TAG", "focused")
-                            } else {
-                                // not focused
-                                Log.d("TAG", "not focused")
-                            }
-                        },
-                    keyboardActions = KeyboardActions {
-                        focusManager.clearFocus()
+                    .weight(1f)
+                    .onFocusChanged {
+                        if (it.isFocused) {
+                            // focused
+                            Log.d("TAG", "focused")
+                        } else {
+                            // not focused
+                            Log.d("TAG", "not focused")
+                        }
                     },
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Gray,
-                        focusedIndicatorColor = Color.Gray
-                    ),
-                    textStyle = TextStyle.Default.copy(color = Color.White, fontSize = 14.sp),
-                    value = comment,
-                    singleLine = true,
-                    onValueChange = { onTextChange(it) },
-                )
-                Icon(
-                    painter = painterResource(id = R.drawable.comment_write),
-                    contentDescription = "comment_write",
-                    modifier = Modifier
-                        .padding(start = 11.dp)
-                        .width(24.dp)
-                        .height(24.dp),
-                    tint = Gray600,
-                )
-            }
-            RatingBar(
-                modifier = Modifier
-                    .align(alignment = Alignment.CenterHorizontally),
-                value = rate,
-                config = RatingBarConfig()
-                    .stepSize(StepSize.HALF)
-                    .size(32.dp)
-                    .style(RatingBarStyle.HighLighted),
-                onValueChange = { onRateChange(it) },
-                onRatingChanged = {
-                    Log.d("TAG", "onRatingChanged: $it")
-                }
+                keyboardActions = KeyboardActions {
+                    focusManager.clearFocus()
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Gray,
+                    focusedIndicatorColor = Color.Gray
+                ),
+                textStyle = TextStyle.Default.copy(color = White, fontSize = 14.sp),
+                value = changeComment,
+                singleLine = true,
+                onValueChange = { changeComment = it },
             )
-
+            Icon(
+                painter = painterResource(id = R.drawable.comment_write),
+                contentDescription = "comment_write",
+                modifier = Modifier
+                    .padding(start = 11.dp)
+                    .width(24.dp)
+                    .height(24.dp),
+                tint = Gray600,
+            )
         }
+        RatingBar(
+            modifier = Modifier
+                .align(alignment = Alignment.CenterHorizontally),
+            value = changeRate,
+            config = RatingBarConfig()
+                .stepSize(StepSize.HALF)
+                .size(32.dp)
+                .style(RatingBarStyle.HighLighted),
+            onValueChange = { changeRate = it },
+            onRatingChanged = {
+                /*
+                 onRatingChanged는 드래그 하는 도중이 아닌 드래그가 시작되는 시점, 끝나는 시점에 호출이 됨
+                 영화 별점 설정을 0점으로 했을 때 -1이라는 플래그값으로 삭제를 의미 영화를 저장할 때는 0점으로 저장.
+                 */
+                if (it <= 0f) onRateChange(-1f) else onRateChange(it)
+            }
+        )
+
     }
 }
 

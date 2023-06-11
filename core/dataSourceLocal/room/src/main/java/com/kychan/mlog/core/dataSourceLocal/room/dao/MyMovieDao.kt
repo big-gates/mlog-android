@@ -31,7 +31,7 @@ abstract class MyMovieDao {
     @Transaction
     open suspend fun updateMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity) {
         upsertMyMovie(myMovieEntity)
-        if (ratedEntity.rated <= 0f) {
+        if (ratedEntity.rated < 0f) { // rate : 사용자가 0 입력 시 -1로 저장 후 삭제 로직 실행
             deleteMyRatedMovie(myMovieEntity, ratedEntity)
         } else (
             upsertRatedMovie(ratedEntity)
