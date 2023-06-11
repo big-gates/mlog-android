@@ -41,7 +41,10 @@ fun MLogNavHost(
             }
         )
         searchScreen(
-            onBackClick = navController::popBackStack
+            onBackClick = navController::popBackStack,
+            navigateToMovieDetail = { id ->
+                navController.navigateToMovieDetail(id)
+            }
         )
         movieDetailScreen()
     }

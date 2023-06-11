@@ -1,8 +1,8 @@
 package com.kychan.mlog.feature.search
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.paging.map
 import com.kychan.mlog.core.domain.observe.ObserveMovieSearch
 import com.kychan.mlog.core.domain.observe.ObserveRecentSearch
@@ -11,6 +11,7 @@ import com.kychan.mlog.core.domain.usecase.DeleteRecentSearch
 import com.kychan.mlog.core.domain.usecase.UpdateRecentSearch
 import com.kychan.mlog.core.model.Language
 import com.kychan.mlog.core.model.WatchRegion
+import com.kychan.mlog.feature.movie_modal.MovieModalBottomSheetViewModel
 import com.kychan.mlog.feature.search.model.MovieItem
 import com.kychan.mlog.feature.search.model.RecentSearchView
 import com.kychan.mlog.feature.search.model.toView
@@ -26,7 +27,7 @@ class SearchViewModel @Inject constructor(
     private val deleteAllRecentSearch: DeleteAllRecentSearch,
     private val deleteRecentSearch: DeleteRecentSearch,
     private val observeMovieSearch: ObserveMovieSearch,
-):ViewModel() {
+) : MovieModalBottomSheetViewModel() {
 
     private val _searchText: MutableStateFlow<String> = MutableStateFlow("")
     val searchText: StateFlow<String>
@@ -51,7 +52,9 @@ class SearchViewModel @Inject constructor(
             ).map { paging ->
                 paging.map { movie -> movie.toView(POSTER_SIZE) }
             }
-        }.stateIn(
+        }
+        .cachedIn(viewModelScope)
+        .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000L),
             initialValue = PagingData.empty()
@@ -71,6 +74,18 @@ class SearchViewModel @Inject constructor(
 
     fun delete(id:Int) = viewModelScope.launch {
         deleteRecentSearch(id)
+    }
+
+    override fun onLikeClick() {
+        insertOrDeleteMyWantMovie()
+    }
+
+    override fun onTextChange(comment: String) {
+        replaceRated(comment = comment)
+    }
+
+    override fun onRateChange(rate: Float) {
+        replaceRated(rate = rate)
     }
 
     companion object{
