@@ -78,17 +78,6 @@ fun MyPageView(
             }
         }
 
-        Row {
-            Image(
-                painter = painterResource(id = MLogIcons.Sort),
-                contentDescription = "",
-                contentScale = ContentScale.Fit,
-                colorFilter = ColorFilter.tint(Black),
-            )
-            Text(
-                text = "정렬 버튼 들어가는 자리"
-            )
-        }
         HorizontalPager(
             modifier = Modifier.fillMaxSize(),
             count = pages.size,
@@ -99,12 +88,25 @@ fun MyPageView(
                 1 -> myWantToWatchMovies
                 else -> emptyList()
             }
-            PhotoGrid(
-                photos = itemList,
-                onClick = { item ->
-                    onClick(item)
+            Column {
+                Row(modifier = Modifier.clickable { onSortClick() }) {
+                    Image(
+                        painter = painterResource(id = MLogIcons.Sort),
+                        contentDescription = "",
+                        contentScale = ContentScale.Fit,
+                        colorFilter = ColorFilter.tint(Black),
+                    )
+                    Text(
+                        text = "최근에 담은 순"
+                    )
                 }
-            )
+                PhotoGrid(
+                    photos = itemList,
+                    onClick = { item ->
+                        onClick(item)
+                    }
+                )
+            }
         }
     }
 }
