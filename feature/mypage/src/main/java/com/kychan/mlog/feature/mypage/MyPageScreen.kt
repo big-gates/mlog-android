@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,8 +25,8 @@ import com.kychan.mlog.feature.mypage.model.MyMovieItem
 import com.kychan.mlog.core.design.theme.Black
 import com.kychan.mlog.feature.movie_modal.BottomSheetLayout
 import com.kychan.mlog.feature.movie_modal.ModalAction
-import com.kychan.mlog.feature.movie_modal.MovieModalUiState
 import com.kychan.mlog.feature.movie_modal.MovieModalUiModel
+import com.kychan.mlog.feature.movie_modal.MovieModalUiState
 import kotlinx.coroutines.launch
 
 
@@ -49,11 +50,12 @@ fun MyPageAppBar() {
 fun MyPageView(
     myRatedMovies: List<MyMovieItem>,
     myWantToWatchMovies: List<MyMovieItem>,
+    pagerState: PagerState,
+    onSortClick: () -> Unit,
     onClick: (item: MyMovieItem) -> Unit,
 ) {
     Column {
         val pages = listOf("평가한", "보고싶어요")
-        val pagerState = rememberPagerState()
         val coroutineScope = rememberCoroutineScope()
 
         TabRow(
@@ -139,7 +141,7 @@ fun PhotoGrid(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalPagerApi::class)
 @Composable
 fun MyPageRoute(
     viewModel: MyPageViewModel = hiltViewModel(),
@@ -152,51 +154,82 @@ fun MyPageRoute(
     val action: ModalAction = viewModel
 
     val coroutineScope = rememberCoroutineScope()
-    val modalSheetState = rememberModalBottomSheetState(
+    val movieModalSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         confirmValueChange = {
             it != ModalBottomSheetValue.Expanded
         },
         skipHalfExpanded = false
     )
-
-    BottomSheetLayout(
-        modalSheetState = modalSheetState,
-        movieModalUiState = MovieModalUiState(
-            movieModalUiModel = movieModalUiModel,
-            myMovieRatedAndWantedItemUiModel = myMovieRatedAndWantedItemUiModel,
-        ),
-        content = {
-            MyPageScreen(
-                myRatedMovies = myRatedMovies,
-                myWantToWatchMovies = myWantToWatchMovies,
-                onClickMovieItem = { item ->
-                    coroutineScope.launch {
-                        if (!modalSheetState.isVisible) {
-                            viewModel.setModalItem(
-                                MovieModalUiModel(
-                                    id = item.myMovieId,
-                                    title = item.title,
-                                    adult = item.adult,
-                                    backgroundImage = item.posterPath,
-                                )
-                            )
-                            modalSheetState.show()
-                        }
-                    }
-                },
-            )
+    val sortSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        confirmValueChange = {
+            it != ModalBottomSheetValue.Expanded
         },
-        action = action,
-        navigateToMovieDetail = navigateToMovieDetail,
+        skipHalfExpanded = false
     )
+    val pagerState = rememberPagerState()
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        MyPageScreen(
+            myRatedMovies = myRatedMovies,
+            myWantToWatchMovies = myWantToWatchMovies,
+            pagerState = pagerState,
+            onSortClick = {
+                coroutineScope.launch {
+                    sortSheetState.show()
+                }
+            },
+            onClickMovieItem = { item ->
+                coroutineScope.launch {
+                    if (!movieModalSheetState.isVisible) {
+                        viewModel.setModalItem(
+                            MovieModalUiModel(
+                                id = item.myMovieId,
+                                title = item.title,
+                                adult = item.adult,
+                                backgroundImage = item.posterPath,
+                            )
+                        )
+                        movieModalSheetState.show()
+                    }
+                }
+            },
+        )
+
+        BottomSheetLayout(
+            modalSheetState = movieModalSheetState,
+            movieModalUiState = MovieModalUiState(
+                movieModalUiModel = movieModalUiModel,
+                myMovieRatedAndWantedItemUiModel = myMovieRatedAndWantedItemUiModel,
+            ),
+            action = action,
+            navigateToMovieDetail = navigateToMovieDetail,
+        )
+
+        ModalBottomSheetLayout(
+            sheetState = sortSheetState,
+            sheetShape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
+            sheetContent = {
+                StorageSortBottomSheetContent(
+                    isRatePage = pagerState.currentPage == 0
+                ) {
+
+                }
+            },
+            content = {}
+        )
+    }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun MyPageScreen(
     myRatedMovies: List<MyMovieItem> = emptyList(),
     myWantToWatchMovies: List<MyMovieItem> = emptyList(),
-    onClickMovieItem: (MyMovieItem) -> Unit,
+    pagerState: PagerState,
+    onSortClick: () -> Unit,
+    onClickMovieItem: (MyMovieItem) -> Unit = {},
 ) {
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -205,6 +238,8 @@ fun MyPageScreen(
             MyPageView(
                 myRatedMovies = myRatedMovies,
                 myWantToWatchMovies = myWantToWatchMovies,
+                pagerState = pagerState,
+                onSortClick = onSortClick,
                 onClick = { item ->
                     onClickMovieItem(item)
                 }
