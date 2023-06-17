@@ -21,11 +21,14 @@ data class WantToWatchesEntity(
     val id: Int,
     @ColumnInfo(name = "my_movie_id")
     val myMovieId: Int,
+    @ColumnInfo("created_at")
+    val createdAt: String,
 ) {
     companion object {
         fun of(wantToWatch: WantToWatch) = WantToWatchesEntity(
             id = wantToWatch.id,
             myMovieId = wantToWatch.myMovieId,
+            createdAt = wantToWatch.createAt,
         )
     }
 }
