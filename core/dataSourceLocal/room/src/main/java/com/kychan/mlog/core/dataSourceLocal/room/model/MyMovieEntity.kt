@@ -2,14 +2,11 @@ package com.kychan.mlog.core.dataSourceLocal.room.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.kychan.mlog.core.model.MyMovie
-import com.kychan.mlog.core.model.WatchProvider
 
 @Entity(
     tableName = "my_movie",
-    indices = [Index(value = ["id", "watch_providers"], unique = true)],
 )
 data class MyMovieEntity(
     @PrimaryKey(autoGenerate = true)
@@ -24,8 +21,6 @@ data class MyMovieEntity(
     val title: String,
     @ColumnInfo(name = "vote_average")
     val voteAverage: Double,
-    @ColumnInfo(name = "watch_providers")
-    val watchProviders: WatchProvider,
     val rank: Int,
 ) {
     fun toDomain() = MyMovie(
@@ -36,7 +31,6 @@ data class MyMovieEntity(
         posterPath = posterPath,
         title = title,
         voteAverage = voteAverage,
-        watchProviders = watchProviders,
         rank = rank,
     )
 
@@ -49,7 +43,6 @@ data class MyMovieEntity(
             posterPath = myMovie.posterPath,
             title = myMovie.title,
             voteAverage = myMovie.voteAverage,
-            watchProviders = myMovie.watchProviders,
             rank = myMovie.rank,
         )
     }

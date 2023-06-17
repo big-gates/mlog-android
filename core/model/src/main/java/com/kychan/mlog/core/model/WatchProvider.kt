@@ -1,13 +1,10 @@
 package com.kychan.mlog.core.model
 
-import kotlinx.serialization.SerialName
+data class WatchProvider(val id: Int, val rank: Int){
 
-enum class WatchProvider(val id: String) {
-    @SerialName("8") Netflix("8"),
-    @SerialName("97") Watcha("97"),
-    @SerialName("-1") None("-1")
-}
-
-fun String.toWatchProvider(): WatchProvider = WatchProvider.values().first { type ->
-    type.id == this
+    companion object{
+        const val NETFLIX_ID = 8
+        const val WATCHA_ID = 97
+        const val MLOG_ID = -1
+    }
 }

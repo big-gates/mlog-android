@@ -6,7 +6,6 @@ import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MoviePopularRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieSearchRes
 import com.kychan.mlog.core.model.Language
-import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.core.model.WatchRegion
 import javax.inject.Inject
 
@@ -17,9 +16,9 @@ class TMDBDataSourceImpl @Inject constructor(
         page: Int,
         language: Language,
         watchRegion: WatchRegion,
-        withWatchProvider: WatchProvider
+        withWatchProviderId: Int
     ): MovieDiscoverRes {
-        return tmdbApi.getMoviePopularWithProvider(page, language, watchRegion, withWatchProvider)
+        return tmdbApi.getMoviePopularWithProvider(page, language, watchRegion, withWatchProviderId)
     }
 
     override suspend fun getMoviePopular(
