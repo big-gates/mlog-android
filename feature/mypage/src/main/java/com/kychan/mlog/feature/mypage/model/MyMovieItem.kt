@@ -16,6 +16,7 @@ data class MyMovieItem(
     val rank: Int,
     val rated: Float,
     val comment: String,
+    val createdAt: String,
 ) {
     companion object {
         fun of(myRatedMovie: MyRatedMovies): MyMovieItem {
@@ -31,6 +32,7 @@ data class MyMovieItem(
                 rank = myRatedMovie.rank,
                 rated = myRatedMovie.rated,
                 comment = myRatedMovie.comment,
+                createdAt = myRatedMovie.createdAt,
             )
         }
 
@@ -47,6 +49,7 @@ data class MyMovieItem(
                 rank = myMovie.rank,
                 rated = 0.0f,
                 comment = "",
+                createdAt = "",
             )
         }
     }

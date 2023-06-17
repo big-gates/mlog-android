@@ -16,6 +16,7 @@ data class MyRatedMoviesVO(
     val rank: Int,
     val rated: Float,
     val comment: String,
+    @ColumnInfo("created_at") val createdAt: String,
 )
 
 fun MyRatedMoviesVO.toDomain() = MyRatedMovies(
@@ -30,4 +31,5 @@ fun MyRatedMoviesVO.toDomain() = MyRatedMovies(
     rank = rank,
     rated = rated,
     comment = comment,
+    createdAt = createdAt
 )
