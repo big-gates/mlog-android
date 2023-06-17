@@ -7,10 +7,7 @@ import com.kychan.mlog.core.dataSourceLocal.room.converter.SyncLogTypeConverter
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MyMovieDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.SearchDao
-import com.kychan.mlog.core.dataSourceLocal.room.model.MlogMovieEntity
-import com.kychan.mlog.core.dataSourceLocal.room.model.NetflixMovieEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.SyncLogEntity
-import com.kychan.mlog.core.dataSourceLocal.room.model.WatchaMovieEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.*
 
 @Database(
@@ -18,12 +15,11 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.*
         MyMovieEntity::class,
         RatedEntity::class,
         WantToWatchesEntity::class,
-        TagsEntity::class,
-        MlogMovieEntity::class,
-        NetflixMovieEntity::class,
-        WatchaMovieEntity::class,
+        TagEntity::class,
+        WatchProviderEntity::class,
         SyncLogEntity::class,
-        RecentSearchEntity::class
+        RecentSearchEntity::class,
+        MovieEntity::class,
     ],
     version = 1,
     autoMigrations = [],
