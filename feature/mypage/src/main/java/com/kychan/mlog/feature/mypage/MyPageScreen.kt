@@ -212,10 +212,9 @@ fun MyPageRoute(
             sheetShape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp),
             sheetContent = {
                 StorageSortBottomSheetContent(
-                    isRatePage = pagerState.currentPage == 0
-                ) {
-
-                }
+                    isRatePage = pagerState.currentPage == 0,
+                    clickSortType = viewModel::setSort
+                )
             },
             content = {}
         )
