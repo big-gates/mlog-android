@@ -22,4 +22,5 @@ data class Rated(
 data class WantToWatch(
     val id: Int,
     val myMovieId: Int,
+    val createAt: String,
 )

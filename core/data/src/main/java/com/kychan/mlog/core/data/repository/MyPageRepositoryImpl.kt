@@ -14,12 +14,8 @@ class MyPageRepositoryImpl @Inject constructor(
         return myMovieRoomDataSource.getMyRatedMovies().map { it.map(MyRatedMoviesVO::toDomain) }
     }
 
-    override fun getMyWantToWatchMovies(): Flow<List<MyMovie>> {
-        return myMovieRoomDataSource.getMyWantToWatchMovies().map { list ->
-            list.map {
-                it.toDomain()
-            }
-        }
+    override fun getMyWantToWatchMovies(): Flow<List<MyWantToWatchMovie>> {
+        return myMovieRoomDataSource.getMyWantToWatchMovies().map { it.map(MyWantToWatchMovieVO::toDomain) }
     }
 
     override suspend fun updateMyRatedMovie(myMovie: MyMovie, rated: Rated) {

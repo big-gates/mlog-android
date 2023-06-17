@@ -1,7 +1,7 @@
 package com.kychan.mlog.feature.mypage.model
 
-import com.kychan.mlog.core.model.MyMovie
 import com.kychan.mlog.core.model.MyRatedMovies
+import com.kychan.mlog.core.model.MyWantToWatchMovie
 import com.kychan.mlog.core.model.WatchProvider
 
 data class MyMovieItem(
@@ -36,20 +36,20 @@ data class MyMovieItem(
             )
         }
 
-        fun of(myMovie: MyMovie): MyMovieItem {
+        fun of(myWTWMovie: MyWantToWatchMovie): MyMovieItem {
             return MyMovieItem(
-                myMovieId = myMovie.id,
-                adult = myMovie.adult,
-                backdropPath = myMovie.backdropPath,
-                originalTitle = myMovie.originalTitle,
-                posterPath = myMovie.posterPath,
-                title = myMovie.title,
-                voteAverage = myMovie.voteAverage,
-                watchProviders = myMovie.watchProviders,
-                rank = myMovie.rank,
+                myMovieId = myWTWMovie.myMovie.id,
+                adult = myWTWMovie.myMovie.adult,
+                backdropPath = myWTWMovie.myMovie.backdropPath,
+                originalTitle = myWTWMovie.myMovie.originalTitle,
+                posterPath = myWTWMovie.myMovie.posterPath,
+                title = myWTWMovie.myMovie.title,
+                voteAverage = myWTWMovie.myMovie.voteAverage,
+                watchProviders = myWTWMovie.myMovie.watchProviders,
+                rank = myWTWMovie.myMovie.rank,
                 rated = 0.0f,
                 comment = "",
-                createdAt = "",
+                createdAt = myWTWMovie.wantToWatch.createAt,
             )
         }
     }

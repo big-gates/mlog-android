@@ -1,5 +1,6 @@
 package com.kychan.mlog.feature.movie_modal
 
+import com.kychan.mlog.core.common.extenstions.toDateTimeFormat
 import com.kychan.mlog.core.model.MyMovie
 import com.kychan.mlog.core.model.Rated
 import com.kychan.mlog.core.model.WantToWatch
@@ -29,7 +30,8 @@ data class MovieModalUiModel(
 
     fun toWantToWatch() = WantToWatch(
         id = this.id,
-        myMovieId = this.id
+        myMovieId = this.id,
+        createAt = System.currentTimeMillis().toDateTimeFormat(),
     )
 
     fun toRated() = Rated(

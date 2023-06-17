@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface MyMovieRoomDataSource {
     fun getMyRatedMovies(): Flow<List<MyRatedMoviesVO>>
 
-    fun getMyWantToWatchMovies(): Flow<List<MyMovieEntity>>
+    fun getMyWantToWatchMovies(): Flow<List<MyWantToWatchMovieVO>>
 
     suspend fun updateMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity)
 
