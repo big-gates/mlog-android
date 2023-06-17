@@ -51,7 +51,7 @@ fun MyPageView(
     myRatedMovies: List<MyMovieItem>,
     myWantToWatchMovies: List<MyMovieItem>,
     pagerState: PagerState,
-    pagerSortType: SortType,
+    pagerSortType: Map<Int, SortType>,
     onSortClick: () -> Unit,
     onClick: (item: MyMovieItem) -> Unit,
 ) {
@@ -100,7 +100,7 @@ fun MyPageView(
                         colorFilter = ColorFilter.tint(Black),
                     )
                     Text(
-                        text = pagerSortType.title
+                        text = pagerSortType[page]?.title.orEmpty()
                     )
                 }
                 PhotoGrid(
@@ -152,7 +152,7 @@ fun MyPageRoute(
     val myWantToWatchMovies by viewModel.myWantToWatchMovies.collectAsStateWithLifecycle()
     val movieModalUiModel by viewModel.movieModalUiModel.collectAsStateWithLifecycle()
     val myMovieRatedAndWantedItemUiModel by viewModel.myMovieRatedAndWantedItemUiModel.collectAsStateWithLifecycle()
-    val pagerSortType by viewModel.sortType.collectAsStateWithLifecycle()
+    val pagerSortType by viewModel.pagerSortType.collectAsStateWithLifecycle()
     val action: ModalAction = viewModel
 
     val coroutineScope = rememberCoroutineScope()
@@ -217,7 +217,7 @@ fun MyPageRoute(
                 StorageSortBottomSheetContent(
                     isRatePage = pagerState.currentPage == 0,
                     clickSortType = {
-                        viewModel.setSort(it)
+                        viewModel.setSort(it, pagerState.currentPage)
                         coroutineScope.launch {
                             sortSheetState.hide()
                         }
@@ -235,7 +235,7 @@ fun MyPageScreen(
     myRatedMovies: List<MyMovieItem> = emptyList(),
     myWantToWatchMovies: List<MyMovieItem> = emptyList(),
     pagerState: PagerState,
-    pagerSortType: SortType,
+    pagerSortType: Map<Int, SortType>,
     onSortClick: () -> Unit,
     onClickMovieItem: (MyMovieItem) -> Unit = {},
 ) {
