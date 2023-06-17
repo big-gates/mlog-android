@@ -51,6 +51,7 @@ fun MyPageView(
     myRatedMovies: List<MyMovieItem>,
     myWantToWatchMovies: List<MyMovieItem>,
     pagerState: PagerState,
+    pagerSortType: SortType,
     onSortClick: () -> Unit,
     onClick: (item: MyMovieItem) -> Unit,
 ) {
@@ -99,7 +100,7 @@ fun MyPageView(
                         colorFilter = ColorFilter.tint(Black),
                     )
                     Text(
-                        text = "최근에 담은 순"
+                        text = pagerSortType.title
                     )
                 }
                 PhotoGrid(
@@ -151,6 +152,7 @@ fun MyPageRoute(
     val myWantToWatchMovies by viewModel.myWantToWatchMovies.collectAsStateWithLifecycle()
     val movieModalUiModel by viewModel.movieModalUiModel.collectAsStateWithLifecycle()
     val myMovieRatedAndWantedItemUiModel by viewModel.myMovieRatedAndWantedItemUiModel.collectAsStateWithLifecycle()
+    val pagerSortType by viewModel.sortType.collectAsStateWithLifecycle()
     val action: ModalAction = viewModel
 
     val coroutineScope = rememberCoroutineScope()
@@ -175,6 +177,7 @@ fun MyPageRoute(
             myRatedMovies = myRatedMovies,
             myWantToWatchMovies = myWantToWatchMovies,
             pagerState = pagerState,
+            pagerSortType = pagerSortType,
             onSortClick = {
                 coroutineScope.launch {
                     sortSheetState.show()
@@ -213,7 +216,12 @@ fun MyPageRoute(
             sheetContent = {
                 StorageSortBottomSheetContent(
                     isRatePage = pagerState.currentPage == 0,
-                    clickSortType = viewModel::setSort
+                    clickSortType = {
+                        viewModel.setSort(it)
+                        coroutineScope.launch {
+                            sortSheetState.hide()
+                        }
+                    }
                 )
             },
             content = {}
@@ -227,6 +235,7 @@ fun MyPageScreen(
     myRatedMovies: List<MyMovieItem> = emptyList(),
     myWantToWatchMovies: List<MyMovieItem> = emptyList(),
     pagerState: PagerState,
+    pagerSortType: SortType,
     onSortClick: () -> Unit,
     onClickMovieItem: (MyMovieItem) -> Unit = {},
 ) {
@@ -238,6 +247,7 @@ fun MyPageScreen(
                 myRatedMovies = myRatedMovies,
                 myWantToWatchMovies = myWantToWatchMovies,
                 pagerState = pagerState,
+                pagerSortType = pagerSortType,
                 onSortClick = onSortClick,
                 onClick = { item ->
                     onClickMovieItem(item)

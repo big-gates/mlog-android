@@ -20,7 +20,7 @@ class MyPageViewModel @Inject constructor(
     private val observeMyRatedMovie: ObserveMyRatedMovie,
 ) : MovieModalBottomSheetViewModel() {
 
-    private val sortType: MutableStateFlow<SortType> = MutableStateFlow(SortType.SAVE_RECENT)
+    val sortType: MutableStateFlow<SortType> = MutableStateFlow(SortType.SAVE_RECENT)
 
     val myWantToWatchMovies: StateFlow<List<MyMovieItem>> = observeMyWantToWatchMovie()
         .map { movies ->
