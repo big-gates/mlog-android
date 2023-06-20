@@ -92,7 +92,12 @@ fun MyPageView(
                 else -> emptyList()
             }
             Column {
-                Row(modifier = Modifier.clickable { onSortClick() }) {
+                Row(
+                    modifier = Modifier
+                        .height(30.dp)
+                        .clickable { onSortClick() },
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Image(
                         painter = painterResource(id = MLogIcons.Sort),
                         contentDescription = "",
