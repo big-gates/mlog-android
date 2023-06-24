@@ -22,7 +22,6 @@ import coil.compose.AsyncImage
 import com.google.accompanist.pager.*
 import com.kychan.mlog.core.design.icon.MLogIcons
 import com.kychan.mlog.feature.mypage.model.MyMovieItem
-import com.kychan.mlog.core.design.theme.Black
 import com.kychan.mlog.feature.movie_modal.BottomSheetLayout
 import com.kychan.mlog.feature.movie_modal.ModalAction
 import com.kychan.mlog.feature.movie_modal.MovieModalUiModel
@@ -102,7 +101,7 @@ fun MyPageView(
                         painter = painterResource(id = MLogIcons.Sort),
                         contentDescription = "",
                         contentScale = ContentScale.Fit,
-                        colorFilter = ColorFilter.tint(Black),
+                        colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground),
                     )
                     Text(
                         text = pagerSortType[page]?.title.orEmpty()
@@ -127,7 +126,7 @@ fun PhotoGrid(
     LazyVerticalGrid(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Black),
+            .background(color = MaterialTheme.colors.background),
         columns = GridCells.Fixed(3),
         verticalArrangement = Arrangement.spacedBy(1.dp),
         horizontalArrangement = Arrangement.spacedBy(1.dp)

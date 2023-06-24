@@ -12,17 +12,20 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.ContentScale
@@ -181,6 +184,10 @@ fun SearchBar(
         ),
         singleLine = true,
         shape = Shapes.large,
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = MaterialTheme.colors.onSurface,
+            containerColor = Color.Transparent,
+        ),
     )
 }
 
@@ -321,12 +328,14 @@ fun RecentSearchHeader(
         Text(
             text = "최근 검색어",
             fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colors.onBackground,
         )
 
         Text(
             modifier = Modifier.clickable { deleteAll() },
-            text = "모두 삭제"
+            text = "모두 삭제",
+            color = MaterialTheme.colors.onBackground,
         )
 
     }
@@ -348,7 +357,8 @@ fun RecentSearch(
         Text(
             modifier = Modifier.padding(vertical = 8.dp),
             text = recentSearchView.text,
-            fontSize = 16.sp
+            fontSize = 16.sp,
+            color = MaterialTheme.colors.onBackground,
         )
 
         Icon(

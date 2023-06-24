@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
@@ -36,7 +37,6 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.kychan.mlog.core.design.icon.MLogIcons
-import com.kychan.mlog.core.design.theme.Black
 import com.kychan.mlog.core.design.theme.MovieRankBg
 import com.kychan.mlog.core.design.theme.Pink500
 import com.kychan.mlog.core.design.theme.Shapes
@@ -60,7 +60,6 @@ fun HomeAppBar(navigateToSearch: () -> Unit) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = CenterVertically,
         modifier = Modifier
-            .background(color = Color.White)
             .fillMaxWidth()
             .padding(
                 horizontal = 10.dp,
@@ -78,7 +77,7 @@ fun HomeAppBar(navigateToSearch: () -> Unit) {
             painter = painterResource(id = MLogIcons.Search),
             contentDescription = "",
             contentScale = ContentScale.Fit,
-            colorFilter = ColorFilter.tint(Black),
+            colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground),
         )
     }
 }
