@@ -5,11 +5,11 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.kychan.mlog.core.design.theme.White
 
 enum class SortType(val title: String) {
     SAVE_RECENT("최근에 담은 순"),
@@ -44,7 +44,7 @@ fun StorageSortBottomSheetContent(
                         clickSortType(sortType)
                     },
                 text = sortType.title,
-                color = White
+                color = MaterialTheme.colors.onBackground
             )
         }
     }
