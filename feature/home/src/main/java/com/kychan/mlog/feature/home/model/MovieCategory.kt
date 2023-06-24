@@ -2,9 +2,9 @@ package com.kychan.mlog.feature.home.model
 
 import androidx.paging.compose.LazyPagingItems
 import com.kychan.mlog.core.common.extenstions.roundToTheFirstDecimal
+import com.kychan.mlog.core.design.component.DynamicGridComponent
 import com.kychan.mlog.core.design.component.DynamicGridItem
 import com.kychan.mlog.core.model.Movie
-import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.feature.home.BuildConfig
 
 data class MovieCategory(
@@ -14,7 +14,7 @@ data class MovieCategory(
 
 data class Header(
     val title: String,
-    val watchProvider: WatchProvider,
+    val watchProviderId: Int,
 )
 
 data class MovieItem(
@@ -30,15 +30,15 @@ data class MovieItem(
 
 fun Movie.toView(
     posterSize: String,
-    isRowDynamic: Boolean = false,
+    watchProviderId: Int,
     isReverse: Boolean = false,
 ) = MovieItem(
     id = id,
     image = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}${posterSize}/${posterPath}",
-    rank = "$rank",
+    rank = "${watchProvider.find { it.id == watchProviderId }?.rank}",
     rating = voteAverage.roundToTheFirstDecimal().toFloat(),
     title = title,
     adult = adult,
-    isRowDynamic = isRowDynamic,
+    isRowDynamic = watchProvider.find { it.id == watchProviderId }?.rank?.rem(DynamicGridComponent.DEFAULT_ROW_DYNAMIC_INDEX) == 0,
     isReverse = isReverse
 )

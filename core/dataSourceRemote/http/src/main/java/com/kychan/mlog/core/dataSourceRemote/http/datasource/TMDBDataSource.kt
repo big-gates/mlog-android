@@ -5,10 +5,7 @@ import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MoviePopularRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieSearchRes
 import com.kychan.mlog.core.model.Language
-import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.core.model.WatchRegion
-import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface TMDBDataSource {
 
@@ -16,7 +13,7 @@ interface TMDBDataSource {
         page: Int,
         language: Language,
         watchRegion: WatchRegion,
-        withWatchProvider: WatchProvider
+        withWatchProviderId: Int
     ): MovieDiscoverRes
 
     suspend fun getMoviePopular(

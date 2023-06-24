@@ -27,8 +27,8 @@ fun MLogNavHost(
         modifier = modifier
     ){
         homeGraph(
-            navigateToHomeDetail = { watchProviders ->
-                navController.navigateToHomeDetail(watchProviders)
+            navigateToHomeDetail = { watchProviderId ->
+                navController.navigateToHomeDetail(watchProviderId)
             },
             navigateToSearch = { navController.navigateToSearch() },
             navigateToMovieDetail = { id ->

@@ -8,8 +8,6 @@ import androidx.navigation.*
 
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.navigation
-import com.kychan.mlog.core.model.WatchProvider
-import com.kychan.mlog.core.model.toWatchProvider
 import com.kychan.mlog.feature.home.HomeRoute
 import com.kychan.mlog.feature.home.detail.HomeDetailRoute
 
@@ -18,22 +16,22 @@ const val homeRoute = "home_route"
 const val homeDetailRoute = "home_detail_route"
 const val watchProvidersIdArg = "watchProvidersId"
 
-internal class HomeDetailArgs(val watchProvider: WatchProvider) {
+internal class HomeDetailArgs(val watchProviderId: Int) {
     constructor(savedStateHandle: SavedStateHandle) :
-            this(checkNotNull(savedStateHandle.get(watchProvidersIdArg) as? String).toWatchProvider())
+            this(checkNotNull(savedStateHandle.get(watchProvidersIdArg) as? Int))
 }
 
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     this.navigate(homeRoute, navOptions)
 }
 
-fun NavController.navigateToHomeDetail(watchProvider: WatchProvider){
-    this.navigate("$homeDetailRoute/${watchProvider.id}")
+fun NavController.navigateToHomeDetail(watchProviderId: Int){
+    this.navigate("$homeDetailRoute/${watchProviderId}")
 }
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.homeGraph(
-    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit,
+    navigateToHomeDetail: (watchProviderId: Int) -> Unit,
     navigateToSearch: () -> Unit,
     navigateToMovieDetail: (id: Int) -> Unit,
 ) {
@@ -52,7 +50,7 @@ fun NavGraphBuilder.homeGraph(
         composable(
             route = "$homeDetailRoute/{$watchProvidersIdArg}",
             arguments = listOf(
-                navArgument(watchProvidersIdArg) { type = NavType.StringType }
+                navArgument(watchProvidersIdArg) { type = NavType.IntType }
             ),
             enterTransition = { scaleIn() },
             exitTransition = { scaleOut() },

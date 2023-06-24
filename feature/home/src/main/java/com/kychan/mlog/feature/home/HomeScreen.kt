@@ -87,7 +87,7 @@ fun HomeAppBar(navigateToSearch: () -> Unit) {
 fun HomeRoute(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
-    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit,
+    navigateToHomeDetail: (watchProviderId: Int) -> Unit,
     navigateToSearch: () -> Unit,
     navigateToMovieDetail: (id: Int) -> Unit
 ) {
@@ -98,15 +98,15 @@ fun HomeRoute(
     HomeScreen(
         categories = listOf(
             MovieCategory(
-                header = Header(MLOG_RECOMMENDATION, WatchProvider.None),
+                header = Header(MLOG_RECOMMENDATION, WatchProvider.MLOG_ID),
                 movieItem = viewModel.mLogMovieItem.collectAsLazyPagingItems()
             ),
             MovieCategory(
-                header = Header(NETFLIX_RECOMMENDATION, WatchProvider.Netflix),
+                header = Header(NETFLIX_RECOMMENDATION, WatchProvider.NETFLIX_ID),
                 movieItem = viewModel.netflixMovieItem.collectAsLazyPagingItems()
             ),
             MovieCategory(
-                header = Header(WATCHA_RECOMMENDATION, WatchProvider.Watcha),
+                header = Header(WATCHA_RECOMMENDATION, WatchProvider.WATCHA_ID),
                 movieItem = viewModel.watchaMovieitem.collectAsLazyPagingItems()
             )
         ),
@@ -136,7 +136,7 @@ fun HomeScreen(
     movieModalUiState: MovieModalUiState,
     action: ModalAction,
     onClickMovieItem: (MovieItem) -> Unit,
-    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit = { },
+    navigateToHomeDetail: (watchProviderId: Int) -> Unit,
     navigateToSearch: () -> Unit,
     navigateToMovieDetail: (id: Int) -> Unit
 ) {
@@ -198,7 +198,7 @@ fun HomeScreen(
 fun MovieRankingsByCategory(
     header: Header,
     movie: LazyPagingItems<MovieItem>,
-    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit,
+    navigateToHomeDetail: (watchProviderId: Int) -> Unit,
     onClick: (item: MovieItem) -> Unit,
 ) {
     Column(
@@ -228,7 +228,7 @@ fun MovieRankingsByCategory(
 @Composable
 fun CategoryTitle(
     category: Header,
-    navigateToHomeDetail: (watchProvider: WatchProvider) -> Unit
+    navigateToHomeDetail: (watchProviderId: Int) -> Unit
 ){
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -237,7 +237,7 @@ fun CategoryTitle(
             .fillMaxWidth()
             .height(50.dp)
             .padding(horizontal = 4.dp)
-            .clickable { navigateToHomeDetail(category.watchProvider) }
+            .clickable { navigateToHomeDetail(category.watchProviderId) }
     ) {
         Text(
             text = category.title,

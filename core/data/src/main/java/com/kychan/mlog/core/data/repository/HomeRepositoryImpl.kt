@@ -5,9 +5,7 @@ import com.kychan.mlog.core.data.mediator.MLogMovieMediator
 import com.kychan.mlog.core.data.mediator.NetflixMovieMediator
 import com.kychan.mlog.core.data.mediator.WatchaMovieMediator
 import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
-import com.kychan.mlog.core.dataSourceLocal.room.model.MlogMovieEntity
-import com.kychan.mlog.core.dataSourceLocal.room.model.NetflixMovieEntity
-import com.kychan.mlog.core.dataSourceLocal.room.model.WatchaMovieEntity
+import com.kychan.mlog.core.dataSourceLocal.room.model.MovieVO
 import com.kychan.mlog.core.dataSourceLocal.room.model.toDomain
 import com.kychan.mlog.core.dataSourceRemote.http.datasource.TMDBDataSource
 import com.kychan.mlog.core.model.*
@@ -28,9 +26,9 @@ class HomeRepositoryImpl @Inject constructor(
                 tmdbDataSource = tmdbDataSource,
             )
         ) {
-            roomDataSource.getMLogMovie()
+            roomDataSource.getMovie(WatchProvider.MLOG_ID)
         }.flow.map { paging ->
-            paging.map(MlogMovieEntity::toDomain)
+            paging.map(MovieVO::toDomain)
         }
     }
 
@@ -42,9 +40,9 @@ class HomeRepositoryImpl @Inject constructor(
                 tmdbDataSource = tmdbDataSource,
             )
         ) {
-            roomDataSource.getNetflixMovie()
+            roomDataSource.getMovie(WatchProvider.NETFLIX_ID)
         }.flow.map { paging ->
-            paging.map(NetflixMovieEntity::toDomain)
+            paging.map(MovieVO::toDomain)
         }
     }
 
@@ -56,9 +54,9 @@ class HomeRepositoryImpl @Inject constructor(
                 tmdbDataSource = tmdbDataSource,
             )
         ) {
-            roomDataSource.getWatchaMovie()
+            roomDataSource.getMovie(WatchProvider.WATCHA_ID)
         }.flow.map { paging ->
-            paging.map(WatchaMovieEntity::toDomain)
+            paging.map(MovieVO::toDomain)
         }
     }
 

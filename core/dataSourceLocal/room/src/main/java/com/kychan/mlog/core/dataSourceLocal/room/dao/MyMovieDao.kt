@@ -15,7 +15,6 @@ abstract class MyMovieDao {
             , m.poster_path
             , m.title
             , m.vote_average
-            , m.watch_providers
             , m.rank
             , r.rated
             , r.comment
