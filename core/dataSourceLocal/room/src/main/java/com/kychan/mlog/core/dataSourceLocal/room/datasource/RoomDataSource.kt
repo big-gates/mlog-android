@@ -5,7 +5,7 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.*
 import kotlinx.coroutines.flow.Flow
 
 interface RoomDataSource {
-    fun getMovie(movieTypeId: Int): PagingSource<Int, MovieVo>
+    fun getMovie(movieTypeId: Int): PagingSource<Int, MovieVO>
     suspend fun clearMlogMoviesUpdateSyncLogUpdatedAt()
     suspend fun clearNetflixMoviesUpdateSyncLogUpdatedAt()
     suspend fun clearWatchaMoviesUpdateSyncLogUpdatedAt()

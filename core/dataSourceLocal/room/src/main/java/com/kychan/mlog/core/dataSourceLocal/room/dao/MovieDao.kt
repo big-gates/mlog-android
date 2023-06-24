@@ -22,7 +22,7 @@ abstract class MovieDao {
         WHERE wp.watch_provider_id = :movieTypeId
         ORDER BY wp.rank ASC
     """)
-    abstract fun getMovie(movieTypeId: Int): PagingSource<Int, MovieVo>
+    abstract fun getMovie(movieTypeId: Int): PagingSource<Int, MovieVO>
 
     @Query("""
         DELETE 

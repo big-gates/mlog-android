@@ -4,7 +4,7 @@ import androidx.room.*
 import com.kychan.mlog.core.model.Movie
 import com.kychan.mlog.core.model.WatchProvider
 
-data class MovieVo(
+data class MovieVO(
     @Embedded val movie: MovieEntity,
     @Relation(
         parentColumn = "id",
@@ -18,7 +18,7 @@ data class MovieVo(
     val tags: List<TagEntity>
 )
 
-fun MovieVo.toDomain() = Movie(
+fun MovieVO.toDomain() = Movie(
     id = movie.id,
     adult = movie.adult,
     backdropPath = movie.backdropPath,

@@ -8,7 +8,7 @@ import com.kychan.mlog.core.common.extenstions.toDate
 import com.kychan.mlog.core.data.mapper.genres
 import com.kychan.mlog.core.data.mapper.toMovieEntity
 import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
-import com.kychan.mlog.core.dataSourceLocal.room.model.MovieVo
+import com.kychan.mlog.core.dataSourceLocal.room.model.MovieVO
 import com.kychan.mlog.core.dataSourceLocal.room.model.SyncLogType
 import com.kychan.mlog.core.dataSourceRemote.http.datasource.TMDBDataSource
 import com.kychan.mlog.core.model.Language
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
 class MLogMovieMediator(
     private val roomDataSource: RoomDataSource,
     private val tmdbDataSource: TMDBDataSource,
-    ):RemoteMediator<Int, MovieVo>() {
+    ):RemoteMediator<Int, MovieVO>() {
 
     companion object{
         const val END_PAGE = 500
@@ -36,7 +36,7 @@ class MLogMovieMediator(
     }
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, MovieVo>
+        state: PagingState<Int, MovieVO>
     ): MediatorResult {
         try {
             val syncLog = roomDataSource.getSyncLog(SyncLogType.Mlog_Movie)

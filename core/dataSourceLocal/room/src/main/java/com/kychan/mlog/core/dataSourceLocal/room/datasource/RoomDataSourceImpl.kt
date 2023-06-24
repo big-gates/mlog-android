@@ -12,7 +12,7 @@ class RoomDataSourceImpl @Inject constructor(
     private val searchDao: SearchDao,
 ): RoomDataSource {
 
-    override fun getMovie(movieTypeId: Int): PagingSource<Int, MovieVo> {
+    override fun getMovie(movieTypeId: Int): PagingSource<Int, MovieVO> {
         return movieDao.getMovie(movieTypeId)
     }
 
