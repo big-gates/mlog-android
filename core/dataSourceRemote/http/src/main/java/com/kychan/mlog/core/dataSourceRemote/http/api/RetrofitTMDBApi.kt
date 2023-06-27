@@ -15,7 +15,7 @@ interface RetrofitTMDBApi {
         @Query("page") page: Int,
         @Query("language") language: Language,
         @Query("watch_region") watchRegion: WatchRegion,
-        @Query("with_watch_providers") withWatchProvider: WatchProvider
+        @Query("with_watch_providers") withWatchProvider: Int
     ): MovieDiscoverRes
 
     @GET("/3/movie/popular")

@@ -8,7 +8,6 @@ data class MyMovie(
     val posterPath: String,
     val title: String,
     val voteAverage: Double,
-    val watchProviders: WatchProvider,
     val rank: Int,
 )
 

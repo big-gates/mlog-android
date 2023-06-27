@@ -14,7 +14,7 @@ data class MovieDiscoverRes(
 @Serializable
 data class MovieDiscover(
     val adult: Boolean,
-    @SerialName("backdrop_path") val backdropPath: String,
+    @SerialName("backdrop_path") val backdropPath: String?,
     @SerialName("genre_ids") val genreIds: List<Int>,
     val id: Int,
     @SerialName("original_language") val originalLanguage: String,

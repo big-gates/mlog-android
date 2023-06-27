@@ -27,7 +27,6 @@ class SearchMovieMediator(
             )
             LoadResult.Page(
                 data = response.toModel(
-                    page = nextPageNumber,
                     filters = listOf(MediaType.MOVIE, MediaType.TV)
                 ),
                 prevKey = null,

@@ -7,6 +7,7 @@ import androidx.paging.map
 import com.kychan.mlog.core.domain.observe.ObserveMlogMovie
 import com.kychan.mlog.core.domain.observe.ObserveNetflixMovie
 import com.kychan.mlog.core.domain.observe.ObserveWatchaMovie
+import com.kychan.mlog.core.model.WatchProvider
 import com.kychan.mlog.feature.home.model.MovieItem
 import com.kychan.mlog.feature.home.model.toView
 import com.kychan.mlog.feature.movie_modal.MovieModalBottomSheetViewModel
@@ -27,7 +28,7 @@ class HomeViewModel @Inject constructor(
     val mLogMovieItem: StateFlow<PagingData<MovieItem>> = observeMlogMovie()
         .map { paging ->
             paging.map { movie ->
-                movie.toView(posterSize = POSTER_SIZE)
+                movie.toView(posterSize = POSTER_SIZE, watchProviderId = WatchProvider.MLOG_ID)
             }
         }
         .cachedIn(viewModelScope)
@@ -40,7 +41,7 @@ class HomeViewModel @Inject constructor(
     val netflixMovieItem: StateFlow<PagingData<MovieItem>> = observeNetflixMovie()
         .map { paging ->
             paging.map { movie ->
-                movie.toView(posterSize = POSTER_SIZE)
+                movie.toView(posterSize = POSTER_SIZE, watchProviderId = WatchProvider.NETFLIX_ID)
             }
         }
         .cachedIn(viewModelScope)
@@ -53,7 +54,7 @@ class HomeViewModel @Inject constructor(
     val watchaMovieitem: StateFlow<PagingData<MovieItem>> = observeWatchaMovie()
         .map { paging ->
             paging.map { movie ->
-                movie.toView(posterSize = POSTER_SIZE)
+                movie.toView(posterSize = POSTER_SIZE, watchProviderId = WatchProvider.WATCHA_ID)
             }
         }
         .cachedIn(viewModelScope)

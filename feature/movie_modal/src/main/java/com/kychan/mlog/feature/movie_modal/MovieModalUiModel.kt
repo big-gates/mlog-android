@@ -24,7 +24,6 @@ data class MovieModalUiModel(
         posterPath = this.backgroundImage,
         title = this.title,
         voteAverage = 3.0,
-        watchProviders = WatchProvider.None,
         rank = 1,
     )
 

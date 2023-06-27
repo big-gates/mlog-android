@@ -3,7 +3,6 @@ package com.kychan.mlog.feature.movie_detail
 import com.kychan.mlog.core.model.Genre2
 import com.kychan.mlog.core.model.MovieDetail
 import com.kychan.mlog.core.model.MyMovie
-import com.kychan.mlog.core.model.WatchProvider
 
 data class MovieDetailUiModel(
     val id: Int,
@@ -35,7 +34,6 @@ fun MovieDetailUiModel.toMyMovie() = MyMovie(
     posterPath = this.posterPath.orEmpty(),
     title = this.title,
     voteAverage = 0.0,
-    watchProviders = WatchProvider.None,
     rank = 0,
 )
 

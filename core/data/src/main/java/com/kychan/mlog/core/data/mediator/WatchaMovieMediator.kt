@@ -5,10 +5,11 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.kychan.mlog.core.common.extenstions.toDate
-import com.kychan.mlog.core.data.mapper.toWatchaMovieEntity
+import com.kychan.mlog.core.data.mapper.genres
+import com.kychan.mlog.core.data.mapper.toMovieEntity
 import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
+import com.kychan.mlog.core.dataSourceLocal.room.model.MovieVO
 import com.kychan.mlog.core.dataSourceLocal.room.model.SyncLogType
-import com.kychan.mlog.core.dataSourceLocal.room.model.WatchaMovieEntity
 import com.kychan.mlog.core.dataSourceRemote.http.datasource.TMDBDataSource
 import com.kychan.mlog.core.model.Language
 import com.kychan.mlog.core.model.WatchProvider
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit
 class WatchaMovieMediator(
     private val roomDataSource: RoomDataSource,
     private val tmdbDataSource: TMDBDataSource,
-):RemoteMediator<Int, WatchaMovieEntity>() {
+):RemoteMediator<Int, MovieVO>() {
 
     companion object{
         const val END_PAGE = 500
@@ -37,7 +38,7 @@ class WatchaMovieMediator(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, WatchaMovieEntity>
+        state: PagingState<Int, MovieVO>
     ): MediatorResult {
         try {
             val syncLog = roomDataSource.getSyncLog(SyncLogType.Watcha_Movie)
@@ -53,12 +54,14 @@ class WatchaMovieMediator(
                 page = loadKey,
                 language = Language.KR,
                 watchRegion = WatchRegion.KR,
-                withWatchProvider = WatchProvider.Watcha
-            ).toWatchaMovieEntity(loadKey)
+                withWatchProviderId = WatchProvider.WATCHA_ID
+            )
 
-            roomDataSource.updateWatchaMoviesAndSyncLogNextKey(
-                movieEntities = data,
-                nextKey = loadKey + 1,
+            roomDataSource.updateMoviesAndSyncLogNextKey(
+                movieEntities = data.toMovieEntity(),
+                genres = data.genres(),
+                currentKey = loadKey,
+                syncLogType = syncLog.type
             )
             return MediatorResult.Success(endOfPaginationReached = loadKey + 1 > END_PAGE)
         }catch (e: Exception){

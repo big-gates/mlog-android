@@ -11,16 +11,9 @@ class RoomDataSourceImpl @Inject constructor(
     private val movieDao: MovieDao,
     private val searchDao: SearchDao,
 ): RoomDataSource {
-    override fun getMLogMovie(): PagingSource<Int, MlogMovieEntity> {
-        return movieDao.getMlogMovie()
-    }
 
-    override fun getNetflixMovie(): PagingSource<Int, NetflixMovieEntity> {
-        return movieDao.getNetflixMovie()
-    }
-
-    override fun getWatchaMovie(): PagingSource<Int, WatchaMovieEntity> {
-        return movieDao.getWatchaMovie()
+    override fun getMovie(movieTypeId: Int): PagingSource<Int, MovieVO> {
+        return movieDao.getMovie(movieTypeId)
     }
 
     override suspend fun clearMlogMoviesUpdateSyncLogUpdatedAt() {
@@ -39,25 +32,18 @@ class RoomDataSourceImpl @Inject constructor(
         return movieDao.getSyncLog(syncLogType)
     }
 
-    override suspend fun updateMlogMoviesAndSyncLogNextKey(
-        movieEntities: List<MlogMovieEntity>,
-        nextKey: Int,
+    override suspend fun updateMoviesAndSyncLogNextKey(
+        movieEntities: List<MovieEntity>,
+        genres: List<List<Int>>,
+        syncLogType: SyncLogType,
+        currentKey: Int
     ) {
-        movieDao.updateMlogMoviesAndSyncLogNextKey(movieEntities, nextKey)
-    }
-
-    override suspend fun updateNetflixMoviesAndSyncLogNextKey(
-        movieEntities: List<NetflixMovieEntity>,
-        nextKey: Int,
-    ) {
-        movieDao.updateNetflixMoviesAndSyncLogNextKey(movieEntities,nextKey)
-    }
-
-    override suspend fun updateWatchaMoviesAndSyncLogNextKey(
-        movieEntities: List<WatchaMovieEntity>,
-        nextKey: Int,
-    ) {
-        movieDao.updateWatchaMoviesAndSyncLogNextKey(movieEntities,nextKey)
+        movieDao.updateMoviesAndSyncLogNextKey(
+            movieEntities,
+            genres,
+            syncLogType,
+            currentKey
+        )
     }
 
     override suspend fun updateRecentSearch(recentSearchEntity: RecentSearchEntity) {
