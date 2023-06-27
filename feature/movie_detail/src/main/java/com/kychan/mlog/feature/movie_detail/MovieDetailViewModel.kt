@@ -3,6 +3,7 @@ package com.kychan.mlog.feature.movie_detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kychan.mlog.core.common.extenstions.toDateTimeFormat
 import com.kychan.mlog.core.domain.observe.ObserveMovieDetail
 import com.kychan.mlog.core.domain.observe.ObserveMyMovieRatedAndWanted
 import com.kychan.mlog.core.domain.usecase.DeleteMyWantMovie
@@ -67,7 +68,7 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             insertMyWantMovie.invoke(
                 myMovie = uiModel.value.toMyMovie(),
-                wantToWatch = WantToWatch(uiModel.value.id, uiModel.value.id)
+                wantToWatch = WantToWatch(uiModel.value.id, uiModel.value.id, System.currentTimeMillis().toDateTimeFormat())
             )
         }
     }
@@ -75,7 +76,7 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             deleteMyWantMovie.invoke(
                 myMovie = uiModel.value.toMyMovie(),
-                wantToWatch = WantToWatch(uiModel.value.id, uiModel.value.id)
+                wantToWatch = WantToWatch(uiModel.value.id, uiModel.value.id, System.currentTimeMillis().toDateTimeFormat())
             )
         }
     }

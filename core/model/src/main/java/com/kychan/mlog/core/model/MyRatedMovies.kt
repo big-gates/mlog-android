@@ -11,4 +11,5 @@ data class MyRatedMovies(
     val rank: Int,
     val rated: Float,
     val comment: String,
+    val createdAt: String,
 )

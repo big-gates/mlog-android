@@ -1,7 +1,7 @@
 package com.kychan.mlog.feature.mypage.model
 
-import com.kychan.mlog.core.model.MyMovie
 import com.kychan.mlog.core.model.MyRatedMovies
+import com.kychan.mlog.core.model.MyWantToWatchMovie
 import com.kychan.mlog.core.model.WatchProvider
 
 data class MyMovieItem(
@@ -15,6 +15,7 @@ data class MyMovieItem(
     val rank: Int,
     val rated: Float,
     val comment: String,
+    val createdAt: String,
 ) {
     companion object {
         fun of(myRatedMovie: MyRatedMovies): MyMovieItem {
@@ -29,21 +30,23 @@ data class MyMovieItem(
                 rank = myRatedMovie.rank,
                 rated = myRatedMovie.rated,
                 comment = myRatedMovie.comment,
+                createdAt = myRatedMovie.createdAt,
             )
         }
 
-        fun of(myMovie: MyMovie): MyMovieItem {
+        fun of(myWTWMovie: MyWantToWatchMovie): MyMovieItem {
             return MyMovieItem(
-                myMovieId = myMovie.id,
-                adult = myMovie.adult,
-                backdropPath = myMovie.backdropPath,
-                originalTitle = myMovie.originalTitle,
-                posterPath = myMovie.posterPath,
-                title = myMovie.title,
-                voteAverage = myMovie.voteAverage,
-                rank = myMovie.rank,
+                myMovieId = myWTWMovie.myMovie.id,
+                adult = myWTWMovie.myMovie.adult,
+                backdropPath = myWTWMovie.myMovie.backdropPath,
+                originalTitle = myWTWMovie.myMovie.originalTitle,
+                posterPath = myWTWMovie.myMovie.posterPath,
+                title = myWTWMovie.myMovie.title,
+                voteAverage = myWTWMovie.myMovie.voteAverage,
+                rank = myWTWMovie.myMovie.rank,
                 rated = 0.0f,
                 comment = "",
+                createdAt = myWTWMovie.wantToWatch.createAt,
             )
         }
     }

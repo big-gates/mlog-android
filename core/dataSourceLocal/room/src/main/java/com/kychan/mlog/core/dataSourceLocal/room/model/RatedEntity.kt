@@ -1,6 +1,7 @@
 package com.kychan.mlog.core.dataSourceLocal.room.model
 
 import androidx.room.*
+import com.kychan.mlog.core.common.extenstions.toDateTimeFormat
 import com.kychan.mlog.core.model.Rated
 
 @Entity(
@@ -22,6 +23,8 @@ data class RatedEntity(
     val myMovieId: Int,
     val rated: Float,
     val comment: String,
+    @ColumnInfo("created_at")
+    val createdAt: String = System.currentTimeMillis().toDateTimeFormat(),
 ) {
     fun toDomain() = Rated(
         id = id,

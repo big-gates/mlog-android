@@ -18,6 +18,7 @@ abstract class MyMovieDao {
             , m.rank
             , r.rated
             , r.comment
+            , r.created_at
             FROM my_movie AS m
             INNER JOIN rated AS r ON m.id = r.my_movie_id
         """
@@ -25,7 +26,7 @@ abstract class MyMovieDao {
     abstract fun getMyRatedMovies(): Flow<List<MyRatedMoviesVO>>
 
     @Query("SELECT * FROM my_movie AS m INNER JOIN want_to_watches AS w ON m.id = w.my_movie_id")
-    abstract fun getMyWantToWatchMovies(): Flow<List<MyMovieEntity>>
+    abstract fun getMyWantToWatchMovies(): Flow<List<MyWantToWatchMovieVO>>
 
     @Transaction
     open suspend fun updateMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity) {
@@ -33,7 +34,9 @@ abstract class MyMovieDao {
         if (ratedEntity.rated < 0f) { // rate : 사용자가 0 입력 시 -1로 저장 후 삭제 로직 실행
             deleteMyRatedMovie(myMovieEntity, ratedEntity)
         } else (
-            upsertRatedMovie(ratedEntity)
+            existToMyRatedMovie(myMovieEntity.id)?.let {
+                upsertRatedMovie(ratedEntity.copy(createdAt = it.createdAt))
+            } ?: upsertRatedMovie(ratedEntity)
         )
     }
 

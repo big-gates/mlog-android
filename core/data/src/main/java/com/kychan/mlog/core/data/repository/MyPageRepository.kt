@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface MyPageRepository {
     fun getMyRatedMovies(): Flow<List<MyRatedMovies>>
 
-    fun getMyWantToWatchMovies(): Flow<List<MyMovie>>
+    fun getMyWantToWatchMovies(): Flow<List<MyWantToWatchMovie>>
 
     suspend fun updateMyRatedMovie(myMovie: MyMovie, rated: Rated)
 
