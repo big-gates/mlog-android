@@ -66,7 +66,7 @@ fun HomeDetailRoute(
                                     id = item.id,
                                     title = item.title,
                                     adult = item.adult,
-                                    backgroundImage = item.image,
+                                    backgroundImage = item.posterPath,
                                 )
                             )
                             modalSheetState.show()
