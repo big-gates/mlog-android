@@ -135,12 +135,12 @@ fun PhotoGrid(
             AsyncImage(
                 modifier = Modifier
                     .aspectRatio(0.667f)
-                    .background(color = Color.Green)
                     .clickable {
                         onClick(photos[index])
                     },
                 model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${photos[index].posterPath}",
-                contentDescription = "my_movie_image"
+                contentDescription = "my_movie_image",
+                contentScale = ContentScale.FillHeight,
             )
         }
     }
