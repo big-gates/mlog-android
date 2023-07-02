@@ -39,7 +39,10 @@ fun MyPageAppBar() {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "보관함")
+            Text(
+                text = "보관함",
+                color = MaterialTheme.colors.onBackground,
+            )
         }
     }
 }
