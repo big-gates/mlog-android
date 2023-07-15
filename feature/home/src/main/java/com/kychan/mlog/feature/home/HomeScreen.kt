@@ -115,14 +115,12 @@ fun HomeRoute(
         ),
         action = action,
         onClickMovieItem = { item ->
-            viewModel.setModalItem(
-                MovieModalUiModel(
-                    id = item.id,
-                    title = item.title,
-                    adult = false,
-                    backgroundImage = item.posterPath,
-                )
-            )
+            viewModel.setModalItem(MovieModalUiModel(
+                id = item.id,
+                title = item.title,
+                adult = false,
+                backgroundImage = item.image,
+            ))
         },
         navigateToHomeDetail = navigateToHomeDetail,
         navigateToSearch = navigateToSearch,

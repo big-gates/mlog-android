@@ -42,8 +42,8 @@ data class MovieDetailRes(
 data class BelongsToCollection(
     @SerialName("id") val id: Int,
     @SerialName("name") val name: String,
-    @SerialName("poster_path") val posterPath: String?,
-    @SerialName("backdrop_path") val backdropPath: String?,
+    @SerialName("poster_path") val posterPath: String,
+    @SerialName("backdrop_path") val backdropPath: String,
 )
 
 fun MovieDetailRes.toDomain() = MovieDetail(

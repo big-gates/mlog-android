@@ -93,7 +93,7 @@ fun SearchRouter(
                                     id = item.id,
                                     title = item.title,
                                     adult = item.adult,
-                                    backgroundImage = item.posterPath,
+                                    backgroundImage = item.image,
                                 )
                             )
                             modalSheetState.show()

@@ -5,7 +5,6 @@ import com.kychan.mlog.feature.search.BuildConfig
 
 data class MovieItem(
     val id: Int,
-    val posterPath: String,
     val image: String,
     val title: String,
     val adult: Boolean,
@@ -13,7 +12,6 @@ data class MovieItem(
 
 fun Movie.toView(posterSize: String) = MovieItem(
     id = id,
-    posterPath = posterPath,
     image = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}${posterSize}/${posterPath}",
     title = title,
     adult = adult,

@@ -19,7 +19,6 @@ data class Header(
 
 data class MovieItem(
     val id: Int,
-    val posterPath: String,
     val image: String,
     val rank: String,
     val rating: Float,
@@ -35,7 +34,6 @@ fun Movie.toView(
     isReverse: Boolean = false,
 ) = MovieItem(
     id = id,
-    posterPath = posterPath,
     image = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}${posterSize}/${posterPath}",
     rank = "$rank",
     rating = voteAverage.roundToTheFirstDecimal().toFloat(),

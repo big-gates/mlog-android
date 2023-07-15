@@ -34,7 +34,7 @@ fun MovieDetailScreen(
                 .fillMaxWidth()
                 .align(Alignment.TopStart),
             contentScale = ContentScale.FillHeight,
-            model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w500${uiModel.posterPath}",//
+            model = "${BuildConfig.THE_MOVIE_DB_IMAGE_URL}w342${uiModel.posterPath}",
             contentDescription = "movie_detail_image"
         )
         Column {
