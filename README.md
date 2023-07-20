@@ -48,6 +48,10 @@ Mlog(Movie Log)는 영화를 검색하여 자신이 본 영화를 기록하는 �
 - Firebase
 - Coil
 
+**Member**
+- [ko0chan](https://github.com/ko0chan)
+- [khm0651](https://github.com/khm0651)
+
 <!-- 
 # ToDo
 - 자체적인 알람 기능 구현.
@@ -57,4 +61,5 @@ Mlog(Movie Log)는 영화를 검색하여 자신이 본 영화를 기록하는 �
 
 
 # WireFrame
+<img src="https://github.com/big-gates/mlog-android/assets/58040559/a8cc4e56-3566-498d-9291-402f57a47c6e">
 
