@@ -13,22 +13,29 @@ Mlog(Movie Log)는 영화를 검색하여 자신이 본 영화를 기록하는 �
 내가 봤던 영화들이 기억나지 않을 때,
 간단하게 찾아볼 수 있습니다.
 
-- 개발 기간 : 2021.03 ~ 2021.05
+- 개발 기간 : 2021.11 ~ 현재
 
 # About
 
 **Technology Stack**
 
-- Tools : Android Studio 4.1
+- Tools : Android Studio Flamingo | 2022.2.1 Patch 1
 - Language : Kotlin
 - DI : Hilt
-- Architecture Pattern : MVVM Pattern
-- Android Architecture Components(AAC)
-  - LiveData
-  - ViewModel
-  - DataBinding
-  - Paging2
-
+- Network : Retrofit2 + okHttp4
+- Architecture Pattern : Multi Module + Clean Architecture + MVVM
+- Android JetPack
+  - Compose
+  - material
+  - foundation
+  - Android Architecture Components(AAC)
+    - LiveData
+    - ViewModel
+    - Room
+    - Paging3
+    - DataBinding
+    - Navigation
+- kotlinx-coroutines
 
 **Library**
 
@@ -38,6 +45,8 @@ Mlog(Movie Log)는 영화를 검색하여 자신이 본 영화를 기록하는 �
 - [Hilt](https://developer.android.com/jetpack/androidx/releases/hilt)
 - [Room](https://developer.android.com/jetpack/androidx/releases/room)
 - [Paging2](https://developer.android.com/jetpack/androidx/releases/paging#version_212_3)
+- Firebase
+- Coil
 
 <!-- 
 # ToDo
