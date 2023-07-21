@@ -23,7 +23,7 @@ Mlog(Movie Log)는 영화를 검색하여 자신이 본 영화를 기록하는 �
 - Language : Kotlin
 - DI : Hilt
 - Network : Retrofit2 + okHttp4
-- Architecture Pattern : Multi Module + Clean Architecture + MVVM
+- Architecture : MVVM + Multi Module + [Android Recommended Architecture](https://developer.android.com/topic/architecture?hl=ko#recommended-app-arch)
 - Android JetPack
   - Compose
   - material
@@ -60,6 +60,6 @@ Mlog(Movie Log)는 영화를 검색하여 자신이 본 영화를 기록하는 �
 - 네트워크 상태  -->
 
 
-# WireFrame
+# Architecture Diagram
 <img src="https://github.com/big-gates/mlog-android/assets/58040559/a8cc4e56-3566-498d-9291-402f57a47c6e">
 
