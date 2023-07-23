@@ -1,9 +1,11 @@
 package com.kychan.mlog.core.design.component
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -14,12 +16,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -27,7 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,6 +36,11 @@ import com.gowtham.ratingbar.RatingBarStyle
 import com.gowtham.ratingbar.StepSize
 import com.kychan.mlog.core.design.theme.AlphaBlack80
 import com.kychan.mlog.core.design.theme.Gray600
+import com.kychan.mlog.core.design.theme.Gray800
+import com.kychan.mlog.core.design.theme.Pink500
+import com.kychan.mlog.core.design.theme.Purple200
+import com.kychan.mlog.core.design.theme.Purple500
+import com.kychan.mlog.core.design.theme.Purple700
 import com.kychan.mlog.core.design.theme.White
 import com.kychan.mlog.core.designsystem.R
 import kotlinx.coroutines.delay
@@ -55,6 +59,7 @@ fun MovieInfoHeader(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 8.dp, end = 8.dp, top = 65.dp)
+            .clip(RoundedCornerShape(10.dp))
             .background(AlphaBlack80)
             .padding(horizontal = 10.dp, vertical = 12.dp),
     ) {
@@ -128,6 +133,7 @@ fun MovieInfoRated(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 8.dp, end = 8.dp, top = 41.dp)
+            .clip(RoundedCornerShape(10.dp))
             .background(AlphaBlack80)
             .padding(horizontal = 10.dp, vertical = 12.dp),
     ) {
@@ -213,6 +219,7 @@ fun MovieInfoStoryAndTags(
         modifier = Modifier
             .fillMaxSize()
             .padding(start = 8.dp, end = 8.dp, top = 41.dp)
+            .clip(RoundedCornerShape(10.dp))
             .background(AlphaBlack80)
             .padding(start = 11.dp, end = 18.dp, top = 20.dp),
     ) {
@@ -238,7 +245,13 @@ fun MovieInfoStoryAndTags(
             )
             Spacer(modifier = Modifier.weight(1f))
             MovieInfoDirect(directer, releaseDate)
-            MovieInfoTags(tags)
+            MovieInfoTags(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 20.dp, horizontal = 10.dp)
+                    .clip(RoundedCornerShape(10.dp)),
+                tags = tags
+            )
         }
     }
 }
@@ -275,21 +288,16 @@ fun MovieInfoDirect(
 
 @Composable
 fun MovieInfoTags(
+    modifier: Modifier = Modifier,
     tags: List<String>,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp, start = 8.dp, end = 7.dp)
-            .background(AlphaBlack80)
-            .padding(horizontal = 11.dp, vertical = 9.dp)
+    LazyRow(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        for (tagName in tags) {
-            MovieTag(tagName = tagName, size = 42.dp)
-            Divider(
-                color = Color.Transparent,
-                modifier = Modifier.width(13.dp)
-            )
+        items(tags){
+            MovieTag(tagName = it)
+            Spacer(modifier = Modifier.width(13.dp))
         }
     }
 }
@@ -298,42 +306,24 @@ fun MovieInfoTags(
 @Composable
 fun MovieTag(
     tagName: String,
-    rotate: Float = -45f,
-    size: Dp = 60.dp,
     fontSize: TextUnit = 10.sp,
     fontWeight: FontWeight = FontWeight.Bold,
     overflow: TextOverflow = TextOverflow.Ellipsis,
 ) {
-    val widthRatio = 0.64
-    val heightRatio = 0.5
-    val offsetRatio = 0.07
+    val colors = listOf(Purple200, Pink500, Purple500, Gray800, Purple700)
 
-    Box(
-        modifier = Modifier.rotate(rotate),
-        contentAlignment = Alignment.Center
-    ) {
-        Image(
-            modifier = Modifier
-                .size(size)
-                .scale(1.4f),
-            contentScale = ContentScale.Fit,
-            painter = painterResource(R.drawable.tag),
-            contentDescription = "",
-        )
-        Text(
-            modifier = Modifier
-                .widthIn(max = (size.value * widthRatio).dp)
-                .heightIn(max = (size.value * heightRatio).dp)
-                .offset(-(size.value * offsetRatio).dp, (0).dp)
-                .align(Alignment.Center),
-            textAlign = TextAlign.Center,
-            text = if (tagName.length >= 5) tagName.breakDown(2) else tagName,
-            fontSize = fontSize,
-            fontWeight = fontWeight,
-            overflow = overflow,
-            color = White
-        )
-    }
+    Text(
+        modifier = Modifier
+            .clip(RoundedCornerShape(5.dp))
+            .background(colors[(0..3).random()])
+            .padding(vertical = 5.dp, horizontal = 15.dp),
+        textAlign = TextAlign.Center,
+        text = if (tagName.length >= 5) tagName.breakDown(2) else tagName,
+        fontSize = fontSize,
+        fontWeight = fontWeight,
+        overflow = overflow,
+        color = White
+    )
 }
 
 private fun String.breakDown(breakDownIndex: Int) = "${this.substring(0, breakDownIndex)}\n${this.substring(breakDownIndex)}"

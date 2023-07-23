@@ -2,6 +2,7 @@ package com.kychan.mlog.feature.movie_modal
 
 import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -10,6 +11,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
@@ -18,8 +20,8 @@ import coil.compose.AsyncImage
 import com.kychan.mlog.core.design.component.MovieInfoHeader
 import com.kychan.mlog.core.design.component.MovieInfoRated
 import com.kychan.mlog.core.design.component.MovieInfoTags
+import com.kychan.mlog.core.design.theme.AlphaBlack80
 import com.kychan.mlog.core.designsystem.BuildConfig
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -97,7 +99,13 @@ fun MovieModalBottomSheetLayout(
                 focusManager = focusManager,
             )
             MovieInfoTags(
-                tags = listOf("드라마")
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp, start = 8.dp, end = 7.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(AlphaBlack80)
+                    .padding(horizontal = 11.dp, vertical = 9.dp),
+                tags = movieModalUiState.movieModalUiModel.genres
             )
         }
     }
