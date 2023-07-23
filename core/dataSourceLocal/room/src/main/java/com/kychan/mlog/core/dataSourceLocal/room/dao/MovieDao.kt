@@ -61,7 +61,7 @@ abstract class MovieDao {
     abstract suspend fun upsertMovies(entities: List<MovieEntity>)
 
     @Upsert
-    abstract suspend fun upsertTags(entities: List<TagEntity>)
+    abstract suspend fun upsertTags(entities: List<GenresEntity>)
 
     @Upsert
     abstract suspend fun upsertWatchProviders(entities: List<WatchProviderEntity>)
@@ -113,10 +113,10 @@ abstract class MovieDao {
         currentKey: Int,
     ){
         upsertMovies(movieEntities)
-        val tagEntities = movieEntities.map { movie ->
-            genres.map { genreIds ->
-                genreIds.map { TagEntity(it, movie.id) }
-            }.flatten()
+        val tagEntities = movieEntities.mapIndexed { index, movie ->
+            genres[index].map {
+                GenresEntity(genreId = it, movieId = movie.id)
+            }
         }.flatten()
 
         val watchProviderEntities = movieEntities.mapIndexed { index, movie ->

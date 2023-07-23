@@ -121,6 +121,7 @@ fun HomeRoute(
                     title = item.title,
                     adult = false,
                     backgroundImage = item.posterPath,
+                    genres = item.genres,
                 )
             )
         },
