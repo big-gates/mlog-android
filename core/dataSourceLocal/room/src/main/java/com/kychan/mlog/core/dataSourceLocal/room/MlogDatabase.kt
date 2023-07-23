@@ -15,7 +15,7 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.*
         MyMovieEntity::class,
         RatedEntity::class,
         WantToWatchesEntity::class,
-        TagEntity::class,
+        GenresEntity::class,
         WatchProviderEntity::class,
         SyncLogEntity::class,
         RecentSearchEntity::class,

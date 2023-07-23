@@ -1,6 +1,6 @@
 package com.kychan.mlog.core.model
 
-enum class Genre(val id: List<Int>,val kr: String, val en: String) {
+enum class Genre(val ids: List<Int>, val kr: String, val en: String) {
     Action(listOf(28,10759),"액션", "Action"),
     Adventure(listOf(12,10759),"모험","Adventure"),
     Comedy(listOf(35),"코미디","Comedy"),

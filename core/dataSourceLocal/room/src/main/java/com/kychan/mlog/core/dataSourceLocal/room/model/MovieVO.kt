@@ -15,7 +15,7 @@ data class MovieVO(
         parentColumn = "id",
         entityColumn = "movie_id"
     )
-    val tags: List<TagEntity>
+    val tags: List<GenresEntity>
 )
 
 fun MovieVO.toDomain() = Movie(
@@ -29,4 +29,5 @@ fun MovieVO.toDomain() = Movie(
     watchProvider = watchProviders.map {
         WatchProvider(id = it.watchProviderId, rank = it.rank)
     },
+    genres = tags.toGenres()
 )

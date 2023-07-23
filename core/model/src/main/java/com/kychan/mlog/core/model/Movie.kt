@@ -9,4 +9,5 @@ data class Movie(
     val title: String,
     val voteAverage: Double,
     val watchProvider: List<WatchProvider>,
+    val genres: List<Genre>
 )

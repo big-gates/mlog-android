@@ -3,10 +3,10 @@ package com.kychan.mlog.core.data.mapper
 import com.kychan.mlog.core.common.extenstions.toDateTimeFormat
 import com.kychan.mlog.core.dataSourceLocal.room.model.MovieEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.RecentSearchEntity
-import com.kychan.mlog.core.dataSourceLocal.room.model.TagEntity
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MoviePopularRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieSearchRes
+import com.kychan.mlog.core.model.Genre
 import com.kychan.mlog.core.model.MediaType
 import com.kychan.mlog.core.model.Movie
 import com.kychan.mlog.core.model.toMediaType
@@ -43,12 +43,6 @@ fun MoviePopularRes.genres(): List<List<Int>> = this.results.map { movie ->
     movie.genreIds
 }
 
-fun MoviePopularRes.toTagEntity(movieId: Int): List<TagEntity> = this.results.map { movie ->
-    movie.genreIds.map { genreId ->
-        TagEntity(genreId, movieId)
-    }
-}.flatten()
-
 internal fun String.toRecentSearchEntity(): RecentSearchEntity =
     RecentSearchEntity(
         text = this,
@@ -71,6 +65,9 @@ fun MovieSearchRes.toModel(
             posterPath = movieSearch.posterPath?: "",
             title = movieSearch.title?: "",
             voteAverage = movieSearch.voteAverage?: 0.0,
-            watchProvider = listOf()
+            watchProvider = listOf(),
+            genres = movieSearch.genreIds?.map { genreId ->
+                Genre.values().filter { genre -> genreId in genre.ids }
+            }?.flatten() ?: listOf()
         )
     }

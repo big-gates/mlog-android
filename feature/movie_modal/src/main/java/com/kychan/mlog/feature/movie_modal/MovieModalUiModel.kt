@@ -4,7 +4,6 @@ import com.kychan.mlog.core.common.extenstions.toDateTimeFormat
 import com.kychan.mlog.core.model.MyMovie
 import com.kychan.mlog.core.model.Rated
 import com.kychan.mlog.core.model.WantToWatch
-import com.kychan.mlog.core.model.WatchProvider
 
 data class MovieModalUiModel(
     val id: Int = -1,
@@ -14,7 +13,7 @@ data class MovieModalUiModel(
     val isLike: Boolean = false,
     val comment: String = "",
     val rate: Float = 0f,
-    val tags: List<String> = emptyList(),
+    val genres: List<String> = emptyList(),
 ) {
     fun toMyMovie() = MyMovie(
         id = this.id,

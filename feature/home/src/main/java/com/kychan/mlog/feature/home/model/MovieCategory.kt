@@ -25,6 +25,7 @@ data class MovieItem(
     val rating: Float,
     val title: String,
     val adult: Boolean,
+    val genres: List<String>,
     override val isRowDynamic: Boolean = false,
     override val isReverse: Boolean = false
 ): DynamicGridItem
@@ -41,6 +42,7 @@ fun Movie.toView(
     rating = voteAverage.roundToTheFirstDecimal().toFloat(),
     title = title,
     adult = adult,
+    genres = genres.map { it.kr },
     isRowDynamic = watchProvider.find { it.id == watchProviderId }?.rank?.rem(DynamicGridComponent.DEFAULT_ROW_DYNAMIC_INDEX) == 0,
     isReverse = isReverse
 )
