@@ -249,7 +249,7 @@ fun MovieInfoStoryAndTags(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 20.dp, horizontal = 10.dp)
-                    .clip(RoundedCornerShape(10.dp)),
+                ,
                 tags = tags
             )
         }
