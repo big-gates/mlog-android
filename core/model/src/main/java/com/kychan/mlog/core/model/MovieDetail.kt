@@ -22,7 +22,7 @@ data class MovieDetail(
 //    val productionCompanies: List<ProductionCompany>,
 //    val productionCountries: List<ProductionCountry>,
     val releaseDate: String, //format: date
-    val revenue: Int,
+    val revenue: Long,
     val runtime: Int?,
 //    val spokenLanguages: List<SpokenLanguage>,
     val status: String,
