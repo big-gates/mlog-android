@@ -94,6 +94,7 @@ fun SearchRouter(
                                     title = item.title,
                                     adult = item.adult,
                                     backgroundImage = item.posterPath,
+                                    genres = item.genres.map { it.kr }
                                 )
                             )
                             modalSheetState.show()
@@ -140,8 +141,9 @@ fun SearchScreen(
             deleteAll = viewModel::deleteAll,
             delete = viewModel::delete,
             onItemClick = viewModel::updateSearchText,
-            onImageClick = onImageClick
-        ) { keyboardController?.hide() }
+            onImageClick = onImageClick,
+            keyboardHide = { keyboardController?.hide() }
+        )
     }
 }
 

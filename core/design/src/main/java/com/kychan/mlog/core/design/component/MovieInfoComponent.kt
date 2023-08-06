@@ -237,7 +237,7 @@ fun MovieInfoStoryAndTags(
             Text(
                 modifier = Modifier
                     .padding(top = 17.dp, end = 38.dp),
-                text = story,
+                text = story.ifEmpty { "해당 영화는 한국어 번역이 지원 되지 않습니다." },
                 color = White,
                 fontSize = 14.sp,
                 maxLines = 6,
@@ -267,17 +267,21 @@ fun MovieInfoDirect(
             .padding(top = 5.dp),
         horizontalAlignment = Alignment.End,
     ) {
-        Text(
-            text = "감독 : $directer",
-            color = White,
-            fontSize = 14.sp,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis,
-        )
+        /**
+         * detail api에서 감독 정보가 없음
+         * 추 후 감독 정보 불러오기 추가
+         */
+//        Text(
+//            text = "감독 : $directer",
+//            color = White,
+//            fontSize = 14.sp,
+//            maxLines = 2,
+//            overflow = TextOverflow.Ellipsis,
+//        )
 
         Text(
             modifier = Modifier.padding(top = 11.dp),
-            text = releaseDate,
+            text = "개봉일자 : $releaseDate",
             color = White,
             fontSize = 14.sp,
             maxLines = 2,
