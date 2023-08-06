@@ -27,7 +27,7 @@ class SearchMovieMediator(
             )
             LoadResult.Page(
                 data = response.toModel(
-                    filters = listOf(MediaType.MOVIE, MediaType.TV)
+                    filters = listOf(MediaType.MOVIE)
                 ),
                 prevKey = null,
                 nextKey = if(response.results.isEmpty()) null else response.page + 1
