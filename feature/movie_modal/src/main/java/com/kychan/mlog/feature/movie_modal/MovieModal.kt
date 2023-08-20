@@ -105,7 +105,7 @@ fun MovieModalBottomSheetLayout(
                     .clip(RoundedCornerShape(10.dp))
                     .background(AlphaBlack80)
                     .padding(horizontal = 11.dp, vertical = 9.dp),
-                tags = movieModalUiState.movieModalUiModel.genres
+                tags = movieModalUiState.movieModalUiModel.genres.map { it.kr }
             )
         }
     }

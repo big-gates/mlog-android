@@ -11,7 +11,7 @@ class UpdateMyRatedMovie @Inject constructor(
     private val myPageRepository: MyPageRepository
 ) {
 
-    suspend operator fun invoke(myMovie: MyMovie, rated: Rated) = withContext(Dispatchers.IO) {
-        myPageRepository.updateMyRatedMovie(myMovie, rated)
+    suspend operator fun invoke(myMovie: MyMovie, rated: Rated, myGenres: List<Int>) = withContext(Dispatchers.IO) {
+        myPageRepository.updateMyRatedMovie(myMovie, rated, myGenres)
     }
 }

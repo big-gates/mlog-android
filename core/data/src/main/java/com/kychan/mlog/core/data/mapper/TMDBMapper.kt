@@ -67,7 +67,7 @@ fun MovieSearchRes.toModel(
             voteAverage = movieSearch.voteAverage?: 0.0,
             watchProvider = listOf(),
             genres = movieSearch.genreIds?.map { genreId ->
-                Genre.values().filter { genre -> genreId in genre.ids }
+                Genre.values().filter { genre -> genreId == genre.id }
             }?.flatten() ?: listOf()
         )
     }

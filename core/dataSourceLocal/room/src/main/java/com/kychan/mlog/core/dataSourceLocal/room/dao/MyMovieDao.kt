@@ -8,17 +8,7 @@ import java.util.*
 @Dao
 abstract class MyMovieDao {
     @Query("""
-            SELECT r.my_movie_id
-            , m.adult
-            , m.backdrop_path
-            , m.original_title
-            , m.poster_path
-            , m.title
-            , m.vote_average
-            , m.rank
-            , r.rated
-            , r.comment
-            , r.created_at
+            SELECT *
             FROM my_movie AS m
             INNER JOIN rated AS r ON m.id = r.my_movie_id
         """
@@ -29,8 +19,13 @@ abstract class MyMovieDao {
     abstract fun getMyWantToWatchMovies(): Flow<List<MyWantToWatchMovieVO>>
 
     @Transaction
-    open suspend fun updateMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity) {
+    open suspend fun updateMyRatedMovie(
+        myMovieEntity: MyMovieEntity,
+        ratedEntity: RatedEntity,
+        myGenres: List<Int>
+    ) {
         upsertMyMovie(myMovieEntity)
+        upsertTags(myGenres.map { MyGenresEntity(genreId = it, movieId = myMovieEntity.id) })
         if (ratedEntity.rated < 0f) { // rate : 사용자가 0 입력 시 -1로 저장 후 삭제 로직 실행
             deleteMyRatedMovie(myMovieEntity, ratedEntity)
         } else (
@@ -41,8 +36,13 @@ abstract class MyMovieDao {
     }
 
     @Transaction
-    open suspend fun insertMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity) {
+    open suspend fun insertMyWantMovie(
+        myMovieEntity: MyMovieEntity,
+        wantToWatchesEntity: WantToWatchesEntity,
+        myGenres: List<Int>
+    ) {
         upsertMyMovie(myMovieEntity)
+        upsertTags(myGenres.map { MyGenresEntity(genreId = it, movieId = myMovieEntity.id) })
         insertWantMovie(wantToWatchesEntity)
     }
 
@@ -85,6 +85,9 @@ abstract class MyMovieDao {
 
     @Query("SELECT * FROM want_to_watches AS w WHERE w.my_movie_id = (:id)")
     abstract suspend fun existToMyWantMovie(id: Int) : WantToWatchesEntity?
+
+    @Upsert
+    abstract suspend fun upsertTags(entities: List<MyGenresEntity>)
 
     @Query(
         """

@@ -6,22 +6,22 @@ import com.kychan.mlog.core.model.Genre
 @Entity(
     foreignKeys = [
         ForeignKey(
-            entity = MovieEntity::class,
+            entity = MyMovieEntity::class,
             parentColumns = ["id"],
             childColumns = ["movie_id"],
             onDelete = ForeignKey.CASCADE
         )
     ],
     primaryKeys = ["genre_id","movie_id"],
-    tableName = "genre"
+    tableName = "my_genre"
 )
-data class GenresEntity(
+data class MyGenresEntity(
     @ColumnInfo(name = "genre_id")
     val genreId: Int,
     @ColumnInfo(name = "movie_id")
     val movieId: Int,
 )
 
-fun List<GenresEntity>.toGenres() = this.map { genreEntity ->
-    Genre.values().filter { genre -> genreEntity.genreId == genre.id }
-}.flatten()
+fun List<MyGenresEntity>.toGenres() = this.map { genreEntity ->
+    Genre.values().find { genre -> genreEntity.genreId == genre.id }?: throw IllegalArgumentException("genreId is required")
+}

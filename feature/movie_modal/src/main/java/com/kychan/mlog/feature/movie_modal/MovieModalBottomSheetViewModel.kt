@@ -46,7 +46,8 @@ abstract class MovieModalBottomSheetViewModel : ViewModel(), ModalAction {
         viewModelScope.launch {
             updateMyRatedMovie.invoke(
                 myMovie = model.toMyMovie(),
-                rated = model.toRated()
+                rated = model.toRated(),
+                myGenres = model.genres.map { it.id }
             )
         }
     }
@@ -63,7 +64,8 @@ abstract class MovieModalBottomSheetViewModel : ViewModel(), ModalAction {
         viewModelScope.launch {
             insertMyWantMovie.invoke(
                 myMovie = movieModalUiModel.toMyMovie(),
-                wantToWatch = movieModalUiModel.toWantToWatch()
+                wantToWatch = movieModalUiModel.toWantToWatch(),
+                myGenres = movieModalUiModel.genres.map { it.id }
             )
         }
     }

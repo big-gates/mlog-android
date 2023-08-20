@@ -68,6 +68,7 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             insertMyWantMovie.invoke(
                 myMovie = uiModel.value.toMyMovie(),
+                myGenres = uiModel.value.genres.map { it.id },
                 wantToWatch = WantToWatch(uiModel.value.id, uiModel.value.id, System.currentTimeMillis().toDateTimeFormat())
             )
         }
@@ -88,6 +89,7 @@ class MovieDetailViewModel @Inject constructor(
         viewModelScope.launch {
             updateMyRatedMovie.invoke(
                 myMovie = uiModel.value.toMyMovie(),
+                myGenres = uiModel.value.genres.map { it.id },
                 rated = Rated(
                     id = uiModel.value.id,
                     myMovieId = uiModel.value.id,

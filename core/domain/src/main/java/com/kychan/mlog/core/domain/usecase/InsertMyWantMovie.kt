@@ -11,7 +11,11 @@ class InsertMyWantMovie @Inject constructor(
     private val myPageRepository: MyPageRepository
 ) {
 
-    suspend operator fun invoke(myMovie: MyMovie, wantToWatch: WantToWatch) = withContext(Dispatchers.IO) {
-        myPageRepository.insertMyWantMovie(myMovie, wantToWatch)
+    suspend operator fun invoke(
+        myMovie: MyMovie,
+        wantToWatch: WantToWatch,
+        myGenres: List<Int>
+    ) = withContext(Dispatchers.IO) {
+        myPageRepository.insertMyWantMovie(myMovie, wantToWatch,myGenres)
     }
 }

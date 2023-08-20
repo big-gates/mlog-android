@@ -94,7 +94,7 @@ fun SearchRouter(
                                     title = item.title,
                                     adult = item.adult,
                                     backgroundImage = item.posterPath,
-                                    genres = item.genres.map { it.kr }
+                                    genres = item.genres
                                 )
                             )
                             modalSheetState.show()

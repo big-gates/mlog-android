@@ -20,6 +20,7 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.*
         SyncLogEntity::class,
         RecentSearchEntity::class,
         MovieEntity::class,
+        MyGenresEntity::class,
     ],
     version = 1,
     autoMigrations = [],

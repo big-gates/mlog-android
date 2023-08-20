@@ -1,8 +1,8 @@
 package com.kychan.mlog.feature.mypage.model
 
+import com.kychan.mlog.core.model.Genre
 import com.kychan.mlog.core.model.MyRatedMovies
 import com.kychan.mlog.core.model.MyWantToWatchMovie
-import com.kychan.mlog.core.model.WatchProvider
 
 data class MyMovieItem(
     val myMovieId: Int,
@@ -16,9 +16,10 @@ data class MyMovieItem(
     val rated: Float,
     val comment: String,
     val createdAt: String,
+    val genres: List<Genre>,
 ) {
     companion object {
-        fun of(myRatedMovie: MyRatedMovies): MyMovieItem {
+        fun of(myRatedMovie: MyRatedMovies, ): MyMovieItem {
             return MyMovieItem(
                 myMovieId = myRatedMovie.myMovieId,
                 adult = myRatedMovie.adult,
@@ -31,6 +32,7 @@ data class MyMovieItem(
                 rated = myRatedMovie.rated,
                 comment = myRatedMovie.comment,
                 createdAt = myRatedMovie.createdAt,
+                genres = myRatedMovie.genres,
             )
         }
 
@@ -47,6 +49,7 @@ data class MyMovieItem(
                 rated = 0.0f,
                 comment = "",
                 createdAt = myWTWMovie.wantToWatch.createAt,
+                genres = myWTWMovie.genres,
             )
         }
     }

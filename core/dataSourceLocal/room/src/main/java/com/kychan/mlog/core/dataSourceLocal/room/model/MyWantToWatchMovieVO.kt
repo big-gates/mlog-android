@@ -10,10 +10,16 @@ data class MyWantToWatchMovieVO(
         parentColumn = "id",
         entityColumn = "my_movie_id"
     )
-    val wantToWatch: WantToWatchesEntity
+    val wantToWatch: WantToWatchesEntity,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "movie_id"
+    )
+    val tags: List<MyGenresEntity>
 )
 
 fun MyWantToWatchMovieVO.toDomain() = MyWantToWatchMovie(
     myMovie = myMovie.toDomain(),
     wantToWatch = wantToWatch.toDomain(),
+    genres = tags.toGenres()
 )
