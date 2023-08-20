@@ -42,7 +42,7 @@ compose-ratingbar = "1.2.4"
 
 compileSdk = "33"
 minSdk = "24"
-targetSdk = "31"
+targetSdk = "33"
 
 [plugins]
 gms-google-service = "com.google.gms.google-services:4.3.14"
