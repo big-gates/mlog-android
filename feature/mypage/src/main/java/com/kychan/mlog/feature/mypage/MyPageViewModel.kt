@@ -34,7 +34,6 @@ class MyPageViewModel @Inject constructor(
                     val item = movies.map(MyMovieItem::of)
                     sortMovie(sortType[1], item)
                 }
-
         }
         .stateIn(
             scope = viewModelScope,

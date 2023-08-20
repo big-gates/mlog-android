@@ -199,6 +199,7 @@ fun MyPageRoute(
                                 title = item.title,
                                 adult = item.adult,
                                 backgroundImage = item.posterPath,
+                                genres = item.genres
                             )
                         )
                         movieModalSheetState.show()

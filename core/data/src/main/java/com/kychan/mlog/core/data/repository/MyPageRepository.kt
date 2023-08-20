@@ -1,6 +1,5 @@
 package com.kychan.mlog.core.data.repository
 
-import com.kychan.mlog.core.dataSourceLocal.room.model.WantToWatchesEntity
 import com.kychan.mlog.core.model.*
 import kotlinx.coroutines.flow.Flow
 
@@ -9,9 +8,9 @@ interface MyPageRepository {
 
     fun getMyWantToWatchMovies(): Flow<List<MyWantToWatchMovie>>
 
-    suspend fun updateMyRatedMovie(myMovie: MyMovie, rated: Rated)
+    suspend fun updateMyRatedMovie(myMovie: MyMovie, rated: Rated, myGenres: List<Int>)
 
-    suspend fun insertMyWantMovie(myMovie: MyMovie, wantToWatch: WantToWatch)
+    suspend fun insertMyWantMovie(myMovie: MyMovie, wantToWatch: WantToWatch, myGenres: List<Int>)
 
     suspend fun deleteMyWantMovie(myMovie: MyMovie, wantToWatch: WantToWatch)
 

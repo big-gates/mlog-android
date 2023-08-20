@@ -1,33 +1,35 @@
 package com.kychan.mlog.core.dataSourceLocal.room.model
 
-import androidx.room.ColumnInfo
+import androidx.room.Embedded
+import androidx.room.Relation
+import com.kychan.mlog.core.model.Genre
 import com.kychan.mlog.core.model.MyRatedMovies
-import com.kychan.mlog.core.model.WatchProvider
 
 data class MyRatedMoviesVO(
-    @ColumnInfo("my_movie_id") val myMovieId: Int,
-    val adult: Boolean,
-    @ColumnInfo("backdrop_path") val backdropPath: String,
-    @ColumnInfo("original_title") val originalTitle: String,
-    @ColumnInfo("poster_path") val posterPath: String,
-    val title: String,
-    @ColumnInfo("vote_average") val voteAverage: Double,
-    val rank: Int,
-    val rated: Float,
-    val comment: String,
-    @ColumnInfo("created_at") val createdAt: String,
+    @Embedded val myMovie: MyMovieEntity,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "my_movie_id"
+    )
+    val rated: RatedEntity,
+    @Relation(
+        parentColumn = "id",
+        entityColumn = "movie_id"
+    )
+    val tags: List<MyGenresEntity>
 )
 
 fun MyRatedMoviesVO.toDomain() = MyRatedMovies(
-    myMovieId = myMovieId,
-    adult = adult,
-    backdropPath = backdropPath,
-    originalTitle = originalTitle,
-    posterPath = posterPath,
-    title = title,
-    voteAverage = voteAverage,
-    rank = rank,
-    rated = rated,
-    comment = comment,
-    createdAt = createdAt
+    myMovieId = myMovie.id,
+    adult = myMovie.adult,
+    backdropPath = myMovie.backdropPath,
+    originalTitle = myMovie.originalTitle,
+    posterPath = myMovie.posterPath,
+    title = myMovie.title,
+    voteAverage = myMovie.voteAverage,
+    rank = myMovie.rank,
+    rated = rated.rated,
+    comment = rated.comment,
+    createdAt = rated.createdAt,
+    genres = tags.toGenres()
 )

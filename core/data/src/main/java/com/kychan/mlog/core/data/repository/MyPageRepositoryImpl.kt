@@ -18,12 +18,16 @@ class MyPageRepositoryImpl @Inject constructor(
         return myMovieRoomDataSource.getMyWantToWatchMovies().map { it.map(MyWantToWatchMovieVO::toDomain) }
     }
 
-    override suspend fun updateMyRatedMovie(myMovie: MyMovie, rated: Rated) {
-        return myMovieRoomDataSource.updateMyRatedMovie(MyMovieEntity.of(myMovie), RatedEntity.of(rated))
+    override suspend fun updateMyRatedMovie(myMovie: MyMovie, rated: Rated, myGenres: List<Int>) {
+        return myMovieRoomDataSource.updateMyRatedMovie(MyMovieEntity.of(myMovie), RatedEntity.of(rated), myGenres)
     }
 
-    override suspend fun insertMyWantMovie(myMovie: MyMovie, wantToWatch: WantToWatch) {
-        return myMovieRoomDataSource.insertMyWantMovie(MyMovieEntity.of(myMovie), WantToWatchesEntity.of(wantToWatch))
+    override suspend fun insertMyWantMovie(
+        myMovie: MyMovie,
+        wantToWatch: WantToWatch,
+        myGenres: List<Int>
+    ) {
+        return myMovieRoomDataSource.insertMyWantMovie(MyMovieEntity.of(myMovie), WantToWatchesEntity.of(wantToWatch), myGenres)
     }
 
     override suspend fun deleteMyWantMovie(myMovie: MyMovie, wantToWatch: WantToWatch) {

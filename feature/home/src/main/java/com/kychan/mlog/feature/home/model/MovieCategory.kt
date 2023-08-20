@@ -4,6 +4,7 @@ import androidx.paging.compose.LazyPagingItems
 import com.kychan.mlog.core.common.extenstions.roundToTheFirstDecimal
 import com.kychan.mlog.core.design.component.DynamicGridComponent
 import com.kychan.mlog.core.design.component.DynamicGridItem
+import com.kychan.mlog.core.model.Genre
 import com.kychan.mlog.core.model.Movie
 import com.kychan.mlog.feature.home.BuildConfig
 
@@ -25,7 +26,7 @@ data class MovieItem(
     val rating: Float,
     val title: String,
     val adult: Boolean,
-    val genres: List<String>,
+    val genres: List<Genre>,
     override val isRowDynamic: Boolean = false,
     override val isReverse: Boolean = false
 ): DynamicGridItem
@@ -42,7 +43,7 @@ fun Movie.toView(
     rating = voteAverage.roundToTheFirstDecimal().toFloat(),
     title = title,
     adult = adult,
-    genres = genres.map { it.kr },
+    genres = genres,
     isRowDynamic = watchProvider.find { it.id == watchProviderId }?.rank?.rem(DynamicGridComponent.DEFAULT_ROW_DYNAMIC_INDEX) == 0,
     isReverse = isReverse
 )
