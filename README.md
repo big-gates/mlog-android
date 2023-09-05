@@ -14,6 +14,10 @@ Mlog(Movie Log)는 영화를 검색하여 자신이 본 영화를 기록하는 �
 간단하게 찾아볼 수 있습니다.
 
 - 개발 기간 : 2021.11 ~ 현재
+<img src="https://github.com/big-gates/mlog-android/assets/58040559/d288f9e1-d9c1-4db8-b8c6-d641b33422db" width="180">
+<img src="https://github.com/big-gates/mlog-android/assets/58040559/927e8093-2e0d-4f65-97fe-e6a3c0e90a86" width="180">
+<img src="https://github.com/big-gates/mlog-android/assets/58040559/496a973d-b623-40c2-8cc9-ac94ada72e63" width="180">
+<img src="https://github.com/big-gates/mlog-android/assets/58040559/b34a9355-de02-491d-8856-bc515b1f872a" width="180">
 
 # About
 
