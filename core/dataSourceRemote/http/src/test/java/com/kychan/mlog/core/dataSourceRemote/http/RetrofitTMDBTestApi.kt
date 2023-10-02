@@ -33,7 +33,7 @@ class RetrofitTMDBTestApi: RetrofitTMDBApi {
         language: Language,
         watchRegion: WatchRegion
     ): MoviePopularRes {
-        TODO("Not yet implemented")
+        return readFile("discover_movie_mlog_${page}.json", MoviePopularRes::class.java)
     }
 
     override suspend fun getSearch(
