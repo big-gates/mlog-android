@@ -53,6 +53,6 @@ class RetrofitTMDBTestApi: RetrofitTMDBApi {
         language: Language,
         appendToResponse: String
     ): MovieDetailRes {
-        TODO("Not yet implemented")
+        return readFile("detail_movie_${movieId}_${language}.json", MovieDetailRes::class.java)
     }
 }
