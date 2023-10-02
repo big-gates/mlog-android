@@ -8,14 +8,24 @@ import com.kychan.mlog.core.dataSourceRemote.http.model.MovieSearchRes
 import com.kychan.mlog.core.model.Language
 import com.kychan.mlog.core.model.WatchRegion
 
-class RetrofitTMDBApiTestApi: RetrofitTMDBApi {
+class RetrofitTMDBTestApi: RetrofitTMDBApi {
     override suspend fun getMoviePopularWithProvider(
         page: Int,
         language: Language,
         watchRegion: WatchRegion,
         withWatchProvider: Int
     ): MovieDiscoverRes {
-        TODO("Not yet implemented")
+        return when(withWatchProvider){
+            97 -> {
+                readFile("discover_movie_watcha_${page}.json", MovieDiscoverRes::class.java)
+            }
+
+            8 -> {
+                readFile("discover_movie_netflix_${page}.json", MovieDiscoverRes::class.java)
+            }
+
+            else -> throw IllegalArgumentException("Type not supported")
+        }
     }
 
     override suspend fun getMoviePopular(

@@ -1,0 +1,413 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "adult": false,
+            "backdrop_path": "/6fKEw0I2FTD5FLOQ5q7L1tqf876.jpg",
+            "genre_ids": [
+                10751,
+                35,
+                28,
+                12
+            ],
+            "id": 790493,
+            "original_language": "en",
+            "original_title": "Spy Kids: Armageddon",
+            "overview": "스파이 슈트. 숨겨진 아지트. 끝내주게 멋진 장비. 부모님이 비밀 요원이라는 사실을 알게 된 패티와 토니. 이제 스파이 키드가 되기 위한 훈련을 시작한다!",
+            "popularity": 649.106,
+            "poster_path": "/vd8YdaH7dzeIMGTNwQinlSiA1gV.jpg",
+            "release_date": "2023-09-22",
+            "title": "스파이 키드: 아마겟돈",
+            "video": false,
+            "vote_average": 6.5,
+            "vote_count": 53
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/9WxqnP9c29wXd03sALSpxpTx8fk.jpg",
+            "genre_ids": [
+                9648,
+                53,
+                28
+            ],
+            "id": 1172009,
+            "original_language": "en",
+            "original_title": "The Black Book",
+            "overview": "납치 사건의 누명을 쓰고 죽은 아들. 홀로 남은 교회 집사 아버지는 자신의 손으로 정의를 바로 세우고, 아들의 결백을 증명하기 위해 부패한 경찰들과 싸운다.",
+            "popularity": 810.288,
+            "poster_path": "/kn28W24slBLyGr8ZIZnxNE5YZrY.jpg",
+            "release_date": "2023-09-22",
+            "title": "더 블랙 북",
+            "video": false,
+            "vote_average": 7.7,
+            "vote_count": 21
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/xsnpgM2Si1hG7daLP1XE7uAfKKH.jpg",
+            "genre_ids": [
+                80,
+                28,
+                53
+            ],
+            "id": 1152797,
+            "original_language": "pl",
+            "original_title": "Freestyle",
+            "overview": "전과가 있지만 장래가 촉망되는 래퍼. 녹음 스튜디오를 빌릴 돈이 필요한 그가 모든 것을 잃을 수 있는 위험한 마약 거래에 발을 들인다.",
+            "popularity": 444.5,
+            "poster_path": "/x6HrGmmpVUX8XBI9Vg4hbSsdBCX.jpg",
+            "release_date": "2023-09-13",
+            "title": "프리스타일",
+            "video": false,
+            "vote_average": 6.8,
+            "vote_count": 35
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/2QL5j6mB4ZpyBcVr0WO9H9MQGBu.jpg",
+            "genre_ids": [
+                28,
+                12,
+                18,
+                14
+            ],
+            "id": 734253,
+            "original_language": "hi",
+            "original_title": "आदिपुरुष",
+            "overview": "전사의 피가 흐르는 정의로운 왕자. 기나긴 추방 생활 중, 육지와 바다를 넘나드는 장대한 여정에 오른다. 마왕으로부터 아내를 구하기 위하여.",
+            "popularity": 443.843,
+            "poster_path": "/1H2xEZOixs0z0JKwyjANZiKNNVJ.jpg",
+            "release_date": "2023-06-16",
+            "title": "아디푸루시",
+            "video": false,
+            "vote_average": 5.6,
+            "vote_count": 54
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/xVMtv55caCEvBaV83DofmuZybmI.jpg",
+            "genre_ids": [
+                53,
+                28
+            ],
+            "id": 724209,
+            "original_language": "en",
+            "original_title": "Heart of Stone",
+            "overview": "베일에 싸인 글로벌 평화유지 조직. 이곳에 속한 첩보원이 시간과의 싸움을 벌인다. 조직이 보유한 가장 가치 있고 위험한 무기를 훔치려는 해커를 막기 위해.",
+            "popularity": 400.951,
+            "poster_path": "/fzDIKaIhMRCczXhmxXxVnJKfDBV.jpg",
+            "release_date": "2023-08-09",
+            "title": "하트 오브 스톤",
+            "video": false,
+            "vote_average": 6.9,
+            "vote_count": 1168
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/iEFuHjqrE059SmflBva1JzDJutE.jpg",
+            "genre_ids": [
+                16,
+                10751,
+                28,
+                14,
+                10749
+            ],
+            "id": 496450,
+            "original_language": "fr",
+            "original_title": "Miraculous - le film",
+            "overview": "마법 보석의 수호자로 인해 슈퍼히어로가 된 수줍음 많은 소녀와 인기 많은 소년. 정반대에 끌리는 두 사람은 서로에게조차 정체를 밝힐 수 없는데.",
+            "popularity": 274.149,
+            "poster_path": "/iu4qpzsyBcnWhiwh1BxTAJefTmS.jpg",
+            "release_date": "2023-07-05",
+            "title": "미라큘러스: 레이디버그와 블랙캣, 더 무비",
+            "video": false,
+            "vote_average": 7.8,
+            "vote_count": 596
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/b1Y8SUb12gPHCSSSNlbX4nB3IKy.jpg",
+            "genre_ids": [
+                12,
+                14,
+                16,
+                35,
+                10751,
+                28
+            ],
+            "id": 315162,
+            "original_language": "en",
+            "original_title": "Puss in Boots: The Last Wish",
+            "overview": "아홉 개의 목숨 중 단 하나의 목숨만 남은 장화신은 고양이.  마지막 남은 목숨을 지키기 위해 히어로의 삶 대신 반려묘의 삶을 선택한 그에게 찾아온 마지막 기회, 바로 소원을 들어주는 소원별이 있는 곳을 알려주는 지도!  잃어버린 목숨을 되찾고 다시 히어로가 되기를 꿈꾸는 장화신은 고양이는 뜻밖에 동료가 된 앙숙 파트너 '키티 말랑손', 그저 친구들과 함께라면 모든 게 행복한 강아지 '페로'와 함께 소원별을 찾기 위해 길을 떠난다.  그리고 소원별을 노리는 또 다른 빌런들과 마주치게 되는데…",
+            "popularity": 292.322,
+            "poster_path": "/rKgvctIuPXyuqOzCQ16VGdnHxKx.jpg",
+            "release_date": "2022-12-07",
+            "title": "장화신은 고양이: 끝내주는 모험",
+            "video": false,
+            "vote_average": 8.3,
+            "vote_count": 6403
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/5OFUCydVG9cSS5hMk4A6XNt1oH4.jpg",
+            "genre_ids": [
+                28,
+                12,
+                14,
+                16
+            ],
+            "id": 1064835,
+            "original_language": "ja",
+            "original_title": "七つの大罪 怨嗟のエジンバラ 後編",
+            "overview": "비극적인 사고 이후 처음으로 랜슬롯과 다시 만난 트리스탄. 어머니의 생명을 구하기 위해선 내면에 자리한 마신족의 힘을 제어하는 법을 배워야 한다.",
+            "popularity": 240.649,
+            "poster_path": "/7HPzJaAGoK3tfFnNZvDmebeoKlz.jpg",
+            "release_date": "2023-08-08",
+            "title": "일곱 개의 대죄: 원망의 에든버러 파트 2",
+            "video": false,
+            "vote_average": 7.3,
+            "vote_count": 102
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/a17F3zXnmuwqxfiDa46mtlosjrv.jpg",
+            "genre_ids": [
+                16,
+                10751,
+                12,
+                35
+            ],
+            "id": 675445,
+            "original_language": "en",
+            "original_title": "PAW Patrol: The Movie",
+            "overview": "시민들을 속여 어드벤처 시티의 시장이 된 날씨 악당 `험딩어`는 취임식 당일, 구름을 조종해 천둥번개를 만드는 등 시민들을 위협하며 본모습을 드러낸다. 그런 가운데, 용감한 시민 퍼피 `리버티`로부터 어드벤처 시티가 위험에 빠진 소식을 들은 퍼피 구조대는 신속하게 시티로 출동하는데…! 위기에 빠진 어드벤처 시티의 운명은?",
+            "popularity": 254.266,
+            "poster_path": "/eCwoA6FoMyvBaO4HB4BzhAKa1Mw.jpg",
+            "release_date": "2021-08-09",
+            "title": "퍼피 구조대 더 무비",
+            "video": false,
+            "vote_average": 7.4,
+            "vote_count": 1143
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/g15PR8eQV9DehSWlagvdnJZqoRq.jpg",
+            "genre_ids": [
+                27,
+                80,
+                9648
+            ],
+            "id": 602734,
+            "original_language": "en",
+            "original_title": "Spiral: From the Book of Saw",
+            "overview": "경찰서로 배달된 의문의 소포. 그리고 시작된 경찰 연쇄살인. 또 다른 살인이 시작되기 전 단서를 찾고 사건을 해결하라!",
+            "popularity": 238.641,
+            "poster_path": "/uwfXUJuog7hRfiDrWrNC9SQJxGI.jpg",
+            "release_date": "2021-05-12",
+            "title": "스파이럴",
+            "video": false,
+            "vote_average": 6,
+            "vote_count": 1662
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/hiHGRbyTcbZoLsYYkO4QiCLYe34.jpg",
+            "genre_ids": [
+                27,
+                53
+            ],
+            "id": 758323,
+            "original_language": "en",
+            "original_title": "The Pope's Exorcist",
+            "overview": "바티칸이 인정한 공식 수석 엑소시스트이자 최고의 구마사제 '가브리엘 아모르트’ 신부(러셀 크로우)는 한 어린 소년에게 들린 악마를 구마하기 위해 스페인으로 향한다. 그리고 그곳에서 바티칸이 숨겨온 충격적인 비밀과 마주하고, '토마스 에스퀴벨’ 신부(다니엘 조바토)와 함께 진실을 파헤치게 되는데...",
+            "popularity": 250.97,
+            "poster_path": "/fA1xRPplBqW87wWh0hO1pwbQmX8.jpg",
+            "release_date": "2023-04-05",
+            "title": "엑소시스트: 더 바티칸",
+            "video": false,
+            "vote_average": 7.1,
+            "vote_count": 1972
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/wRxLAw4l17LqiFcPLkobriPTZAw.jpg",
+            "genre_ids": [
+                28,
+                53
+            ],
+            "id": 697843,
+            "original_language": "en",
+            "original_title": "Extraction 2",
+            "overview": "전작에서 겨우 살아남은 레이크. 호주 비밀 작전 용병으로 귀환한 그가 또다시 죽음의 문턱을 넘나드는 임무를 맡게 된다. 무자비한 조지아 갱스터의 가족이 구금됐다. 온갖 고초를 겪고 있는 그들을 감옥에서 구출하라.",
+            "popularity": 228.651,
+            "poster_path": "/uJGYC2l97RWz8zJ9WFjLiUOqUva.jpg",
+            "release_date": "2023-06-09",
+            "title": "익스트랙션 2",
+            "video": false,
+            "vote_average": 7.5,
+            "vote_count": 1818
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/6IafiYxaqR2MxCnEC29bi6637eo.jpg",
+            "genre_ids": [
+                28,
+                12,
+                53,
+                35
+            ],
+            "id": 457332,
+            "original_language": "en",
+            "original_title": "Hidden Strike",
+            "overview": "두 엘리트 군인에게 떨어진 특별한 임무. 총격과 폭발이 난무하는 사지에서 민간인들을 무사히 호송해야 한다. 성룡, 존 시나 주연 영화.",
+            "popularity": 215.934,
+            "poster_path": "/zsbolOkw8RhTU4DKOrpf4M7KCmi.jpg",
+            "release_date": "2023-07-06",
+            "title": "스내푸",
+            "video": false,
+            "vote_average": 7,
+            "vote_count": 751
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/4Yon9Qmg3U4onL0OywXAHSkFTUG.jpg",
+            "genre_ids": [
+                28,
+                18
+            ],
+            "id": 1163045,
+            "original_language": "yo",
+            "original_title": "Jagun Jagun",
+            "overview": "",
+            "popularity": 206.348,
+            "poster_path": "/n0GXumEMtwgYj2M3YW4Iu0veYJg.jpg",
+            "release_date": "2023-08-10",
+            "title": "Jagun Jagun",
+            "video": false,
+            "vote_average": 6.5,
+            "vote_count": 48
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/n47trh6SChgncx2GUmwsvry6DLb.jpg",
+            "genre_ids": [
+                35,
+                27,
+                14
+            ],
+            "id": 991708,
+            "original_language": "es",
+            "original_title": "El Conde",
+            "overview": "세상을 떠날 준비를 마친 흡혈귀, 아우구스토 피노체트. 하지만 죽음의 운명은 그를 놓아줄 생각이 없다. 마지막 피의 식사를 할 때까지. 파블로 라라인의 어두운 풍자극.",
+            "popularity": 195.832,
+            "poster_path": "/gUYn97rRvnw7TkQbBhnt0WsU3JM.jpg",
+            "release_date": "2023-09-08",
+            "title": "공작",
+            "video": false,
+            "vote_average": 6.4,
+            "vote_count": 85
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/997ToEZvF2Obp9zNZbY5ELVnmrW.jpg",
+            "genre_ids": [
+                10749,
+                18
+            ],
+            "id": 537915,
+            "original_language": "en",
+            "original_title": "After",
+            "overview": "대학 입학 후 첫 파티에 초대 받게 된 신입생 ‘테사’는 진실게임을 하던 중 키스 벌칙에 걸리고 만다. 상대는 학교에서 유명한 반항아 ‘하딘’. 키스를 앞둔 0.1초 전, 모두가 주목하는 그 순간 ‘테사’는 ‘하딘’의 입술을 거절하고 만다. 강렬했던 첫 만남 이후, 마치 새로운 세상을 발견한 듯 한번도 경험한 적 없던 감정에 눈을 뜨게 된 두 사람. ‘하딘’은 자신의 비밀 장소로 ‘테사’를 초대하고 이제 두 사람은 서로를 모르기 전으로 절대 되돌아 갈 수 없음을 알게 되는데…",
+            "popularity": 179.559,
+            "poster_path": "/zTZ7Q9mAwBQoYaR8HgGbmBNp6AC.jpg",
+            "release_date": "2019-04-11",
+            "title": "애프터",
+            "video": false,
+            "vote_average": 7.1,
+            "vote_count": 7783
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/AioRI7M077BBR33VimFiyFop2Rc.jpg",
+            "genre_ids": [
+                28,
+                12,
+                53
+            ],
+            "id": 1149381,
+            "original_language": "pl",
+            "original_title": "Operacja: Soulcatcher",
+            "overview": "사람들을 살육 괴물로 돌변하게 하는 무기 탓에 형제를 잃은 민간 용병. 그 무기를 확보하라는 임무가 떨어진 순간, 기다려 왔던 복수에 돌입한다.",
+            "popularity": 180.94,
+            "poster_path": "/bwhw9CYte83GwA9sYOvcYs7oDXr.jpg",
+            "release_date": "2023-08-02",
+            "title": "소울캐처",
+            "video": false,
+            "vote_average": 6.5,
+            "vote_count": 195
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/mxdiaM2tsx8M6W3zLgiPwAkhQfq.jpg",
+            "genre_ids": [
+                10749,
+                18
+            ],
+            "id": 744275,
+            "original_language": "en",
+            "original_title": "After We Fell",
+            "overview": "영국 런던에서 미국 시애틀까지, 핫스팟에서 시작된 사랑의 클라이맥스! 첫사랑, 첫키스, 첫경험, 설렘 가득했던 처음을 뒤로 하고 꿈을 위해 잠시 서로를 떠나게 된 하딘과 테사. 각자 영국 런던과 미국 시애틀에서 롱디 연애를 앞둔 두 사람은 시간과 장소를 가리지 않고 달콤한 사랑을 속삭인다. 하지만 연애와 꿈의 갈림길에 선 둘은 서로에게 감춘 '누군가'의 존재와 예상치 못한 비밀까지 알게 되면서 사랑의 클라이맥스에 치닫게 되는데…",
+            "popularity": 160.758,
+            "poster_path": "/o0PgoBD6jLYId3LYpu9yUY06SLT.jpg",
+            "release_date": "2021-09-01",
+            "title": "애프터: 관계의 함정",
+            "video": false,
+            "vote_average": 7.1,
+            "vote_count": 2311
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/dS4JR8gmj8UnamjuLEyAkEFoppy.jpg",
+            "genre_ids": [
+                14,
+                35,
+                12
+            ],
+            "id": 923939,
+            "original_language": "en",
+            "original_title": "The Wonderful Story of Henry Sugar",
+            "overview": "로알드 달의 인기 소설을 웨스 앤더슨 감독이 각색한 작품. 어느 부유한 남자가 도박에서 속임수를 쓰기 위해 비범한 기술을 배우기로 한다.",
+            "popularity": 189.007,
+            "poster_path": "/xbbAeMzkZnY9VGXxDhZwVYVWN7y.jpg",
+            "release_date": "2023-09-20",
+            "title": "기상천외한 헨리 슈거 이야기",
+            "video": false,
+            "vote_average": 7.5,
+            "vote_count": 178
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/jDjmnEuNUfWHg8rbW6u8mylkcO0.jpg",
+            "genre_ids": [
+                16,
+                14,
+                12,
+                10751,
+                35
+            ],
+            "id": 832502,
+            "original_language": "en",
+            "original_title": "The Monkey King",
+            "overview": "서로 힘을 합쳐 파란만장한 모험에 나서는 원숭이와 마법의 여의봉. 악마와 용, 신, 그리고 가장 강력한 적인 원숭이 자신의 자만심과 맞서 싸운다.",
+            "popularity": 156.756,
+            "poster_path": "/i6ye8ueFhVE5pXatgyRrZ83LBD8.jpg",
+            "release_date": "2023-08-11",
+            "title": "몽키 킹",
+            "video": false,
+            "vote_average": 6.8,
+            "vote_count": 171
+        }
+    ],
+    "total_pages": 201,
+    "total_results": 4004
+}
