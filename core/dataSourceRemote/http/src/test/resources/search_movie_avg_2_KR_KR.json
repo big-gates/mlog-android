@@ -1,0 +1,68 @@
+{
+  "page": 2,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/l5JMz8whHg0hZfWVxt5UZVx89uY.jpg",
+      "id": 517289,
+      "title": "톡식 어벤져",
+      "original_language": "en",
+      "original_title": "The Toxic Avenger: The Musical",
+      "overview": "미국 뉴저지주의 가상도시 트로마빌을 배경으로 부패권력과 지구온난화에 맞서 싸우는 돌연변이 녹색 슈퍼히어로의 요절복통 러브스토리! 독성 폐기물 문제를 해결하기로 결심한 야심찬 지구 환경 예비 과학자인 멜빈 페르드 3세는 부패한 도시 여시장과 정부가 그의 계획을 눈치채면서, 멜빈은 유독성 폐기물의 늪으로 던져지고, 뉴저지 최초의 몬스터 영웅인 톡식 어벤저로 변하게 되는데...",
+      "poster_path": "/t0iGwh06pEHBTbizbC19KnXISmw.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        35,
+        878,
+        10402
+      ],
+      "popularity": 1.66,
+      "release_date": "2018-04-07",
+      "video": true,
+      "vote_average": 8.0,
+      "vote_count": 5
+    },
+    {
+      "adult": false,
+      "backdrop_path": null,
+      "id": 212644,
+      "name": "프리티 어벤져스",
+      "original_language": "ko",
+      "original_name": "프리티 어벤져스",
+      "overview": "뷰티 스타들의 무한도전이 시작된다! 신개념 뷰티 예능 프로그램",
+      "poster_path": "/u1pQTgsEZttsh65siZBdecv2jXX.jpg",
+      "media_type": "tv",
+      "genre_ids": [],
+      "popularity": 0.6,
+      "first_air_date": "2015-10-28",
+      "vote_average": 0.0,
+      "vote_count": 0,
+      "origin_country": [
+        "KR"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/qvWptvV5PEqEGrls5JmgKXiJ0UU.jpg",
+      "id": 10222,
+      "title": "어벤저",
+      "original_language": "en",
+      "original_title": "Kickboxer",
+      "overview": "킥복싱 챔비언인 에릭 슬로운(Eric Sloane : 데니스 알렉시오 분)은 동생 커트 슬로운(Kurt Sloane : 쟝-끌로드 반 담 분)과 함께 킥복싱의 본고장 태국에 도착한다. 태국의 챔피언인 동 포(Tong Po : 동 포 분)와의 시합에서 무참히 짓밟힌 에릭은 평생을 휠체어에 의지해야 하는 신세가 되었다. 커트는 형의 복수를 하기 위해 태국의 전통 무술을 배우러 스승을 찾아 나선다. 기이한 스승 시안 초우(Xian : 데니스 찬 분)을 만나 그 곳에서 혹독한 훈련을 받는다. 훈련 도중 그는 스승의 조카 딸인 마이리(Mylee : 로첼 애쉬어나 분)와 사랑에 빠지게 되고 그들 사랑이 더해감이 따라 훈련도 거의 마무리 단계에 이르게 된다. 드디어 생명을 건 동 포와의 결전의 날이 다가온다. 하지만 마이리와 형을 납치, 커트에게 시합에서 질 것을 요구, 커트는 거의 초죽음이 되도록 맞기만 하지만 마침내 그를 멋지게 꺾고 승리한다.",
+      "poster_path": "/q5sy4cjqshxSGXgiC1jgcgmMsmC.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        53,
+        18
+      ],
+      "popularity": 21.183,
+      "release_date": "1989-09-09",
+      "video": false,
+      "vote_average": 6.78,
+      "vote_count": 1248
+    }
+  ],
+  "total_pages": 2,
+  "total_results": 23
+}

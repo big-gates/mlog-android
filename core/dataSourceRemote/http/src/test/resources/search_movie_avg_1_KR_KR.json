@@ -1,0 +1,436 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/9BBTo63ANSmhC4e6r62OJFuK2GL.jpg",
+      "id": 24428,
+      "title": "어벤져스",
+      "original_language": "en",
+      "original_title": "The Avengers",
+      "overview": "에너지원 큐브를 이용한 적의 등장으로 인류가 위험에 처하자 국제평화유지기구인 쉴드의 국장 닉 퓨리는 어벤져스 작전을 위해 전 세계에 흩어져 있던 슈퍼히어로들을 찾아나선다. 아이언맨부터 토르, 헐크, 캡틴 아메리카는 물론, 쉴드의 요원인 블랙 위도우, 호크 아이까지, 최고의 슈퍼히어로들이 어벤져스의 멤버로 모이게 되지만, 각기 개성이 강한 이들의 만남은 예상치 못한 방향으로 흘러가는데...",
+      "poster_path": "/1uHRkB2Q00Y4i7I7KNd0jGi4OmY.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        878,
+        28,
+        12
+      ],
+      "popularity": 101.795,
+      "release_date": "2012-05-04",
+      "video": false,
+      "vote_average": 7.71,
+      "vote_count": 29174
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/mDfJG3LC3Dqb67AZ52x3Z0jU0uB.jpg",
+      "id": 299536,
+      "title": "어벤져스: 인피니티 워",
+      "original_language": "en",
+      "original_title": "Avengers: Infinity War",
+      "overview": "타노스는 6개의 인피니티 스톤을 획득해 신으로 군림하려 한다. 그것은 곧 인류의 절반을 학살해 우주의 균형을 맞추겠다는 뜻. 타노스는 닥터 스트레인지가 소유한 타임 스톤, 비전의 이마에 박혀 있는 마인드 스톤을 차지하기 위해 지구를 침략한다. 아이언맨과 스파이더맨은 가디언즈 오브 갤럭시의 멤버들과 타노스를 상대한다. 지구에선 캡틴 아메리카, 완다, 블랙 위도우, 블랙 팬서 등이 비전을 지키기 위해 뭉친다.",
+      "poster_path": "/kmP6viwzcEkZeoi1LaVcQemcvZh.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        12,
+        28,
+        878
+      ],
+      "popularity": 180.084,
+      "release_date": "2018-04-23",
+      "video": false,
+      "vote_average": 8.255,
+      "vote_count": 27719
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/y9FhwCVyIqonm2XqwGrFtmalnkv.jpg",
+      "id": 91278,
+      "name": "마블 퓨처 어벤져스",
+      "original_language": "ja",
+      "original_name": "マーベル フューチャー・アベンジャーズ",
+      "overview": "하이드라의 연구소의 실험으로 특수한 능력을 얻게 된 카이는 하이드라의 행동이 잘못됨을 알고 탈출하게 된다. 그리고 토니 스타크와 어벤져스와 만나게 되는데...",
+      "poster_path": "/buxBvftqx3g57FTYtdrfGSHlWfQ.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        16,
+        10759,
+        10765
+      ],
+      "popularity": 11.01,
+      "first_air_date": "2017-07-22",
+      "vote_average": 6.3,
+      "vote_count": 15,
+      "origin_country": [
+        "JP"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
+      "id": 299534,
+      "title": "어벤져스: 엔드게임",
+      "original_language": "en",
+      "original_title": "Avengers: Endgame",
+      "overview": "어벤져스의 패배 이후 지구는 초토화됐고 남은 절반의 사람들은 정신적 고통을 호소하며 하루하루를 근근이 버텨나간다. 와칸다에서 싸우다 생존한 히어로들과 우주의 타이탄 행성에서 싸우다 생존한 히어로들이 뿔뿔이 흩어졌는데, 아이언맨과 네뷸라는 우주를 떠돌고 있고 지구에 남아 있는 어벤져스 멤버들은 닉 퓨리가 마지막에 신호를 보내다 만 송신기만 들여다보며 혹시 모를 우주의 응답을 기다리는 중이다. 애초 히어로의 삶을 잠시 내려놓고 가족과 시간을 보내던 호크아이 역시 헤아릴 수 없는 마음의 상처를 입은 채 사라지고 마는데...",
+      "poster_path": "/z7ilT5rNN9kDo8JZmgyhM6ej2xv.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        12,
+        878,
+        28
+      ],
+      "popularity": 109.538,
+      "release_date": "2019-04-22",
+      "video": false,
+      "vote_average": 8.263,
+      "vote_count": 23865
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/zRu0L0eB500AmBh2ZPFceMXbPml.jpg",
+      "id": 59427,
+      "name": "어벤져스 어셈블",
+      "original_language": "en",
+      "original_name": "Marvel's Avengers",
+      "overview": "캡틴 아메리카가 레드 스컬에 의해 무너진 것으로 보이자 아이언맨은 친구의 복수를 하고 레드 스컬의 군대를 막기 위해 팀을 다시 모은다.",
+      "poster_path": "/vchDkX1DtqTy3bIDJ7YqmSbX965.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        10759,
+        16,
+        10765
+      ],
+      "popularity": 444.466,
+      "first_air_date": "2013-05-26",
+      "vote_average": 7.633,
+      "vote_count": 594,
+      "origin_country": [
+        "US"
+      ]
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/6YwkGolwdOMNpbTOmLjoehlVWs5.jpg",
+      "id": 99861,
+      "title": "어벤져스: 에이지 오브 울트론",
+      "original_language": "en",
+      "original_title": "Avengers: Age of Ultron",
+      "overview": "토니 스타크는 뉴욕전쟁 때와 같은 사태가 벌어지지 않도록 한때 가동하려다 중단된 휴면 상태의 평화 유지 프로그램을 작동 시키려 한다. 배너 박사와 함께 지구를 지킬 최강의 인공지능 울트론을 탄생시키게 되지만, 울트론은 예상과 다르게 지배를 벗어나 폭주하기 시작하고 어벤져스는 지구의 운명이 걸린 거대한 시험대에 오르게 된다. 울트론이 자신을 복제해 위협을 가하자 이를 저지하기 위해 아이언맨, 캡틴 아메리카, 토르, 헐크, 블랙위도우, 호크아이 등으로 구성된 어벤져스와 새로 합류하게 되는 퀵 실버, 스칼렛 위치 남매와 불안한 동맹을 맺는다.",
+      "poster_path": "/sTUiA9zY6O4qFlmRC69nG6dngTh.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        12,
+        878
+      ],
+      "popularity": 83.819,
+      "release_date": "2015-05-01",
+      "video": false,
+      "vote_average": 7.276,
+      "vote_count": 21759
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/4NWWpT0jiMUak8r6jfpvG4eBgFU.jpg",
+      "id": 1771,
+      "title": "퍼스트 어벤져",
+      "original_language": "en",
+      "original_title": "Captain America: The First Avenger",
+      "overview": "진주만 공습을 겪은 미국은 선전포고를 하고 제2차 세계대전에 발을 들인다. 스티브 로저스는 왜소하고 마른 체격으로 인해 입대마저 번번히 거부당하지만, 포기를 모르는 근성과 강한 희생 정신을 인정받아 최고의 전사를 양성하는 슈퍼 솔져 프로젝트에 스카우트된다. 비밀리에 진행된 실험을 통해 가장 완벽한 육체와 인간의 한계를 초월한 신체 능력을 얻게 된 스티브는 모두에게 캡틴으로 불리며 영웅으로 새롭게 태어난다. 하지만 거대한 히드라 조직을 앞세운 적의 공격은 한층 막강해지고, 그 핵심에 선 레드 스컬은 인류를 위협하는 최후의 전투를 준비하는데...",
+      "poster_path": "/v37Dq0G5Z8Yx2TLChlzS9Minzo2.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        12,
+        878
+      ],
+      "popularity": 44.623,
+      "release_date": "2011-07-22",
+      "video": false,
+      "vote_average": 6.995,
+      "vote_count": 20274
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/ldxi7dKtud2KrStUr8V9P65ixNr.jpg",
+      "id": 14611,
+      "title": "얼티밋 어벤져스 2",
+      "original_language": "en",
+      "original_title": "Ultimate Avengers 2: Rise of the Panther",
+      "overview": "신비한 와칸다는 세계 대부분이 알지 못하는 아프리카의 가장 어두운 심장부에 있습니다. 폐쇄된 국경 뒤에 숨겨진 고립된 땅, 젊은 왕 블랙 팬서에 의해 강력하게 보호됩니다. 하지만 잔인한 외계 침략자들이 공격할 때, 그 위협은 흑표범에게 그의 백성들의 신성한 법령을 거스르고 외부인들에게 도움을 요청하는 것 외에는 선택의 여지가 없게 합니다.",
+      "poster_path": "/h1PKqtjuTifmTU0EqM4W0Br2pHX.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        12,
+        16,
+        28,
+        878
+      ],
+      "popularity": 12.476,
+      "release_date": "2006-08-08",
+      "video": false,
+      "vote_average": 6.707,
+      "vote_count": 259
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/jqFC2WjYF07hx2X7cs0XmY9jBX6.jpg",
+      "id": 1003598,
+      "title": "어벤져스: 시크릿 워즈",
+      "original_language": "en",
+      "original_title": "Avengers: Secret Wars",
+      "overview": "An upcoming film in the Marvel Cinematic Universe's sixth Phase and the finale of The Multiverse Saga. Plot unknown.",
+      "poster_path": "/8chwENebfUEJzZ7sMUA0nOgiCKk.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        878
+      ],
+      "popularity": 22.698,
+      "release_date": "2027-05-07",
+      "video": false,
+      "vote_average": 0.0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/uR952NrgispGuyqIdUbkR24vE0u.jpg",
+      "id": 1003596,
+      "title": "어벤져스: 캉 다이너스티",
+      "original_language": "en",
+      "original_title": "Avengers: The Kang Dynasty",
+      "overview": "An upcoming film in the Marvel Cinematic Universe's sixth Phase and part of The Multiverse Saga. Plot unknown.",
+      "poster_path": "/utZTb3VBrH0zR77BcISU67pHuAx.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        878,
+        12
+      ],
+      "popularity": 21.719,
+      "release_date": "2026-05-01",
+      "video": false,
+      "vote_average": 0.0,
+      "vote_count": 0
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/wctWoTYIUZcps4ZSlqOt7XzznPO.jpg",
+      "id": 24993,
+      "title": "어벤져 2",
+      "original_language": "en",
+      "original_title": "Kickboxer 2: The Road Back",
+      "overview": "태국까지 가서 킥복싱 헤비급 세계 챔피언에 도전한 커트 슬론(Kurt Sloan: 엠마뉴엘 커빈 분)은 챔피언인 통포(Tong Po: 미셀 퀴시 분)를 물리치고 세계 챔피언이 되지만 킥복싱의 본고장에서 왕좌를 빼앗긴데 굴욕감을 느낀 통포의 손에 의해 방콕의 밤거리에서 동생 에릭, 애인 메이와 함께 숨을 거둔다. 형들의 귀환을 기다리던 막내동생 데이비드(David Sloan: 사샤 미첼 분)는 하늘이 무너지는 것 같은 슬픔을 딛고 일어서서 형들이 남긴 도장을 맡아 운영한다. 그러나 타고난 교육자로 돈벌이와는 인연이 먼 그는 점점 더 빚더미에 올라앉게 된다. 에릭의 친구이기도하며 도장의 총무인 잭크는 빚을 갚을 유일한 길은 데이비드가 시합을 하는 것이라고 압력을 가하지만 데이비드는 이 제안을 완강히 거절한다. 한편, 굴욕감에 못이긴 통포가 커트를 죽여버려서 명예를 회복할 길이 없어진 태국 흥행사 상가(Sanga: 캐리-히로유키 타가와 분)는 데이비드와 통포와의 시합을 주선하지만 데이비드는 이 역시 거절한다. 그러자 상가의 동업자인 저스틴 메이셔(Justin: 피터 보일 분)는 자기 수하의 킥복싱 선수인 버거스(Vargas: 매티아스 휴스 분)를 시켜 도장을 불지르게 하지만 불을 지르던 버거스는 데이비드에게 발각되자 데이비드의 무릎에 총을 쏘고 그런 소란 중에 한 소년이 불에 타죽는다. 버거스가 데이비드의 무릎을 상하게 하여 시합을 할 수 없에 만들자 노발대발한 상가는 버거스가 자신의 계획을 모두 망쳐 놓았기 때문에 메지셔에게 그를 죽이도록 시킨 후 데이비드가 사랑하는 수제자 브라이언(Brian Wagner: 빈스 무도코 분)을 스카웃하여 혹독한 트레이닝과 고행으로 온몸이 흉터 투성이가 된 통포와 시합을 시키고는 브라이언을 관중이 보는 앞에서 죽여 버린다.",
+      "poster_path": "/pNvuLT77H9eSStoqmB7EMLdlffv.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        12
+      ],
+      "popularity": 11.221,
+      "release_date": "1991-06-14",
+      "video": false,
+      "vote_average": 5.411,
+      "vote_count": 163
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/qzzAt0GakCZzbCeCJ0sFGhMIcdv.jpg",
+      "id": 323660,
+      "title": "슈퍼히어로 어벤져",
+      "original_language": "en",
+      "original_title": "Avengers Grimm",
+      "overview": "사악한 럼펄스킨은 평화로웠던 스노우화이트의 왕국을 불시에 공격해 다른 세상으로 가는 입구인 마법 거울을 빼앗아 지구로 들어간다. 인간들의 세계에서 흑마술을 부리며 왕처럼 군림하려는 계략을 가진 그를 막기 위해 스노우화이트와 신데렐라, 라푼젤, 잠자는 숲속의 공주 슬리핑 뷰티, 빨간 망토 소녀도 서둘러 지구로 쫓아간다. 지구를 구하기 위해선 럼펄스킨이 가진 거울을 빼앗고 도시 점령을 막아야 한다. 현대의 지구에 나타난 다섯 명의 공주들과 시장이 된 악당의 피할 수 없는 대결이 시작되는데…",
+      "poster_path": "/l8oD6Ch9VcSK1qXJND5kHMkSBAH.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        14
+      ],
+      "popularity": 11.52,
+      "release_date": "2015-03-17",
+      "video": false,
+      "vote_average": 3.924,
+      "vote_count": 112
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/i85hRArY4WgJ8klO1tBQ25QiPFO.jpg",
+      "id": 39027,
+      "title": "어벤져 3",
+      "original_language": "en",
+      "original_title": "Kickboxer 3: The Art of War",
+      "overview": "자선 경기 참석차 리오로 가던 킥복싱 선수 데이빗 슬로안(David Sloan: 사샤 미첼 분)과 그의 트레이너이자 정신적 스승인 지안(Xian: 데니스 찬 분)은 고아 마르코스(Marcos: 노아 베르두주코 분)와 이자벨라(Isabella: 알레테아 미란다 분)와 친구가 된다. 경기는 잘 진행되지만 아르헨티나 선수 에릭 마틴(Martine: 이안 잭클린 분)은 데이빗의 정신을 교란시키려고 반칙을 하며 소란을 피운다. 시합 후 마틴의 메니저 레인(Lane: 리차드 코마 분)은 데이빗을 파티에 초대한다. 소녀들을 팔아 매음굴을 운영하는 레인은 이자벨라를 보자 납치한다. 마르코스는 데이빗에게 도움을 청하고 경찰에 가지만 경찰은 무관심하다. 수없이 많은 소녀들이 납치되고 있기 때문이다. 이자벨라를 찾는 과정에서 싸움이 생기고, 데이빗과 지안은 감옥에 갇힌다. 레인은 돈을 써서 두 사람을 풀어준다. 그리고는 제안을 한다. 시합에 지면 돈을 주겠다는 것이다. 이를 거절한 데이빗은 이자벨라를 찾아 거물급 브랑코에게 간다. 브랑코의 집에 진입하려고 싸움을 하지만 오페라에 가고 없었다. 브랑코 부부를 위협해서 이자벨라를 납치한 것이 레인임을 알게된다. 데이빗은 레인을 찾아가지만 이미 정보를 듣고 데이빗은 함정에 빠진다. 레인은 데이빗에게 훈련을 시켜서 힘을 빼 시합에 지도록 하려는 것이다. 시합은 다가오고 데이빗은 녹초가 되어 싸울 수가 없다. 지안이 약초로 치료해 주어 데이빗의 힘은 되살아난다. 잠시의 고전뒤 데이빗은 마틴을 때려 눕힌다. 빈털털이가 된 레인은 마지막으로 이자벨을 데리고 도망가려 한다. 그러나 데이빗은 그녀를 구해내고 레인에게 상금을 주기로 한다. 후에 레인의 집에 가서 다른 소녀들을 구해내지만 레인의 총부리에 마주서게 된다. 하지만 레인은 자기의 부하에게 당하고 데이빗은 상금을 소녀들과 마르코스 이자벨라 남매에게 주고는 미국으로 돌아간다.",
+      "poster_path": "/7K9Nh9ACZfSTn7ngMMAFELiyUr6.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        53
+      ],
+      "popularity": 9.964,
+      "release_date": "1992-06-11",
+      "video": false,
+      "vote_average": 5.031,
+      "vote_count": 97
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/1QQJdocwGjVjMipuHhZSRaV92b6.jpg",
+      "id": 50346,
+      "title": "어벤져 4",
+      "original_language": "en",
+      "original_title": "Kickboxer 4: The Aggressor",
+      "overview": "슬론(David Sloan: 사샤 밋첼 분)은 그의 오랜 숙적이자 형을 죽인 원수인 통포(Tong Po: 카멜 크리파 분)의 음모에 빠져 형의 살해범으로 몰려 감옥에 갇히게 되고 잔인한 악질인 통포는 그의 아내를 납치하여 그와 숙명적인 대결을 바라며 슬론을 궁지로 몰아넣는다. 통포는 킥복싱 챔피언으로 멕시코에서 마약의 대부로 군림한다. 정부당국에서는 통포를 제거하기 위해 슬론을 이용하려 한다. 살인혐의로 수감된 상황에서 슬론이 선택할 수 있는 방법은 아내를 구하기 위해 목숨을 건 죽음의 격투 경기에 참가하여 통포와 대결하는 것이다. 킥복싱을 비롯하여 용맹스런 모든 기술과 실제 경기를 보는 듯한 격렬한 격투장면을 보여주며 슬론은 전세계에서 모여든 용감한 선수들과 함께 목숨보다 귀한 사랑을 위해 아내를 구출하는 죽음의 경기를 시작한다.",
+      "poster_path": "/7zRXzWRBt1bCdJa0naOs5RX8PSC.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        18,
+        53,
+        10749
+      ],
+      "popularity": 9.535,
+      "release_date": "1994-07-27",
+      "video": false,
+      "vote_average": 4.974,
+      "vote_count": 95
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/9tjIgkkbajG2zMI4Yk21hpttXv0.jpg",
+      "id": 14609,
+      "title": "얼티밋 어벤져스",
+      "original_language": "en",
+      "original_title": "Ultimate Avengers: The Movie",
+      "overview": "수퍼 군인 혈청으로 탄생한 캡틴 아메리카는 2차 세계대전이 한창이던 1945년, 나치와 전투를 벌이던 중 북극의 빙하에 갇혀 냉동된다. 21세기가 되어 그의 혈액으로부터 수퍼 군인 혈청을 추출하려는 미군에 의해 다시 깨어난 그는 또 다시 거대한 악의 세력에 위협받는 세계를 구하기 위해 나서야할 상황을 맞이하는데...",
+      "poster_path": "/fKQqZEDmvKMCXEQztvMJHGou9dO.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        16,
+        10751,
+        12,
+        878
+      ],
+      "popularity": 11.575,
+      "release_date": "2006-02-21",
+      "video": false,
+      "vote_average": 6.76,
+      "vote_count": 313
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/sORO7a1cSghfWE5GD4cSJ0qTN8O.jpg",
+      "id": 521720,
+      "title": "어벤져스 그림: 시간 전쟁",
+      "original_language": "en",
+      "original_title": "Avengers Grimm: Time Wars",
+      "overview": "시공간의 균열로 인해 마법 세계와의 통로가 열렸다! 아틀란티스의 여왕 막다는 마법의 힘으로 온 세상을 손에 넣고자 한다. 이를 막기 위해 나타난 어벤져스들은 막다의 계략으로 차원의 틈에 휘말려 과거에 갇히고 만다. 여왕의 손에서 미래와 세상을 구하기 위한 최후의 전쟁이 시작된다!",
+      "poster_path": "/4ARjDBmYpOocL8kVTyWWSSzx5Df.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        28,
+        12,
+        14
+      ],
+      "popularity": 12.21,
+      "release_date": "2018-05-01",
+      "video": false,
+      "vote_average": 4.657,
+      "vote_count": 54
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/1r42uwYTbX7aOWxtS1qPCAdOBQJ.jpg",
+      "id": 257346,
+      "title": "어벤져스 컨피덴셜: 블랙 위도우 앤 퍼니셔",
+      "original_language": "ja",
+      "original_title": "アベンジャーズ コンフィデンシャル：ブラック・ウィドウ ＆ パニッシャー",
+      "overview": "지구의 안보가 위협당하는 위기의 상황에서 슈퍼히어로들을 불러모아 세상을 구하는, 일명 [어벤져스] 작전.  지구의 평화를 위협하는 적의 등장으로 인류가 위험에 처하자 국제평화유지기구인 쉴드 (S.H.I.E.L.D)의 국장 닉 퓨이는 [어벤져스] 작전을 위해 전 세계에 흩어져 있던 슈퍼히어로들을 찾아나선다. 아이언맨부터 토르, 헐크, 캡틴 아메리카는 물론, 쉴드의 요원인 블랙 위도우, 호크 아이까지, 최고의 슈퍼히어로들이 [어벤져스]의 멤버로 모이게 되지만, 각기 개성이 강한 이들의 만남은 예상치 못한 방향으로 흘러가는데…",
+      "poster_path": "/bsXC1PaRg8eEvVXCTVtNwLLvcyl.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        16,
+        878,
+        28
+      ],
+      "popularity": 19.661,
+      "release_date": "2014-03-25",
+      "video": false,
+      "vote_average": 6.3,
+      "vote_count": 221
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/r5uAQQahZzcTYyPdlomDggyxHkV.jpg",
+      "id": 538153,
+      "title": "어벤져스 오브 저스티스",
+      "original_language": "en",
+      "original_title": "Avengers of Justice: Farce Wars",
+      "overview": "은하계 최강의 빌런 조크스터는 태양을 없애 지구에 새로운 빙하기를 불러일으키고자 한다. 슈퍼히어로 슈퍼배트는 히어로 동료들과 함께 조크스터에 맞서 지구를 지켜내야만 한다. 이제 전 인류의 운명이 걸린 최후의 대결이 시작된다.",
+      "poster_path": "/yymsCwKPbJIF1xcl2ih8fl7OxAa.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        35,
+        14,
+        28
+      ],
+      "popularity": 7.075,
+      "release_date": "2018-07-20",
+      "video": false,
+      "vote_average": 4.0,
+      "vote_count": 13
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/8N91uYwrr1uepEKbmym1tgfXlzS.jpg",
+      "id": 14613,
+      "title": "넥스트 어벤져스: 히어로즈 오브 투모로우",
+      "original_language": "en",
+      "original_title": "Next Avengers: Heroes of Tomorrow",
+      "overview": "울트론의 세력 확장을 피해 숨어 지내던 어벤져의 아이들은 우연히 자신들의 운명을 깨닫고 울트론에게 맞서 싸우기로 결심한다.",
+      "poster_path": "/fpG1NDbcLV2a7c8X7LC4FPISBT7.jpg",
+      "media_type": "movie",
+      "genre_ids": [
+        16,
+        10751,
+        28,
+        12,
+        878
+      ],
+      "popularity": 10.828,
+      "release_date": "2008-09-02",
+      "video": false,
+      "vote_average": 6.9,
+      "vote_count": 236
+    },
+    {
+      "adult": false,
+      "backdrop_path": "/eToeY9TLq4xd4kOLnuYFccH0S3H.jpg",
+      "id": 112851,
+      "name": "레고 마블 어벤져스: 기후위기",
+      "original_language": "en",
+      "original_name": "LEGO Marvel Avengers: Climate Conundrum",
+      "overview": "기후 환경 인식 및 지구 환경 오염 정화 연합 연례 회의에 참석한 토니 스타크와 브루스 배너는 지구 환경을 개선할 발명품을 출품하고 저스틴 해머와 승부를 겨룬다. 그런데 정체를 알 수 없는 비밀 요원의 등장으로 참가자들의 발명품 발표가 엉망이 되자 저스틴은 토니가 방해 공작을 폈다고 의심하기 시작하는데…",
+      "poster_path": "/yeCEBB9eLeJ4nmj00ePD7eqeWYx.jpg",
+      "media_type": "tv",
+      "genre_ids": [
+        16,
+        10762,
+        10751,
+        10759
+      ],
+      "popularity": 2.916,
+      "first_air_date": "2020-11-01",
+      "vote_average": 4.2,
+      "vote_count": 5,
+      "origin_country": [
+        "US"
+      ]
+    }
+  ],
+  "total_pages": 2,
+  "total_results": 23
+}
