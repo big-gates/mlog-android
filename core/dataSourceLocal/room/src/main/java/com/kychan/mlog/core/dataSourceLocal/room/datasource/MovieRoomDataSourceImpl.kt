@@ -23,7 +23,7 @@ class MovieRoomDataSourceImpl @Inject constructor(
 ): MovieRoomDataSource {
 
     override fun getMovie(movieTypeId: Int): PagingSource<Int, MovieVO> {
-        return movieDao.getMovie(movieTypeId)
+        return movieDao.getMovies(movieTypeId)
     }
 
     @Transaction
