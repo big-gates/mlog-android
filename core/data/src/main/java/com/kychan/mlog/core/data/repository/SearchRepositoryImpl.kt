@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.kychan.mlog.core.data.mapper.toRecentSearchEntity
 import com.kychan.mlog.core.data.mediator.SearchMovieMediator
-import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
+import com.kychan.mlog.core.dataSourceLocal.room.datasource.MovieRoomDataSource
 import com.kychan.mlog.core.dataSourceLocal.room.model.RecentSearchEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.toDomain
 import com.kychan.mlog.core.dataSourceLocal.room.model.update
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(
     private val tmdbDataSource: TMDBDataSource,
-    private val roomDataSource: RoomDataSource
+    private val movieRoomDataSource: MovieRoomDataSource
 ): SearchRepository {
     override fun getSearch(
         language: Language,
@@ -39,20 +39,20 @@ class SearchRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateRecentSearch(text: String) {
-        roomDataSource.getRecentSearch(text).firstOrNull()?.let {
-            roomDataSource.updateRecentSearch(it.update())
-        }?: roomDataSource.updateRecentSearch(text.toRecentSearchEntity())
+        movieRoomDataSource.getRecentSearch(text).firstOrNull()?.let {
+            movieRoomDataSource.updateRecentSearch(it.update())
+        }?: movieRoomDataSource.updateRecentSearch(text.toRecentSearchEntity())
     }
 
     override fun getRecentSearch(): Flow<List<RecentSearch>> {
-        return roomDataSource.getRecentSearches().map { it.map(RecentSearchEntity::toDomain) }
+        return movieRoomDataSource.getRecentSearches().map { it.map(RecentSearchEntity::toDomain) }
     }
 
     override suspend fun deleteAllRecentSearch() {
-        roomDataSource.deleteAllRecentSearch()
+        movieRoomDataSource.deleteAllRecentSearch()
     }
 
     override suspend fun deleteRecentSearch(id: Int) {
-        roomDataSource.deleteRecentSearch(id)
+        movieRoomDataSource.deleteRecentSearch(id)
     }
 }
