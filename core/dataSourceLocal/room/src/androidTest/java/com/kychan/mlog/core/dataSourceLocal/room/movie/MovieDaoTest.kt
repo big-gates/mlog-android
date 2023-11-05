@@ -21,35 +21,6 @@ class MovieDaoTest {
 
     private lateinit var movieDao: MovieDao
     private lateinit var db: MlogDatabase
-    private val mockMovieEntities = listOf(
-        MovieEntity(
-            id = 13,
-            adult = false,
-            backdropPath = "/qdIMHd4sEfJSckfVJfKQvisL02a.jpg",
-            originalTitle = "Forrest Gump",
-            posterPath = "/xdJxoq0dtkchOkUz5UVKuxn7a2V.jpg",
-            title = "포레스트 검프",
-            voteAverage = 8.5
-        ),
-        MovieEntity(
-            id = 98,
-            adult = false,
-            backdropPath = "/3ZVEtQxVPpEp5LNpAULDcxadTU3.jpg",
-            originalTitle = "Gladiator",
-            posterPath = "/yemF0xxGU56Pf3JXxVr4C6kuKng.jpg",
-            title = "글래디에이터",
-            voteAverage = 8.2
-        ),
-        MovieEntity(
-            id = 105,
-            adult = false,
-            backdropPath = "/3lbTiIN8cVonMUQwaeh5nvn61lr.jpg",
-            originalTitle = "Back to the Future",
-            posterPath = "/7gGicAJdHRzaUd6qLjH5bSW4Cgi.jpg",
-            title = "빽 투 더 퓨쳐",
-            voteAverage = 8.3
-        )
-    )
 
     @Before
     fun createDb() {
