@@ -6,6 +6,9 @@ import com.kychan.mlog.core.dataSourceLocal.room.dao.MyMovieDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MyRatedDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MyWantToWatchDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.SearchDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.SyncLogDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.TagDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.WatchProviderDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,4 +47,19 @@ object DaosModule {
     fun providesSearchDao(
         database: MlogDatabase
     ): SearchDao = database.searchDao()
+
+    @Provides
+    fun providesTagDao(
+        database: MlogDatabase
+    ): TagDao = database.tagDao()
+
+    @Provides
+    fun providesSyncLogDao(
+        database: MlogDatabase
+    ): SyncLogDao = database.syncLogDao()
+
+    @Provides
+    fun providesWatchProviderDao(
+        database: MlogDatabase
+    ): WatchProviderDao = database.watchProviderDao()
 }

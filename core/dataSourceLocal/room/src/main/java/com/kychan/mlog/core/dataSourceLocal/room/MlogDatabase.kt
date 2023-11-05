@@ -10,6 +10,9 @@ import com.kychan.mlog.core.dataSourceLocal.room.dao.MyMovieDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MyRatedDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MyWantToWatchDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.SearchDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.SyncLogDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.TagDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.WatchProviderDao
 import com.kychan.mlog.core.dataSourceLocal.room.model.SyncLogEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.*
 
@@ -35,6 +38,9 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.*
 abstract class MlogDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
     abstract fun searchDao(): SearchDao
+    abstract fun tagDao(): TagDao
+    abstract fun syncLogDao(): SyncLogDao
+    abstract fun watchProviderDao(): WatchProviderDao
     abstract fun myMovieDao(): MyMovieDao
     abstract fun myRatedDao(): MyRatedDao
     abstract fun myWantToWatchDao(): MyWantToWatchDao

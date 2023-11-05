@@ -6,10 +6,13 @@ import com.kychan.mlog.core.dataSourceLocal.room.dao.MyMovieDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MyRatedDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MyWantToWatchDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.SearchDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.SyncLogDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.TagDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.WatchProviderDao
 import com.kychan.mlog.core.dataSourceLocal.room.datasource.MyMovieRoomDataSource
 import com.kychan.mlog.core.dataSourceLocal.room.datasource.MyMovieRoomDataSourceImpl
-import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
-import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSourceImpl
+import com.kychan.mlog.core.dataSourceLocal.room.datasource.MovieRoomDataSource
+import com.kychan.mlog.core.dataSourceLocal.room.datasource.MovieRoomDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,7 +28,16 @@ object DataSourceModule {
     fun providesRoomDataSource(
         movieDao: MovieDao,
         searchDao: SearchDao,
-    ): RoomDataSource = RoomDataSourceImpl(movieDao, searchDao)
+        tagDao: TagDao,
+        watchProviderDao: WatchProviderDao,
+        syncLogDao: SyncLogDao,
+    ): MovieRoomDataSource = MovieRoomDataSourceImpl(
+        movieDao = movieDao,
+        searchDao = searchDao,
+        tagDao = tagDao,
+        syncLogDao = syncLogDao,
+        watchProviderDao = watchProviderDao
+    )
 
     @Provides
     @Singleton
