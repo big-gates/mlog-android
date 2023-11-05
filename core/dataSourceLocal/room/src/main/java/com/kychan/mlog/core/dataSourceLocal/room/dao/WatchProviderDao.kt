@@ -20,4 +20,12 @@ abstract class WatchProviderDao {
         """,
     )
     abstract fun getMovieIds(watchProviderId: Int): Flow<List<Int>>
+
+    @Query(
+        value = """
+            SELECT *
+            FROM watch_provider
+        """,
+    )
+    abstract fun getWatchProviders(): Flow<List<WatchProviderEntity>>
 }
