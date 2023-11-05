@@ -7,44 +7,6 @@ import java.util.*
 
 @Dao
 abstract class MyMovieDao {
-    @Query("""
-            SELECT *
-            FROM my_movie AS m
-            INNER JOIN rated AS r ON m.id = r.my_movie_id
-        """
-    )
-    abstract fun getMyRatedMovies(): Flow<List<MyRatedMoviesVO>>
-
-    @Query("SELECT * FROM my_movie AS m INNER JOIN want_to_watches AS w ON m.id = w.my_movie_id")
-    abstract fun getMyWantToWatchMovies(): Flow<List<MyWantToWatchMovieVO>>
-
-    @Transaction
-    open suspend fun updateMyRatedMovie(
-        myMovieEntity: MyMovieEntity,
-        ratedEntity: RatedEntity,
-        myGenres: List<Int>
-    ) {
-        upsertMyMovie(myMovieEntity)
-        upsertTags(myGenres.map { MyGenresEntity(genreId = it, movieId = myMovieEntity.id) })
-        if (ratedEntity.rated < 0f) { // rate : 사용자가 0 입력 시 -1로 저장 후 삭제 로직 실행
-            deleteMyRatedMovie(myMovieEntity, ratedEntity)
-        } else (
-            existToMyRatedMovie(myMovieEntity.id)?.let {
-                upsertRatedMovie(ratedEntity.copy(createdAt = it.createdAt))
-            } ?: upsertRatedMovie(ratedEntity)
-        )
-    }
-
-    @Transaction
-    open suspend fun insertMyWantMovie(
-        myMovieEntity: MyMovieEntity,
-        wantToWatchesEntity: WantToWatchesEntity,
-        myGenres: List<Int>
-    ) {
-        upsertMyMovie(myMovieEntity)
-        upsertTags(myGenres.map { MyGenresEntity(genreId = it, movieId = myMovieEntity.id) })
-        insertWantMovie(wantToWatchesEntity)
-    }
 
     @Transaction
     open suspend fun deleteMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity) {
@@ -65,29 +27,8 @@ abstract class MyMovieDao {
     @Upsert
     abstract suspend fun upsertMyMovie(myMovieEntity: MyMovieEntity)
 
-    @Upsert
-    abstract suspend fun upsertRatedMovie(ratedEntity: RatedEntity)
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insertWantMovie(wantToWatchesEntity: WantToWatchesEntity)
-
     @Delete
     abstract suspend fun deleteMyMovie(myMovieEntity: MyMovieEntity)
-
-    @Delete
-    abstract suspend fun deleteWantMovie(wantToWatchesEntity: WantToWatchesEntity)
-
-    @Delete
-    abstract suspend fun deleteRatedMovie(ratedEntity: RatedEntity)
-
-    @Query("SELECT * FROM rated AS r WHERE r.my_movie_id = (:id)")
-    abstract suspend fun existToMyRatedMovie(id: Int) : RatedEntity?
-
-    @Query("SELECT * FROM want_to_watches AS w WHERE w.my_movie_id = (:id)")
-    abstract suspend fun existToMyWantMovie(id: Int) : WantToWatchesEntity?
-
-    @Upsert
-    abstract suspend fun upsertTags(entities: List<MyGenresEntity>)
 
     @Query(
         """
