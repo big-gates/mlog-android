@@ -2,6 +2,7 @@ package com.kychan.mlog.core.dataSourceLocal.room.datasource
 
 import androidx.paging.PagingSource
 import androidx.room.Transaction
+import com.kychan.mlog.core.common.extenstions.toDateFormat
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.SearchDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.SyncLogDao
@@ -30,20 +31,20 @@ class MovieRoomDataSourceImpl @Inject constructor(
     override suspend fun clearMlogMoviesUpdateSyncLogUpdatedAt() {
         val ids = watchProviderDao.getMovieIds(WatchProvider.MLOG_ID).first()
         movieDao.deleteMovies(ids)
-        syncLogDao.clearSyncLog(SyncLogType.Mlog_Movie)
+        clearSyncLog(SyncLogType.Mlog_Movie)
     }
 
     @Transaction
     override suspend fun clearNetflixMoviesUpdateSyncLogUpdatedAt() {
         val ids = watchProviderDao.getMovieIds(WatchProvider.NETFLIX_ID).first()
         movieDao.deleteMovies(ids)
-        syncLogDao.clearSyncLog(SyncLogType.Netflix_Movie)
+        clearSyncLog(SyncLogType.Netflix_Movie)
     }
 
     override suspend fun clearWatchaMoviesUpdateSyncLogUpdatedAt() {
         val ids = watchProviderDao.getMovieIds(WatchProvider.WATCHA_ID).first()
         movieDao.deleteMovies(ids)
-        syncLogDao.clearSyncLog(SyncLogType.Watcha_Movie)
+        clearSyncLog(SyncLogType.Watcha_Movie)
     }
 
     override suspend fun getSyncLog(syncLogType: SyncLogType): SyncLogEntity {
@@ -107,5 +108,13 @@ class MovieRoomDataSourceImpl @Inject constructor(
 
     override suspend fun deleteRecentSearch(id: Int) {
         searchDao.deleteRecentSearch(id)
+    }
+
+    private suspend fun clearSyncLog(syncLogType: SyncLogType){
+        val syncLog = getSyncLog(syncLogType)
+        syncLogDao.upsertSyncLog(syncLog.copy(
+            nextKey = 1,
+            updatedAt = System.currentTimeMillis().toDateFormat()
+        ))
     }
 }
