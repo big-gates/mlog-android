@@ -2,6 +2,8 @@ package com.kychan.mlog.core.dataSourceLocal.room.movie
 
 import com.kychan.mlog.core.dataSourceLocal.room.model.GenresEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.MovieEntity
+import com.kychan.mlog.core.dataSourceLocal.room.model.WatchProviderEntity
+import com.kychan.mlog.core.model.WatchProvider
 
 internal val mockMovieEntities = listOf(
     MovieEntity(
@@ -31,6 +33,44 @@ internal val mockMovieEntities = listOf(
         title = "빽 투 더 퓨쳐",
         voteAverage = 8.3
     )
+)
+
+internal val mockWatchProviderEntities = listOf(
+    WatchProviderEntity(
+        watchProviderId = WatchProvider.MLOG_ID,
+        movieId = 13,
+        rank = 1
+    ),
+    WatchProviderEntity(
+        watchProviderId = WatchProvider.MLOG_ID,
+        movieId = 98,
+        rank = 2
+    ),
+    WatchProviderEntity(
+        watchProviderId = WatchProvider.MLOG_ID,
+        movieId = 105,
+        rank = 3
+    ),
+    WatchProviderEntity(
+        watchProviderId = WatchProvider.WATCHA_ID,
+        movieId = 13,
+        rank = 1
+    ),
+    WatchProviderEntity(
+        watchProviderId = WatchProvider.WATCHA_ID,
+        movieId = 98,
+        rank = 2
+    ),
+    WatchProviderEntity(
+        watchProviderId = WatchProvider.NETFLIX_ID,
+        movieId = 13,
+        rank = 2
+    ),
+    WatchProviderEntity(
+        watchProviderId = WatchProvider.NETFLIX_ID,
+        movieId = 105,
+        rank = 1
+    ),
 )
 
 internal val sameMovieIdAndDifferentGenreIdMockTagEntities = listOf(

@@ -44,7 +44,7 @@ class RetrofitTMDBTestApi: RetrofitTMDBApi {
     ): MovieSearchRes {
         return when(query) {
             "어벤져" -> readFile("search_movie_avg_${page}_${language}_${watchRegion}.json", MovieSearchRes::class.java)
-            else -> readFile("search_movie_empty_${page}_${language}_${watchRegion}.json", MovieSearchRes::class.java)
+            else -> readFile("search_movie_${page}_${language}_${watchRegion}_empty.json", MovieSearchRes::class.java)
         }
     }
 
