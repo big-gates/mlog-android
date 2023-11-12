@@ -8,21 +8,8 @@ import java.util.*
 @Dao
 abstract class MyMovieDao {
 
-    @Transaction
-    open suspend fun deleteMyWantMovie(myMovieEntity: MyMovieEntity, wantToWatchesEntity: WantToWatchesEntity) {
-        deleteWantMovie(wantToWatchesEntity)
-        if (existToMyRatedMovie(myMovieEntity.id) == null) {
-            deleteMyMovie(myMovieEntity)
-        }
-    }
-
-    @Transaction
-    open suspend fun deleteMyRatedMovie(myMovieEntity: MyMovieEntity, ratedEntity: RatedEntity) {
-        deleteRatedMovie(ratedEntity)
-        if (existToMyWantMovie(myMovieEntity.id) == null) {
-            deleteMyMovie(myMovieEntity)
-        }
-    }
+    @Query("SELECT * FROM my_movie")
+    abstract fun getMyMovies(): Flow<List<MyMovieEntity>>
 
     @Upsert
     abstract suspend fun upsertMyMovie(myMovieEntity: MyMovieEntity)
