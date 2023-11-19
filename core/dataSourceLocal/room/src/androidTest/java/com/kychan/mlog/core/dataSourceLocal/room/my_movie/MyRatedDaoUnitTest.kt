@@ -25,21 +25,6 @@ class MyRatedDaoUnitTest {
     private lateinit var myRatedDao: MyRatedDao
     private lateinit var db: MlogDatabase
 
-    private val myRatedList = listOf(
-        RatedEntity(
-            id = 961268,
-            myMovieId = 961268,
-            rated = 4.0f,
-            comment = "",
-        ),
-        RatedEntity(
-            id = 1151534,
-            myMovieId = 1151534,
-            rated = 3.5f,
-            comment = "",
-        )
-    )
-
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()

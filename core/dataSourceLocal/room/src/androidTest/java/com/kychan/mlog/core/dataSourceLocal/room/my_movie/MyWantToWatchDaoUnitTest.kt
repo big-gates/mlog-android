@@ -26,19 +26,6 @@ class MyWantToWatchDaoUnitTest {
     private lateinit var myWantToWatchDao: MyWantToWatchDao
     private lateinit var db: MlogDatabase
 
-    private val myWantToWatchList = listOf(
-        WantToWatchesEntity(
-            id = 961268,
-            myMovieId = 961268,
-            createdAt = System.currentTimeMillis().toDateTimeFormat(),
-        ),
-        WantToWatchesEntity(
-            id = 1151534,
-            myMovieId = 1151534,
-            createdAt = System.currentTimeMillis().toDateTimeFormat(),
-        ),
-    )
-
     @Before
     fun createDb() {
         val context = ApplicationProvider.getApplicationContext<Context>()

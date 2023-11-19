@@ -6,7 +6,10 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.kychan.mlog.core.dataSourceLocal.room.MlogDatabase
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MyMovieDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.MyRatedDao
+import com.kychan.mlog.core.dataSourceLocal.room.dao.MyWantToWatchDao
 import com.kychan.mlog.core.dataSourceLocal.room.model.MyMovieEntity
+import com.kychan.mlog.core.dataSourceLocal.room.model.MyMovieRatedAndWantedVO
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -19,6 +22,8 @@ import java.io.IOException
 @RunWith(AndroidJUnit4::class)
 class MyMovieDaoUnitTest {
     private lateinit var myMovieDao: MyMovieDao
+    private lateinit var myRatedDao: MyRatedDao
+    private lateinit var myWantToWatchDao: MyWantToWatchDao
     private lateinit var db: MlogDatabase
 
     @Before
@@ -27,6 +32,8 @@ class MyMovieDaoUnitTest {
         db = Room.inMemoryDatabaseBuilder(
             context, MlogDatabase::class.java).build()
         myMovieDao = db.myMovieDao()
+        myRatedDao = db.myRatedDao()
+        myWantToWatchDao = db.myWantToWatchDao()
     }
 
     @After
@@ -110,6 +117,32 @@ class MyMovieDaoUnitTest {
 
         //then
         val expected = data - deleteData
+        assertEquals(expected, result)
+    }
+
+
+    @Test
+    fun get_Rated_and_Want_to_watch_data_for_the_movie_with_id_961268() = runTest {
+
+        //given
+        val findMovieId = 961268
+
+        //when
+        myMovieList.forEach { myMovieDao.upsertMyMovie(it) }
+        myRatedList.forEach { myRatedDao.upsertRatedMovie(it) }
+        myWantToWatchList.forEach { myWantToWatchDao.insertWantMovie(it) }
+
+        val result = myMovieDao.getMyMovieRatedAndWanted(findMovieId).first()
+
+
+        //then
+        val findMovieRated = myRatedList.find { it.myMovieId == findMovieId }
+        val findMovieWantToWatch = myWantToWatchList.find { it.myMovieId == findMovieId }
+        val expected = MyMovieRatedAndWantedVO(
+            rated = findMovieRated?.rated,
+            comment = findMovieRated?.comment,
+            wantToMovieId = findMovieWantToWatch?.id,
+        )
         assertEquals(expected, result)
     }
 }
