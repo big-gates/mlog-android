@@ -1,0 +1,408 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "adult": false,
+            "backdrop_path": "/jv4tiXAgaArMQo57jFMjvBEjmoa.jpg",
+            "genre_ids": [
+                28,
+                18,
+                12
+            ],
+            "id": 980489,
+            "original_language": "en",
+            "original_title": "Gran Turismo",
+            "overview": "",
+            "popularity": 2680.593,
+            "poster_path": "/fo9yzLP5HUd0sUtNf5rpVqony0I.jpg",
+            "release_date": "2023-09-20",
+            "title": "Gran Turismo",
+            "video": false,
+            "vote_average": 8.1,
+            "vote_count": 680
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/8pjWz2lt29KyVGoq1mXYu6Br7dE.jpg",
+            "genre_ids": [
+                28,
+                878,
+                27
+            ],
+            "id": 615656,
+            "original_language": "en",
+            "original_title": "Meg 2: The Trench",
+            "overview": "",
+            "popularity": 1882.661,
+            "poster_path": "/4m1Au3YkjqsxF8iwQy0fPYSxE0h.jpg",
+            "release_date": "2023-08-15",
+            "title": "Meg 2: The Trench",
+            "video": false,
+            "vote_average": 6.9,
+            "vote_count": 2060
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/53z2fXEKfnNg2uSOPss2unPBGX1.jpg",
+            "genre_ids": [
+                27,
+                9648,
+                53
+            ],
+            "id": 968051,
+            "original_language": "en",
+            "original_title": "The Nun II",
+            "overview": "",
+            "popularity": 1692.778,
+            "poster_path": "/c9kVD7W8CT5xe4O3hQ7bFWwk68U.jpg",
+            "release_date": "2023-09-27",
+            "title": "The Nun II",
+            "video": false,
+            "vote_average": 6.5,
+            "vote_count": 362
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/4XM8DUTQb3lhLemJC51Jx4a2EuA.jpg",
+            "genre_ids": [
+                28,
+                80,
+                53
+            ],
+            "id": 385687,
+            "original_language": "en",
+            "original_title": "Fast X",
+            "overview": "",
+            "popularity": 1442.076,
+            "poster_path": "/fiVW06jE7z9YnO4trhaMEdclSiC.jpg",
+            "release_date": "2023-05-17",
+            "title": "Fast X",
+            "video": false,
+            "vote_average": 7.3,
+            "vote_count": 3897
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/iIvQnZyzgx9TkbrOgcXx0p7aLiq.jpg",
+            "genre_ids": [
+                27,
+                53
+            ],
+            "id": 1008042,
+            "original_language": "en",
+            "original_title": "Talk to Me",
+            "overview": "",
+            "popularity": 1458.514,
+            "poster_path": "/kdPMUMJzyYAc4roD52qavX0nLIC.jpg",
+            "release_date": "2023-11-01",
+            "title": "Talk to Me",
+            "video": false,
+            "vote_average": 7.2,
+            "vote_count": 965
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/ctMserH8g2SeOAnCw5gFjdQF8mo.jpg",
+            "genre_ids": [
+                35,
+                12,
+                14
+            ],
+            "id": 346698,
+            "original_language": "en",
+            "original_title": "Barbie",
+            "overview": "",
+            "popularity": 1336.845,
+            "poster_path": "/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg",
+            "release_date": "2023-07-19",
+            "title": "Barbie",
+            "video": false,
+            "vote_average": 7.3,
+            "vote_count": 5130
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/4fLZUr1e65hKPPVw0R3PmKFKxj1.jpg",
+            "genre_ids": [
+                16,
+                35,
+                10751,
+                14,
+                10749
+            ],
+            "id": 976573,
+            "original_language": "en",
+            "original_title": "Elemental",
+            "overview": "",
+            "popularity": 1008.942,
+            "poster_path": "/4Y1WNkd88JXmGfhtWR7dmDAo1T2.jpg",
+            "release_date": "2023-06-14",
+            "title": "Elemental",
+            "video": false,
+            "vote_average": 7.8,
+            "vote_count": 2462
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/c6Splshb8lb2Q9OvUfhpqXl7uP0.jpg",
+            "genre_ids": [
+                28,
+                53
+            ],
+            "id": 717930,
+            "original_language": "en",
+            "original_title": "Kandahar",
+            "overview": "",
+            "popularity": 876.479,
+            "poster_path": "/lCanGgsqF4xD2WA5NF8PWeT3IXd.jpg",
+            "release_date": "2023-09-20",
+            "title": "Kandahar",
+            "video": false,
+            "vote_average": 6.9,
+            "vote_count": 579
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/35z8hWuzfFUZQaYog8E9LsXW3iI.jpg",
+            "genre_ids": [
+                12,
+                28
+            ],
+            "id": 335977,
+            "original_language": "en",
+            "original_title": "Indiana Jones and the Dial of Destiny",
+            "overview": "",
+            "popularity": 833.684,
+            "poster_path": "/y4zAHCRmS1wof5bUmEM9CZOYQ04.jpg",
+            "release_date": "2023-06-28",
+            "title": "Indiana Jones and the Dial of Destiny",
+            "video": false,
+            "vote_average": 6.7,
+            "vote_count": 1774
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/2vFuG6bWGyQUzYS9d69E5l85nIz.jpg",
+            "genre_ids": [
+                28,
+                12,
+                878
+            ],
+            "id": 667538,
+            "original_language": "en",
+            "original_title": "Transformers: Rise of the Beasts",
+            "overview": "",
+            "popularity": 715.526,
+            "poster_path": "/gPbM0MK8CP8A174rmUwGsADNYKD.jpg",
+            "release_date": "2023-06-06",
+            "title": "Transformers: Rise of the Beasts",
+            "video": false,
+            "vote_average": 7.5,
+            "vote_count": 3280
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/4HodYYKEIsGOdinkGi2Ucz6X9i0.jpg",
+            "genre_ids": [
+                16,
+                28,
+                12
+            ],
+            "id": 569094,
+            "original_language": "en",
+            "original_title": "Spider-Man: Across the Spider-Verse",
+            "overview": "",
+            "popularity": 685.126,
+            "poster_path": "/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg",
+            "release_date": "2023-05-31",
+            "title": "Spider-Man: Across the Spider-Verse",
+            "video": false,
+            "vote_average": 8.4,
+            "vote_count": 4420
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/yF1eOkaYvwiORauRCPWznV9xVvi.jpg",
+            "genre_ids": [
+                28,
+                12,
+                878
+            ],
+            "id": 298618,
+            "original_language": "en",
+            "original_title": "The Flash",
+            "overview": "",
+            "popularity": 616.365,
+            "poster_path": "/4vjKJRcO1LO36JZYMbbjbx421YN.jpg",
+            "release_date": "2023-06-13",
+            "title": "The Flash",
+            "video": false,
+            "vote_average": 6.9,
+            "vote_count": 2973
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/iQcCAm8hKWZyUntqrvzyEGtXyJl.jpg",
+            "genre_ids": [
+                878,
+                28,
+                53
+            ],
+            "id": 670292,
+            "original_language": "en",
+            "original_title": "The Creator",
+            "overview": "",
+            "popularity": 671.371,
+            "poster_path": "/vBZ0qvaRxqEhZwl6LWmruJqWE8Z.jpg",
+            "release_date": "2023-10-03",
+            "title": "The Creator",
+            "video": false,
+            "vote_average": 7.4,
+            "vote_count": 135
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/9n2tJBplPbgR2ca05hS5CKXwP2c.jpg",
+            "genre_ids": [
+                16,
+                10751,
+                12,
+                14,
+                35
+            ],
+            "id": 502356,
+            "original_language": "en",
+            "original_title": "The Super Mario Bros. Movie",
+            "overview": "",
+            "popularity": 548.661,
+            "poster_path": "/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",
+            "release_date": "2023-04-26",
+            "title": "The Super Mario Bros. Movie",
+            "video": false,
+            "vote_average": 7.8,
+            "vote_count": 6758
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/w2nFc2Rsm93PDkvjY4LTn17ePO0.jpg",
+            "genre_ids": [
+                16,
+                35,
+                28
+            ],
+            "id": 614930,
+            "original_language": "en",
+            "original_title": "Teenage Mutant Ninja Turtles: Mutant Mayhem",
+            "overview": "",
+            "popularity": 534.841,
+            "poster_path": "/ueO9MYIOHO7M1PiMUeX74uf8fB9.jpg",
+            "release_date": "2023-09-14",
+            "title": "Teenage Mutant Ninja Turtles: Mutant Mayhem",
+            "video": false,
+            "vote_average": 7.3,
+            "vote_count": 662
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/7I6VUdPj6tQECNHdviJkUHD2u89.jpg",
+            "genre_ids": [
+                28,
+                53,
+                80
+            ],
+            "id": 603692,
+            "original_language": "en",
+            "original_title": "John Wick: Chapter 4",
+            "overview": "",
+            "popularity": 580.781,
+            "poster_path": "/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg",
+            "release_date": "2023-03-22",
+            "title": "John Wick: Chapter 4",
+            "video": false,
+            "vote_average": 7.8,
+            "vote_count": 4648
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/fm6KqXpk3M2HVveHwCrBSSBaO0V.jpg",
+            "genre_ids": [
+                18,
+                36
+            ],
+            "id": 872585,
+            "original_language": "en",
+            "original_title": "Oppenheimer",
+            "overview": "",
+            "popularity": 499.868,
+            "poster_path": "/ptpr0kGAckfQkJeJIt8st5dglvd.jpg",
+            "release_date": "2023-08-15",
+            "title": "Oppenheimer",
+            "video": false,
+            "vote_average": 8.3,
+            "vote_count": 3766
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/rMvPXy8PUjj1o8o1pzgQbdNCsvj.jpg",
+            "genre_ids": [
+                28,
+                12,
+                53
+            ],
+            "id": 299054,
+            "original_language": "en",
+            "original_title": "Expend4bles",
+            "overview": "",
+            "popularity": 443.124,
+            "poster_path": "/nbrqj9q8WubD3QkYm7n3GhjN7kE.jpg",
+            "release_date": "2023-10-18",
+            "title": "Expend4bles",
+            "video": false,
+            "vote_average": 6.6,
+            "vote_count": 90
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/fgsHxz21B27hOOqQBiw9L6yWcM7.jpg",
+            "genre_ids": [
+                27,
+                9648,
+                53
+            ],
+            "id": 439079,
+            "original_language": "en",
+            "original_title": "The Nun",
+            "overview": "",
+            "popularity": 551.672,
+            "poster_path": "/sFC1ElvoKGdHJIWRpNB3xWJ9lJA.jpg",
+            "release_date": "2018-09-05",
+            "title": "The Nun",
+            "video": false,
+            "vote_average": 5.9,
+            "vote_count": 6089
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/7VEUOEfRzzrQfWddlIyLUKvh6Nf.jpg",
+            "genre_ids": [
+                12,
+                10751,
+                14,
+                10749
+            ],
+            "id": 447277,
+            "original_language": "en",
+            "original_title": "The Little Mermaid",
+            "overview": "",
+            "popularity": 478.441,
+            "poster_path": "/ym1dxyOk4jFcSl4Q2zmRrA5BEEN.jpg",
+            "release_date": "2023-05-24",
+            "title": "The Little Mermaid",
+            "video": false,
+            "vote_average": 6.5,
+            "vote_count": 2158
+        }
+    ],
+    "total_pages": 1027,
+    "total_results": 20530
+}
