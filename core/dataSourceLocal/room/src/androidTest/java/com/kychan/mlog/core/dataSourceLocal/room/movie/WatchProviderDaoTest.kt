@@ -84,14 +84,14 @@ class WatchProviderDaoTest {
         //given
         val data = mockWatchProviderEntities
         watchProviderDao.upsertWatchProviders(data)
-        val watchProvider = watchProviderDao.getMovieIds(WatchProvider.MLOG_ID).first()
+        val watchProvider = watchProviderDao.getMovieIds(WatchProvider.NETFLIX_ID).first()
         assertTrue(watchProvider.isNotEmpty())
 
         //when
         movieDao.deleteMovies(mockMovieEntities.map { it.id })
 
         //then
-        val result = watchProviderDao.getMovieIds(WatchProvider.MLOG_ID).first()
+        val result = watchProviderDao.getMovieIds(WatchProvider.NETFLIX_ID).first()
         assertTrue(result.isEmpty())
     }
 
