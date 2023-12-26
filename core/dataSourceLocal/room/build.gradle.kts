@@ -12,6 +12,8 @@ android {
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     namespace = "com.kychan.mlog.core.dataSourceLocal.room"
@@ -29,4 +31,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     testImplementation(project(":core:testing"))
+    androidTestImplementation(project(":core:testing"))
 }

@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.kychan.mlog.core.data.mapper.toRecentSearchEntity
 import com.kychan.mlog.core.data.mediator.SearchMovieMediator
-import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
+import com.kychan.mlog.core.dataSourceLocal.room.datasource.SearchRoomDataSource
 import com.kychan.mlog.core.dataSourceLocal.room.model.RecentSearchEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.toDomain
 import com.kychan.mlog.core.dataSourceLocal.room.model.update
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(
     private val tmdbDataSource: TMDBDataSource,
-    private val roomDataSource: RoomDataSource
+    private val searchRoomDataSource: SearchRoomDataSource
 ): SearchRepository {
     override fun getSearch(
         language: Language,
@@ -39,20 +39,20 @@ class SearchRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateRecentSearch(text: String) {
-        roomDataSource.getRecentSearch(text).firstOrNull()?.let {
-            roomDataSource.updateRecentSearch(it.update())
-        }?: roomDataSource.updateRecentSearch(text.toRecentSearchEntity())
+        searchRoomDataSource.getRecentSearch(text).firstOrNull()?.let {
+            searchRoomDataSource.updateRecentSearch(it.update())
+        }?: searchRoomDataSource.updateRecentSearch(text.toRecentSearchEntity())
     }
 
     override fun getRecentSearch(): Flow<List<RecentSearch>> {
-        return roomDataSource.getRecentSearches().map { it.map(RecentSearchEntity::toDomain) }
+        return searchRoomDataSource.getRecentSearches().map { it.map(RecentSearchEntity::toDomain) }
     }
 
     override suspend fun deleteAllRecentSearch() {
-        roomDataSource.deleteAllRecentSearch()
+        searchRoomDataSource.deleteAllRecentSearch()
     }
 
     override suspend fun deleteRecentSearch(id: Int) {
-        roomDataSource.deleteRecentSearch(id)
+        searchRoomDataSource.deleteRecentSearch(id)
     }
 }

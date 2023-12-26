@@ -4,7 +4,7 @@ import androidx.paging.*
 import com.kychan.mlog.core.data.mediator.MLogMovieMediator
 import com.kychan.mlog.core.data.mediator.NetflixMovieMediator
 import com.kychan.mlog.core.data.mediator.WatchaMovieMediator
-import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
+import com.kychan.mlog.core.dataSourceLocal.room.datasource.MovieRoomDataSource
 import com.kychan.mlog.core.dataSourceLocal.room.model.MovieVO
 import com.kychan.mlog.core.dataSourceLocal.room.model.toDomain
 import com.kychan.mlog.core.dataSourceRemote.http.datasource.TMDBDataSource
@@ -16,17 +16,17 @@ import javax.inject.Inject
 @OptIn(ExperimentalPagingApi::class)
 class HomeRepositoryImpl @Inject constructor(
     private val tmdbDataSource: TMDBDataSource,
-    private val roomDataSource: RoomDataSource
+    private val movieRoomDataSource: MovieRoomDataSource
 ): HomeRepository {
     override fun getMlogMovie(): Flow<PagingData<Movie>> {
         return Pager(
             PagingConfig(20),
             remoteMediator = MLogMovieMediator(
-                roomDataSource = roomDataSource,
+                movieRoomDataSource = movieRoomDataSource,
                 tmdbDataSource = tmdbDataSource,
             )
         ) {
-            roomDataSource.getMovie(WatchProvider.MLOG_ID)
+            movieRoomDataSource.getMovie(WatchProvider.MLOG_ID)
         }.flow.map { paging ->
             paging.map(MovieVO::toDomain)
         }
@@ -36,11 +36,11 @@ class HomeRepositoryImpl @Inject constructor(
         return Pager(
             PagingConfig(20),
             remoteMediator = NetflixMovieMediator(
-                roomDataSource = roomDataSource,
+                movieRoomDataSource = movieRoomDataSource,
                 tmdbDataSource = tmdbDataSource,
             )
         ) {
-            roomDataSource.getMovie(WatchProvider.NETFLIX_ID)
+            movieRoomDataSource.getMovie(WatchProvider.NETFLIX_ID)
         }.flow.map { paging ->
             paging.map(MovieVO::toDomain)
         }
@@ -50,11 +50,11 @@ class HomeRepositoryImpl @Inject constructor(
         return Pager(
             PagingConfig(20),
             remoteMediator = WatchaMovieMediator(
-                roomDataSource = roomDataSource,
+                movieRoomDataSource = movieRoomDataSource,
                 tmdbDataSource = tmdbDataSource,
             )
         ) {
-            roomDataSource.getMovie(WatchProvider.WATCHA_ID)
+            movieRoomDataSource.getMovie(WatchProvider.WATCHA_ID)
         }.flow.map { paging ->
             paging.map(MovieVO::toDomain)
         }
