@@ -1,6 +1,7 @@
 package com.kychan.mlog.core.dataSourceLocal.room.my_movie
 
 import com.kychan.mlog.core.common.extenstions.toDateTimeFormat
+import com.kychan.mlog.core.dataSourceLocal.room.model.MyGenresEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.MyMovieEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.RatedEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.WantToWatchesEntity
@@ -63,5 +64,24 @@ internal val myWantToWatchList = listOf(
         id = 1151534,
         myMovieId = 1151534,
         createdAt = System.currentTimeMillis().toDateTimeFormat(),
+    ),
+)
+
+internal val myGenreList = mutableListOf(
+    MyGenresEntity(
+        genreId = 28,
+        movieId = 961268,
+    ),
+    MyGenresEntity(
+        genreId = 80,
+        movieId = 961268,
+    ),
+    MyGenresEntity(
+        genreId = 53,
+        movieId = 961268,
+    ),
+    MyGenresEntity(
+        genreId = 53,
+        movieId = 1151534,
     ),
 )

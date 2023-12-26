@@ -24,24 +24,6 @@ class MyGenresDaoUnitTest {
     private lateinit var myMovieDao: MyMovieDao
     private lateinit var myGenresDao: MyGenresDao
     private lateinit var db: MlogDatabase
-    private val myGenreList = mutableListOf(
-        MyGenresEntity(
-            genreId = 28,
-            movieId = 961268,
-        ),
-        MyGenresEntity(
-            genreId = 80,
-            movieId = 961268,
-        ),
-        MyGenresEntity(
-            genreId = 53,
-            movieId = 961268,
-        ),
-        MyGenresEntity(
-            genreId = 53,
-            movieId = 1151534,
-        ),
-    )
 
     @Before
     fun createDb() {
