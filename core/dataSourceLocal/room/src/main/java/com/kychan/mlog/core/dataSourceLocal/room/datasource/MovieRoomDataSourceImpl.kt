@@ -17,7 +17,6 @@ import javax.inject.Inject
 private const val DEFAULT_RESULT_COUNT = 20
 class MovieRoomDataSourceImpl @Inject constructor(
     private val movieDao: MovieDao,
-    private val searchDao: SearchDao,
     private val tagDao: TagDao,
     private val syncLogDao: SyncLogDao,
     private val watchProviderDao: WatchProviderDao
@@ -88,26 +87,6 @@ class MovieRoomDataSourceImpl @Inject constructor(
         val syncLog = getSyncLog(syncLogType)
         syncLogDao.upsertSyncLog(syncLog.copy(nextKey = currentKey + 1))
 
-    }
-
-    override suspend fun updateRecentSearch(recentSearchEntity: RecentSearchEntity) {
-        searchDao.upsertRecentSearch(recentSearchEntity)
-    }
-
-    override fun getRecentSearches(): Flow<List<RecentSearchEntity>> {
-        return searchDao.getRecentSearches()
-    }
-
-    override fun getRecentSearch(text: String): Flow<RecentSearchEntity> {
-        return searchDao.getRecentSearch(text)
-    }
-
-    override suspend fun deleteAllRecentSearch() {
-        searchDao.deleteAllRecentSearch()
-    }
-
-    override suspend fun deleteRecentSearch(id: Int) {
-        searchDao.deleteRecentSearch(id)
     }
 
     private suspend fun clearSyncLog(syncLogType: SyncLogType){
