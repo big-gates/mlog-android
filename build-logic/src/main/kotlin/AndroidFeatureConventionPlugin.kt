@@ -46,8 +46,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("androidx.compose.material.icons.extended").get())
                 add("implementation", libs.findLibrary("androidx.compose.material3.window.size").get())
                 add("implementation", libs.findLibrary("androidx.compose.activity").get())
-                add("implementation", libs.findLibrary("androidx.lifecycle.viewModel.compose").get())
-
                 add("implementation", libs.findLibrary("coil.kt.compose").get())
 
                 add("implementation", libs.findLibrary("androidx.hilt.navigation.compose").get())

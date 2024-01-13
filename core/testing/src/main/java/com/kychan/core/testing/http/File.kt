@@ -1,4 +1,4 @@
-package com.kychan.mlog.core.dataSourceRemote.http
+package com.kychan.core.testing.http
 
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
