@@ -16,4 +16,5 @@ dependencies {
     implementation(libs.androidx.paging.runtime.ktx)
 
     testImplementation(project(":core:testing"))
+    androidTestImplementation(project(":core:testing"))
 }
