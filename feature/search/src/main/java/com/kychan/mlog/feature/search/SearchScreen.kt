@@ -186,10 +186,7 @@ fun SearchBar(
         ),
         singleLine = true,
         shape = Shapes.large,
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = MaterialTheme.colors.onSurface,
-            containerColor = Color.Transparent,
-        ),
+        colors = TextFieldDefaults.colors(),
     )
 }
 
