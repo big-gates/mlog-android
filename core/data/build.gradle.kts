@@ -14,6 +14,8 @@ dependencies {
     implementation(project(":core:dataSourceLocal:room"))
     implementation(project(":core:dataSourceRemote:http"))
     implementation(libs.androidx.paging.runtime.ktx)
+    androidTestImplementation("androidx.paging:paging-common:3.1.1")
 
     testImplementation(project(":core:testing"))
+    androidTestImplementation(project(":core:testing"))
 }
