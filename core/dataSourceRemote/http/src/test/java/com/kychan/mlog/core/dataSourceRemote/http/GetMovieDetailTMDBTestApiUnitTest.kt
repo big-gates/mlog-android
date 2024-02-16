@@ -1,6 +1,6 @@
 package com.kychan.mlog.core.dataSourceRemote.http
 
-import com.kychan.mlog.core.testing.http.RetrofitTMDBTestApi
+import com.kychan.mlog.core.dataSourceRemote.http.fake.RetrofitTMDBTestApi
 import com.kychan.mlog.core.model.Language
 import kotlinx.coroutines.test.runTest
 import org.junit.Test

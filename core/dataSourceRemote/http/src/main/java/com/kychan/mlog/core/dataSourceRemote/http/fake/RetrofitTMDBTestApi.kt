@@ -1,5 +1,8 @@
-package com.kychan.core.testing.http
+package com.kychan.mlog.core.dataSourceRemote.http.fake
 
+import JvmUnitTestFakeAssetManager
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.GsonBuilder
 import com.kychan.mlog.core.dataSourceRemote.http.api.RetrofitTMDBApi
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDetailRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
@@ -7,8 +10,17 @@ import com.kychan.mlog.core.dataSourceRemote.http.model.MoviePopularRes
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieSearchRes
 import com.kychan.mlog.core.model.Language
 import com.kychan.mlog.core.model.WatchRegion
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromStream
+import okio.use
 
+@OptIn(ExperimentalSerializationApi::class)
 class RetrofitTMDBTestApi: RetrofitTMDBApi {
+
+    private val assets: FakeAssetManager = JvmUnitTestFakeAssetManager
+    private val json = Json
+
     override suspend fun getMoviePopularWithProvider(
         page: Int,
         language: Language,
@@ -17,11 +29,11 @@ class RetrofitTMDBTestApi: RetrofitTMDBApi {
     ): MovieDiscoverRes {
         return when(withWatchProvider){
             97 -> {
-                readFile("discover_movie_watcha_${page}.json", MovieDiscoverRes::class.java)
+                assets.open("discover_movie_watcha_${page}.json").use(json::decodeFromStream)
             }
 
             8 -> {
-                readFile("discover_movie_netflix_${page}.json", MovieDiscoverRes::class.java)
+                assets.open("discover_movie_netflix_${page}.json").use(json::decodeFromStream)
             }
 
             else -> throw IllegalArgumentException("Type not supported")
@@ -33,7 +45,7 @@ class RetrofitTMDBTestApi: RetrofitTMDBApi {
         language: Language,
         watchRegion: WatchRegion
     ): MoviePopularRes {
-        return readFile("discover_movie_mlog_${page}.json", MoviePopularRes::class.java)
+        return assets.open("discover_movie_mlog_${page}.json").use(json::decodeFromStream)
     }
 
     override suspend fun getSearch(
@@ -43,8 +55,8 @@ class RetrofitTMDBTestApi: RetrofitTMDBApi {
         query: String
     ): MovieSearchRes {
         return when(query) {
-            "어벤져" -> readFile("search_movie_avg_${page}_${language}_${watchRegion}.json", MovieSearchRes::class.java)
-            else -> readFile("search_movie_${page}_${language}_${watchRegion}_empty.json", MovieSearchRes::class.java)
+            "어벤져" -> assets.open("search_movie_avg_${page}_${language}_${watchRegion}.json").use(json::decodeFromStream)
+            else -> assets.open("search_movie_${page}_${language}_${watchRegion}_empty.json").use(json::decodeFromStream)
         }
     }
 
@@ -53,6 +65,6 @@ class RetrofitTMDBTestApi: RetrofitTMDBApi {
         language: Language,
         appendToResponse: String
     ): MovieDetailRes {
-        return readFile("detail_movie_${movieId}_${language}.json", MovieDetailRes::class.java)
+        return assets.open("detail_movie_${movieId}_${language}.json").use(json::decodeFromStream)
     }
 }
