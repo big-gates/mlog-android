@@ -10,7 +10,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common"))
+    api(project(":core:common"))
+    api(project(":core:dataSourceRemote:http"))
+    api(project(":core:model"))
 
     api(libs.junit4)
     api(libs.androidx.test.core)
@@ -22,5 +24,6 @@ dependencies {
     api(libs.androidx.compose.ui.test.junit4)
     api(libs.hilt.android.testing)
 
+    implementation(libs.retrofit.gson)
     debugApi(libs.androidx.compose.ui.test.manifest)
 }

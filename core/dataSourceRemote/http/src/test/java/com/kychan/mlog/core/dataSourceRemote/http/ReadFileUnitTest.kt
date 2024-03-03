@@ -1,5 +1,6 @@
 package com.kychan.mlog.core.dataSourceRemote.http
 
+import com.kychan.mlog.core.testing.http.readFile
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.MatcherAssert.assertThat

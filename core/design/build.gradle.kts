@@ -12,6 +12,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.ui.android)
     testImplementation(project(":core:testing"))
 
     implementation(libs.androidx.core.ktx)

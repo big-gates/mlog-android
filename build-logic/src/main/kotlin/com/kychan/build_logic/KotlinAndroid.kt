@@ -17,7 +17,7 @@ import java.io.InputStreamReader
  * Configure base Kotlin with Android options
  */
 fun Project.configureKotlinAndroid(
-    commonExtension: CommonExtension<*, *, *, *>,
+    commonExtension: CommonExtension<*, *, *, *, *>,
 ) {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
@@ -29,6 +29,10 @@ fun Project.configureKotlinAndroid(
             buildConfigField("String", "THE_MOVIE_DB_API_KEY", getLocalProperty("the_movie_db_api_key"))
             buildConfigField("String", "THE_MOVIE_DB_API_URL", getLocalProperty("the_movie_db_api_url"))
             buildConfigField("String", "THE_MOVIE_DB_IMAGE_URL", getLocalProperty("the_movie_db_image_url"))
+        }
+
+        buildFeatures {
+            buildConfig = true
         }
 
         compileOptions {
@@ -56,7 +60,7 @@ fun Project.configureKotlinAndroid(
     }
 }
 
-fun CommonExtension<*, *, *, *>.kotlinOptions(block: KotlinJvmOptions.() -> Unit) {
+fun CommonExtension<*, *, *, *, *>.kotlinOptions(block: KotlinJvmOptions.() -> Unit) {
     (this as ExtensionAware).extensions.configure("kotlinOptions", block)
 }
 

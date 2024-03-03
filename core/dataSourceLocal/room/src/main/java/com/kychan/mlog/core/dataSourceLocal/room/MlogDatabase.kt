@@ -1,8 +1,11 @@
 package com.kychan.mlog.core.dataSourceLocal.room
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.kychan.mlog.core.dataSourceLocal.room.converter.SyncLogTypeConverter
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MovieDao
 import com.kychan.mlog.core.dataSourceLocal.room.dao.MyGenresDao
@@ -45,4 +48,27 @@ abstract class MlogDatabase : RoomDatabase() {
     abstract fun myRatedDao(): MyRatedDao
     abstract fun myWantToWatchDao(): MyWantToWatchDao
     abstract fun myGenresDao(): MyGenresDao
+
+    companion object {
+        fun create(context: Context, useInMemory: Boolean): MlogDatabase {
+            val databaseBuilder = if (useInMemory) {
+                Room.inMemoryDatabaseBuilder(context, MlogDatabase::class.java)
+            } else {
+                Room.databaseBuilder(
+                    context,
+                    MlogDatabase::class.java,
+                    "movie_database"
+                ).addCallback(object: Callback(){
+                    override fun onCreate(db: SupportSQLiteDatabase) {
+                        super.onCreate(db)
+                        db.execSQL("INSERT INTO sync_log (id, type, next_key, created_at, updated_at) VALUES (null, 'Netflix_Movie', 1, date(), date());")
+                        db.execSQL("INSERT INTO sync_log (id, type, next_key, created_at, updated_at) VALUES (null, 'Watcha_Movie', 1, date(), date());")
+                        db.execSQL("INSERT INTO sync_log (id, type, next_key, created_at, updated_at) VALUES (null, 'Mlog_Movie', 1, date(), date());")
+                    }
+                })
+            }
+            return databaseBuilder
+                .build()
+        }
+    }
 }

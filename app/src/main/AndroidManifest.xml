@@ -28,10 +28,6 @@
             android:exported="true">
 
         </activity>
-        <activity
-            android:name=".presentation.main.MainActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustNothing" />
     </application>
 
 </manifest>
