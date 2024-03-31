@@ -1,4 +1,4 @@
-package com.kychan.core.testing.http
+package com.kychan.mlog.core.testing.http
 
 import com.kychan.mlog.core.dataSourceRemote.http.api.RetrofitTMDBApi
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDetailRes

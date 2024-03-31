@@ -1,4 +1,4 @@
-package com.kychan.core.testing.http
+package com.kychan.mlog.core.testing.http
 
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
