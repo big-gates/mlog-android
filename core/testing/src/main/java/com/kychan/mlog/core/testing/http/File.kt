@@ -9,7 +9,7 @@ import java.io.InputStreamReader
 
 
 fun <T>readFile(fileName: String, target: Class<T>): T{
-    val path = "src/test/resources"
+    val path = "src/main/assets"
 
     val file = File("${path}/$fileName")
     val inputStream: InputStream = file.inputStream()
