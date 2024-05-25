@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 @Dao
-abstract class MyGenresDao {
+interface MyGenresDao {
 
     @Query("SELECT * FROM my_genre")
     abstract fun getMyGenres(): Flow<List<MyGenresEntity>>

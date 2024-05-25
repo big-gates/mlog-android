@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 @Dao
-abstract class MyRatedDao {
+interface MyRatedDao {
     @Query("""
             SELECT *
             FROM my_movie AS m

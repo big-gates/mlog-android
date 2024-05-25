@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 @Dao
-abstract class MyWantToWatchDao {
+interface MyWantToWatchDao {
 
     @Query("SELECT * FROM my_movie AS m INNER JOIN want_to_watches AS w ON m.id = w.my_movie_id")
     abstract fun getMyWantToWatchMovies(): Flow<List<MyWantToWatchMovieVO>>

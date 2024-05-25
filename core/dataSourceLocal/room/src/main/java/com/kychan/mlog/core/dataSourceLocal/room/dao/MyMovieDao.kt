@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 @Dao
-abstract class MyMovieDao {
+interface MyMovieDao {
 
     @Query("SELECT * FROM my_movie")
     abstract fun getMyMovies(): Flow<List<MyMovieEntity>>
