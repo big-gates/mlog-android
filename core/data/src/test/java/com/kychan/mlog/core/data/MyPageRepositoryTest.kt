@@ -12,6 +12,8 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.MyRatedMoviesVO
 import com.kychan.mlog.core.dataSourceLocal.room.model.MyWantToWatchMovieVO
 import com.kychan.mlog.core.dataSourceLocal.room.model.toDomain
 import com.kychan.mlog.core.model.MyMovie
+import com.kychan.mlog.core.model.MyRatedMovies
+import com.kychan.mlog.core.model.MyWantToWatchMovie
 import com.kychan.mlog.core.model.Rated
 import com.kychan.mlog.core.model.WantToWatch
 import kotlinx.coroutines.flow.first
@@ -21,6 +23,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class MyPageRepositoryTest {
 
@@ -39,7 +42,7 @@ class MyPageRepositoryTest {
         myMovieDao = FakeMyMovieDao()
         myGenresDao = FakeMyGenresDao()
         myRatedDao = FakeMyRatedDao(myMovieDao, myGenresDao)
-        myWantToWatchDao = FakeMyWantToWatchDao()
+        myWantToWatchDao = FakeMyWantToWatchDao(myMovieDao, myGenresDao)
         myMovieRoomDataSource = FakeMyMovieRoomDataSource(
             myMovieDao = myMovieDao,
             myRatedDao = myRatedDao,
@@ -50,38 +53,77 @@ class MyPageRepositoryTest {
             myMovieRoomDataSource = myMovieRoomDataSource
         )
     }
-    /*
-        getMyRatedMovies1
-        getMyWantToWatchMovies1
-        updateMyRatedMovie
-        insertMyWantMovie
-        deleteMyWantMovie
-        deleteMyRatedMovie
-        existToMyRatedMovie
-        existToMyWantMovie
-     */
 
     @Test
-    fun getMyWantToWatchMovies() = runTest {
-
-        assertEquals(
-            myWantToWatchDao.getMyWantToWatchMovies().first()
-                .map(MyWantToWatchMovieVO::toDomain),
-            repository.getMyWantToWatchMovies().first()
+    fun `좋아요 영화 인덱스 0번째인 mock 데이터 삽입 후 dao와 repo에서 가져오는 데이터가 일치해야 한다'`() = runTest {
+        repository.insertMyWantMovie(
+            myMovie = myMovieList[0],
+            wantToWatch = wantToWatchList[0],
+            myGenres = myGenreList,
         )
+
+        val expected = myWantToWatchDao.getMyWantToWatchMovies().first().map(MyWantToWatchMovieVO::toDomain)
+        val result = repository.getMyWantToWatchMovies().first()
+
+        assertEquals(expected, result)
     }
 
     @Test
-    fun updateMyRatedMovie() = testScope.runTest {
+    fun `평가한 영화 인덱스 0번째인 mock 데이터 삽입 후 dao와 repo에서 가져오는 데이터가 일치해야 한다`() = testScope.runTest {
         repository.updateMyRatedMovie(
             myMovie = myMovieList[0],
             rated = ratedList[0],
             myGenres = myGenreList,
         )
-        val test1 = myRatedDao.getMyRatedMovies().first().map(MyRatedMoviesVO::toDomain).toString()
-        val test2 = repository.getMyRatedMovies().first().toString()
 
-        assertEquals(test1, test2)
+        val expected = myRatedDao.getMyRatedMovies().first().map(MyRatedMoviesVO::toDomain).toString()
+        val result = repository.getMyRatedMovies().first().toString()
+
+        assertEquals(expected, result)
+    }
+
+    @Test
+    fun `좋아요 영화 추가 확인 후 삭제`() = testScope.runTest {
+        repository.insertMyWantMovie(
+            myMovie = myMovieList[0],
+            wantToWatch = wantToWatchList[0],
+            myGenres = myGenreList,
+        )
+
+        val result = repository.getMyWantToWatchMovies().first()
+        assertNotNull(result)
+
+        repository.deleteMyWantMovie(
+            myMovie = myMovieList[0],
+            wantToWatch = wantToWatchList[0],
+        )
+
+        val expected = emptyList<MyWantToWatchMovie>()
+        val result2 = repository.getMyWantToWatchMovies().first()
+
+        assertEquals(expected, result2)
+    }
+
+    @Test
+    fun `평가한 영화 추가 확인 후 삭제`() = testScope.runTest {
+        repository.updateMyRatedMovie(
+            myMovie = myMovieList[0],
+            rated = ratedList[0],
+            myGenres = myGenreList,
+        )
+
+        val result = repository.getMyRatedMovies().first()
+        assertNotNull(result)
+
+        repository.deleteMyRatedMovie(
+            myMovie = myMovieList[0],
+            rated = ratedList[0],
+        )
+
+        val expected = emptyList<MyRatedMovies>()
+        val result2 = repository.getMyRatedMovies().first()
+
+        assertEquals(expected, result2)
     }
 
 
