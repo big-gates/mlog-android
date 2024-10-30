@@ -5,8 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.kychan.core.testing"
-
+    namespace = "com.kychan.mlog.core.testing"
 }
 
 dependencies {

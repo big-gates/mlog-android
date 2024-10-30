@@ -7,10 +7,10 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.WatchProviderEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-abstract class WatchProviderDao {
+interface  WatchProviderDao {
 
     @Upsert
-    abstract suspend fun upsertWatchProviders(entities: List<WatchProviderEntity>)
+    suspend fun upsertWatchProviders(entities: List<WatchProviderEntity>)
 
     @Query(
         value = """
@@ -19,7 +19,7 @@ abstract class WatchProviderDao {
             WHERE watch_provider_id = :watchProviderId
         """,
     )
-    abstract fun getMovieIds(watchProviderId: Int): Flow<List<Int>>
+    fun getMovieIds(watchProviderId: Int): Flow<List<Int>>
 
     @Query(
         value = """
@@ -27,5 +27,5 @@ abstract class WatchProviderDao {
             FROM watch_provider
         """,
     )
-    abstract fun getWatchProviders(): Flow<List<WatchProviderEntity>>
+    fun getWatchProviders(): Flow<List<WatchProviderEntity>>
 }

@@ -6,6 +6,11 @@ plugins {
 
 android {
     namespace = "com.kychan.mlog.core.dataSourceRemote.http"
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {

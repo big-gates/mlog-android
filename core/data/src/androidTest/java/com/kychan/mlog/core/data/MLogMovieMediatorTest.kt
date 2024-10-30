@@ -1,7 +1,7 @@
 package com.kychan.mlog.core.data
 
 import androidx.test.core.app.ApplicationProvider
-import com.kychan.mlog.core.testing.http.RetrofitTMDBTestApi
+import com.kychan.mlog.core.dataSourceRemote.http.api.RetrofitTMDBTestApi
 import com.kychan.mlog.core.dataSourceLocal.room.MlogDatabase
 import com.kychan.mlog.core.dataSourceRemote.http.api.RetrofitTMDBApi
 import com.kychan.mlog.core.model.Language

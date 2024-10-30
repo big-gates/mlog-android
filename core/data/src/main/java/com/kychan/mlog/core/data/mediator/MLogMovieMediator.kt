@@ -19,11 +19,8 @@ import java.util.concurrent.TimeUnit
 class MLogMovieMediator(
     private val movieRoomDataSource: MovieRoomDataSource,
     private val tmdbDataSource: TMDBDataSource,
+    private val endPage: Int = 500
     ):RemoteMediator<Int, MovieVO>() {
-
-    companion object{
-        const val END_PAGE = 500
-    }
 
     override suspend fun initialize(): InitializeAction {
         val latestUpdate = movieRoomDataSource.getSyncLog(SyncLogType.Mlog_Movie).updatedAt.toDate().time
@@ -58,7 +55,7 @@ class MLogMovieMediator(
                 syncLogType = syncLog.type,
                 currentKey = loadKey
             )
-            return MediatorResult.Success(endOfPaginationReached = loadKey + 1 > END_PAGE)
+            return MediatorResult.Success(endOfPaginationReached = loadKey + 1 > endPage)
         }catch (e: Exception){
             return MediatorResult.Error(e)
         }

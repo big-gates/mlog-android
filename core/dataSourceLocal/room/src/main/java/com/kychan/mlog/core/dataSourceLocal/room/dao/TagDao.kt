@@ -7,14 +7,14 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.GenresEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-abstract class TagDao {
+interface TagDao {
 
     @Upsert
-    abstract suspend fun upsertTags(entities: List<GenresEntity>)
+    suspend fun upsertTags(entities: List<GenresEntity>)
 
     @Query(value = """
         SELECT *
         FROM genre as g
     """)
-    abstract fun getTags(): Flow<List<GenresEntity>>
+    fun getTags(): Flow<List<GenresEntity>>
 }
