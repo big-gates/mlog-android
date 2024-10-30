@@ -7,15 +7,15 @@ import com.kychan.mlog.core.dataSourceLocal.room.model.SyncLogEntity
 import com.kychan.mlog.core.dataSourceLocal.room.model.SyncLogType
 
 @Dao
-abstract class SyncLogDao {
+interface SyncLogDao {
 
     @Query(value = """
             SELECT * FROM sync_log
             WHERE type = :syncLogType
         """
     )
-    abstract suspend fun getSyncLog(syncLogType: SyncLogType): SyncLogEntity
+    suspend fun getSyncLog(syncLogType: SyncLogType): SyncLogEntity
 
     @Upsert
-    abstract suspend fun upsertSyncLog(syncLogEntity: SyncLogEntity)
+    suspend fun upsertSyncLog(syncLogEntity: SyncLogEntity)
 }

@@ -1,6 +1,6 @@
 package com.kychan.mlog.core.dataSourceRemote.http
 
-import com.kychan.mlog.core.testing.http.RetrofitTMDBTestApi
+import com.kychan.mlog.core.dataSourceRemote.http.api.RetrofitTMDBTestApi
 import com.kychan.mlog.core.testing.http.readFile
 import com.kychan.mlog.core.dataSourceRemote.http.model.MovieDiscoverRes
 import com.kychan.mlog.core.model.Language

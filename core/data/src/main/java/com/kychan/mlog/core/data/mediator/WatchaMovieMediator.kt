@@ -20,11 +20,8 @@ import java.util.concurrent.TimeUnit
 class WatchaMovieMediator(
     private val movieRoomDataSource: MovieRoomDataSource,
     private val tmdbDataSource: TMDBDataSource,
+    private val endPage: Int = 500
 ):RemoteMediator<Int, MovieVO>() {
-
-    companion object{
-        const val END_PAGE = 500
-    }
 
     override suspend fun initialize(): InitializeAction {
         val latestUpdate = movieRoomDataSource.getSyncLog(SyncLogType.Watcha_Movie).updatedAt.toDate().time
@@ -62,7 +59,7 @@ class WatchaMovieMediator(
                 currentKey = loadKey,
                 syncLogType = syncLog.type
             )
-            return MediatorResult.Success(endOfPaginationReached = loadKey + 1 > END_PAGE)
+            return MediatorResult.Success(endOfPaginationReached = loadKey + 1 > endPage)
         }catch (e: Exception){
             return MediatorResult.Error(e)
         }
