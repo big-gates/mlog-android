@@ -32,7 +32,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import coil.compose.rememberAsyncImagePainter
 import coil.request.CachePolicy
 import coil.request.ImageRequest
@@ -216,11 +215,12 @@ fun MovieRankingsByCategory(
             flingBehavior = maxScrollFlingBehavior(5000F),
         ) {
             items(
-                key = { it.id },
-                items = movie
-            ) { movie ->
-                if (movie != null) {
-                    Movie(movie = movie, onClick = onClick)
+                count = movie.itemCount,
+                key = {it},
+            ) {index ->
+                val item = movie[index]
+                if (item != null) {
+                    Movie(movie = item, onClick = onClick)
                 }
             }
         }

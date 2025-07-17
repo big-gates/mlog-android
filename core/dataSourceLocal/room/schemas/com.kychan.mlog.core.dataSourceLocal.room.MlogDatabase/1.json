@@ -189,12 +189,12 @@
         ]
       },
       {
-        "tableName": "tag",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `movie_id` INTEGER NOT NULL, FOREIGN KEY(`movie_id`) REFERENCES `movie`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "tableName": "genre",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`genre_id` INTEGER NOT NULL, `movie_id` INTEGER NOT NULL, PRIMARY KEY(`genre_id`, `movie_id`), FOREIGN KEY(`movie_id`) REFERENCES `movie`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "genreId",
+            "columnName": "genre_id",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -206,23 +206,13 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
-            "id"
+            "genre_id",
+            "movie_id"
           ]
         },
-        "indices": [
-          {
-            "name": "index_tag_id_movie_id",
-            "unique": true,
-            "columnNames": [
-              "id",
-              "movie_id"
-            ],
-            "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_tag_id_movie_id` ON `${TABLE_NAME}` (`id`, `movie_id`)"
-          }
-        ],
+        "indices": [],
         "foreignKeys": [
           {
             "table": "movie",
@@ -449,12 +439,51 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "my_genre",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`genre_id` INTEGER NOT NULL, `movie_id` INTEGER NOT NULL, PRIMARY KEY(`genre_id`, `movie_id`), FOREIGN KEY(`movie_id`) REFERENCES `my_movie`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "genreId",
+            "columnName": "genre_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "movieId",
+            "columnName": "movie_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "genre_id",
+            "movie_id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "my_movie",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "movie_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '68c66487919cbdcdead891f33d09bfd1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd166288924e071d59324d2996054e2e3')"
     ]
   }
 }

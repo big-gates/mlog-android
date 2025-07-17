@@ -20,7 +20,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import androidx.navigation.compose.rememberNavController
 import com.kychan.mlog.feature.search.navigation.searchRoute
 import com.kychan.mlog.navigation.BottomNavItem
 import com.kychan.mlog.navigation.MLogNavHost
@@ -29,7 +29,7 @@ import com.kychan.mlog.navigation.MLogNavHost
 @Preview(showBackground = true)
 @Composable
 fun MLogApp(){
-    val navController = rememberAnimatedNavController()
+    val navController = rememberNavController()
 
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }

@@ -8,8 +8,8 @@ plugins {
 
 android {
     defaultConfig {
-        versionCode = 7
-        versionName = "2.0.0" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+        versionCode = 8
+        versionName = "2.0.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -55,35 +55,16 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.constraintlayout)
 
-    implementation(libs.material)
-    implementation(libs.fragment.ktx)
     implementation(libs.activity.ktx)
 
-    implementation(libs.browser)
-
-    //retrofit2
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.gson)
-
-    // Glide
-    implementation(libs.glide)
-    ksp(libs.glide.compiler)
-
-    //Room
-    implementation(libs.room.runtime)
-    ksp(libs.room.compiler)
-    implementation(libs.room.ktx)
-
-    //Paging
-    implementation(libs.androidx.paging.runtime.ktx)
-
     //Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics.ktx)
-    implementation(libs.firebase.config.ktx)
+    // 추 후 스플래쉬 구현시 강제업데이트, 버전 체크 등 구현 해야함
+//    implementation(platform(libs.firebase.bom))
+//    implementation(libs.firebase.analytics.ktx)
+//    implementation(libs.firebase.config.ktx)
 
+    implementation(libs.material)
     //Compose
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material2)
@@ -106,7 +87,6 @@ dependencies {
     androidTestImplementation(libs.androidx.navigation.testing)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.accompanist.navigation.animation)
 
     //loging
     implementation(libs.logger)

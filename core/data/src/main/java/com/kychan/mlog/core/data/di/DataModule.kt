@@ -3,7 +3,8 @@ package com.kychan.mlog.core.data.di
 import com.kychan.mlog.core.data.repository.*
 import com.kychan.mlog.core.dataSourceRemote.http.datasource.TMDBDataSource
 import com.kychan.mlog.core.dataSourceLocal.room.datasource.MyMovieRoomDataSource
-import com.kychan.mlog.core.dataSourceLocal.room.datasource.RoomDataSource
+import com.kychan.mlog.core.dataSourceLocal.room.datasource.MovieRoomDataSource
+import com.kychan.mlog.core.dataSourceLocal.room.datasource.SearchRoomDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,8 +19,8 @@ object DataModule {
     @Singleton
     fun providesHomeRepository(
         tmdbDataSource: TMDBDataSource,
-        roomDataSource: RoomDataSource
-    ): HomeRepository = HomeRepositoryImpl(tmdbDataSource, roomDataSource)
+        movieRoomDataSource: MovieRoomDataSource
+    ): HomeRepository = HomeRepositoryImpl(tmdbDataSource, movieRoomDataSource)
 
     @Provides
     @Singleton
@@ -31,8 +32,8 @@ object DataModule {
     @Singleton
     fun providesSearchRepository(
         tmdbDataSource: TMDBDataSource,
-        roomDataSource: RoomDataSource
-    ): SearchRepository = SearchRepositoryImpl(tmdbDataSource, roomDataSource)
+        searchRoomDataSource: SearchRoomDataSource,
+    ): SearchRepository = SearchRepositoryImpl(tmdbDataSource, searchRoomDataSource)
 
     @Provides
     @Singleton

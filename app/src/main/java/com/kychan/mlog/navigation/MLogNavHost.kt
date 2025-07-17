@@ -4,7 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.google.accompanist.navigation.animation.AnimatedNavHost
+import androidx.navigation.compose.NavHost
 import com.kychan.mlog.feature.home.navigation.homeGraph
 import com.kychan.mlog.feature.home.navigation.navigateToHomeDetail
 import com.kychan.mlog.feature.movie_detail.navigation.movieDetailScreen
@@ -21,7 +21,7 @@ fun MLogNavHost(
     modifier: Modifier = Modifier,
     startDestination: String = homeGraph
 ) {
-    AnimatedNavHost(
+    NavHost(
         navController = navController,
         startDestination = startDestination,
         modifier = modifier
