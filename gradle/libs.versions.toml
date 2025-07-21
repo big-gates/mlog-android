@@ -36,7 +36,7 @@ compose-ratingbar = "1.2.4"
 
 compileSdk = "34"
 minSdk = "24"
-targetSdk = "34"
+targetSdk = "35"
 uiAndroid = "1.5.4"
 
 [plugins]

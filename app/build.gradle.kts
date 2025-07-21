@@ -8,8 +8,8 @@ plugins {
 
 android {
     defaultConfig {
-        versionCode = 8
-        versionName = "2.0.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+        versionCode = 9
+        versionName = "2.0.2" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
